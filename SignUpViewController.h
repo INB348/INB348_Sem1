@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SignUpViewController : UIViewController <UIAlertViewDelegate>
+@interface SignUpViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UITextField *txt_NewEmail;
 @property (nonatomic, strong) IBOutlet UITextField *txt_NewPassword;
