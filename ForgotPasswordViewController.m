@@ -26,8 +26,58 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.txt_RecoveryEmail.text = @"nOrJKachI";
+    self.txt_RecoveryEmail.delegate = self;
 }
+
+
+/** Move the UIView up when the keyboard is hiding an object on the screen */
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+#pragma mark - keyboard movements
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect f = self.view.frame;
+        f.origin.y = -5.0f;  //set the -35.0f to your required value
+        self.view.frame = f;
+    }];
+}
+
+-(void)keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect f = self.view.frame;
+        f.origin.y = 64.0f;
+        self.view.frame = f;
+    }];
+}
+/* end */
+
+
+/** Dismiss keyboard */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.txt_RecoveryEmail resignFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    if (textField) {
+        [textField resignFirstResponder];
+    }
+    
+    return NO;
+}
+/* end */
+
+
 
 - (void)viewDidUnload
 {
