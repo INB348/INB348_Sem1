@@ -11,10 +11,32 @@
 
 @interface GroupsTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
+@property (strong) NSArray *userGroups;
 @end
 
 @implementation GroupsTableViewController
 
+- (void)refresh{
+    PFQuery *query = [PFQuery queryWithClassName:@"UserGroup"];
+    [query includeKey:@"group"];
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        [query whereKey:@"user" equalTo:currentUser];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                // The find succeeded.
+                NSLog(@"Successfully retrieved %d UserGroups.", objects.count);
+                
+                // Do something with the found objects
+                self.userGroups = [objects mutableCopy];
+                [self.tableView reloadData];
+            } else {
+                // Log details of the failure
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -25,6 +47,36 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // Fetch the devices from persistent data store
+    [self refresh];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return self.userGroups.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"userGroupCell";
+    UITableViewCell *userGroupCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    // Configure the cell...
+    PFObject *userGroup = self.userGroups[indexPath.row];
+    NSString *groupName = userGroup[@"group"][@"name"];
+    NSNumber *balance = userGroup[@"balance"];
+    
+    [userGroupCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
+    [userGroupCell.detailTextLabel setText:[balance stringValue]];
+    userGroupCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+    
+    return userGroupCell;
 }
 
 - (void)customSetup

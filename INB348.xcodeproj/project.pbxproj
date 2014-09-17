@@ -59,6 +59,7 @@
 		0CE717ED19C033D800D9F56D /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717EC19C033D800D9F56D /* LogInViewController.m */; };
 		0CE717F019C03C7800D9F56D /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717EF19C03C7800D9F56D /* SignUpViewController.m */; };
 		0CE717F319C04C0400D9F56D /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */; };
+		D84DD4A419C90413001B61ED /* images.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = D84DD4A319C90413001B61ED /* images.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +142,7 @@
 		0CE717EF19C03C7800D9F56D /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		0CE717F119C04C0400D9F56D /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
+		D84DD4A319C90413001B61ED /* images.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = images.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,7 @@
 		0C6E5F5E19B72750000594BF = {
 			isa = PBXGroup;
 			children = (
+				D84DD4A319C90413001B61ED /* images.jpeg */,
 				0CE717F119C04C0400D9F56D /* ForgotPasswordViewController.h */,
 				0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */,
 				0CE717EB19C033D800D9F56D /* LogInViewController.h */,
@@ -408,6 +411,7 @@
 				0C192DBE19B797C8008A0CA9 /* exit-50.png in Resources */,
 				0C6E5F7E19B72750000594BF /* Main.storyboard in Resources */,
 				0C6E5FB819B731A5000594BF /* login.jpg in Resources */,
+				D84DD4A419C90413001B61ED /* images.jpeg in Resources */,
 				0C192DBF19B797C8008A0CA9 /* group-50.png in Resources */,
 				0C192DB719B7973F008A0CA9 /* edit_user-50.png in Resources */,
 				0C192DC319B79859008A0CA9 /* wallpaper-1536424.jpg in Resources */,
