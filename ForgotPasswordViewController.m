@@ -55,7 +55,7 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         CGRect f = self.view.frame;
-        f.origin.y = 63.0f;
+        f.origin.y = 64.0f;
         self.view.frame = f;
     }];
 }

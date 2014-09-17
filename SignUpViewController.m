@@ -11,68 +11,75 @@
 #import <Parse/Parse.h>
 
 @interface SignUpViewController ()
-
 @end
 
 @implementation SignUpViewController
 
 @synthesize txt_NewEmail = _txt_NewEmail,
             txt_NewPassword = _txt_NewPassword,
-            txt_ReTypePassword = _txt_ReTypePassword;
+            txt_ReTypePassword = _txt_ReTypePassword,
+            img_Profile = _img_Profile,
+            txt_Name = _txt_Name;
 
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Default new Email and Password for testing
     self.txt_NewEmail.delegate = self;
     self.txt_NewPassword.delegate = self;
     self.txt_ReTypePassword.delegate = self;
+    self.txt_Name.delegate = self;
+    
 }
 
-
-/** Move the UIView up when the keyboard is hiding an object on the screen */
-- (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+/** Choose a photo in Photo Library */
+- (IBAction)selectPhoto:(UIButton *)sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:picker animated:YES completion:NULL];
+    
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-}
-
-#pragma mark - keyboard movements
-- (void)keyboardWillShow:(NSNotification *)notification
+// Handle library navigation bar
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect f = self.view.frame;
-        f.origin.y = -5.0f;  //set the -35.0f to your required value
-        self.view.frame = f;
-    }];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    navigationController.navigationBar.translucent = NO;
+    navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+
 }
 
--(void)keyboardWillHide:(NSNotification *)notification
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect f = self.view.frame;
-        f.origin.y = 63.0f;
-        self.view.frame = f;
-    }];
+#pragma mark - Image Picker Controller delegate methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    self.img_Profile.image = chosenImage;
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
 }
 /* end */
-
 
 /** Dismiss keyboard */
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self.txt_NewEmail resignFirstResponder];
     [self.txt_NewPassword resignFirstResponder];
     [self.txt_ReTypePassword resignFirstResponder];
+    [self.txt_Name resignFirstResponder];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -86,24 +93,22 @@
 /* end */
 
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     self.txt_NewEmail= nil;
     self.txt_NewPassword = nil;
     self.txt_ReTypePassword = nil;
+    self.txt_Name = nil;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 // Sign Up Button pressed
--(IBAction)signUpPressed:(id)sender
-{
+-(IBAction)signUpPressed:(id)sender {
     BOOL isValidEmail = [self NSStringIsValidEmail: _txt_NewEmail.text];
     
     if (isValidEmail) {
@@ -115,12 +120,26 @@
             PFUser *user = [PFUser user];
             user.username = self.txt_NewEmail.text;
             user.password = self.txt_NewPassword.text;
-            user.email = self.txt_NewEmail.text;
             
             [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
                     //The registration was succesful, go to the wall
+                    //Profile Picture
+                    //UIImage *image = [UIImage imageNamed:@"pill"];
+                    NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
+                    
+                    NSString *imageName = [NSString stringWithFormat:@"%@_ProfilePhoto", self.txt_Name.text];
+                    PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
+                    [imageFile saveInBackground];
+                    
+                    PFUser *user = [PFUser currentUser];
+                    [user setObject:self.txt_Name.text forKey:@"name"];
+                    [user setObject:imageFile forKey:@"profilePic"];
+                    [user saveInBackground];
                     [self performSegueWithIdentifier:@"SignUpSuccessful" sender:self];
+                    
+                    UIAlertView *welcomeView = [[UIAlertView alloc] initWithTitle:@"Welcome" message:@"You've successfully signed up to WhoPaysNext :)" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [welcomeView show];
                     
                 } else {
                     //Something bad has ocurred
@@ -136,7 +155,7 @@
     }
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == [alertView cancelButtonIndex]){
         //cancel clicked ...do your action
     }else{
@@ -145,8 +164,7 @@
     }
 }
 
--(BOOL) NSStringIsValidEmail:(NSString *)checkEmail
-{
+-(BOOL) NSStringIsValidEmail:(NSString *)checkEmail {
     BOOL stricterFilter = NO;
     NSString *stricterFilterString = @"[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}";
     NSString *laxString = @".+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*";

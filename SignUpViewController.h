@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SignUpViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate>
+@interface SignUpViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UITextField *txt_NewEmail;
 @property (nonatomic, strong) IBOutlet UITextField *txt_NewPassword;
 @property (nonatomic, strong) IBOutlet UITextField *txt_ReTypePassword;
+@property (nonatomic, strong) IBOutlet UITextField *txt_Name;
+@property (strong, nonatomic) IBOutlet UIImageView *img_Profile;
+
+- (IBAction)selectPhoto:(UIButton *)sender;
 
 -(IBAction)signUpPressed:(id)sender;
 
