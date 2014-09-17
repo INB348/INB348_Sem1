@@ -232,7 +232,7 @@
                         <barButtonItem key="leftBarButtonItem" image="Burger" id="IQe-M3-vgf"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="vSy-ep-1ux">
                             <connections>
-                                <segue destination="IV2-S0-2Cw" kind="push" id="eqG-4v-P4K"/>
+                                <segue destination="vcR-mr-iAC" kind="modal" id="eqG-4v-P4K"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -685,7 +685,7 @@
         <!--New Group-->
         <scene sceneID="d3E-lw-Ymf">
             <objects>
-                <tableViewController storyboardIdentifier="NewGroup" title="New Group" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IV2-S0-2Cw" userLabel="New Group" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="NewGroup" title="New Group" useStoryboardIdentifierAsRestorationIdentifier="YES" id="IV2-S0-2Cw" userLabel="New Group" customClass="NewGroupViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="XAa-bu-ey1">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -749,14 +749,23 @@
                             <outlet property="delegate" destination="IV2-S0-2Cw" id="uNF-7e-vBO"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="New Group" id="7WP-RR-PEp">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="qrS-4k-o72"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Q0i-zf-w62">
+                            <connections>
+                                <action selector="save:" destination="IV2-S0-2Cw" id="Scw-Mz-3iN"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="nameTextField" destination="0fb-Z2-H0X" id="4W8-x4-NNQ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uyR-sp-IwD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2605" y="-1300"/>
+            <point key="canvasLocation" x="3033" y="-1026"/>
         </scene>
         <!--Navigation Controller - Group Settings-->
         <scene sceneID="Ujt-N5-yut">
@@ -776,7 +785,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="te0-a2-WL4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3673" y="-921"/>
+            <point key="canvasLocation" x="4199" y="-921"/>
         </scene>
         <!--Group Settings Table View Controller - Group Settings-->
         <scene sceneID="PSA-vQ-beU">
@@ -980,7 +989,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pD7-lG-56d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4249" y="-921"/>
+            <point key="canvasLocation" x="4775" y="-921"/>
         </scene>
         <!--Navigation Controller - Balance-->
         <scene sceneID="mL2-64-xO2">
@@ -1161,7 +1170,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iZV-Hm-7GS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3673" y="-1653"/>
+            <point key="canvasLocation" x="4199" y="-1653"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="9id-3O-wvl">
@@ -1183,7 +1192,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pc4-oF-aLJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3147" y="-1635"/>
+            <point key="canvasLocation" x="3673" y="-1635"/>
         </scene>
         <!--Notifications Table View Controller - Notifications-->
         <scene sceneID="bFq-N9-Trk">
@@ -1582,7 +1591,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0QC-7S-Mwg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4249" y="-1653"/>
+            <point key="canvasLocation" x="4775" y="-1653"/>
         </scene>
         <!--Table View Controller - Review Expense-->
         <scene sceneID="5cV-is-ZkT">
@@ -1926,7 +1935,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ho-NJ-SNJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4744" y="-1653"/>
+            <point key="canvasLocation" x="5270" y="-1653"/>
         </scene>
         <!--New Balance Table View Controller - Balance Management-->
         <scene sceneID="ZCs-gZ-J6i">
@@ -2041,7 +2050,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prS-QZ-pY9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5125" y="-1660"/>
+            <point key="canvasLocation" x="5651" y="-1660"/>
         </scene>
         <!--Table View Controller - New Expense-->
         <scene sceneID="Hid-0F-jvF">
@@ -2502,6 +2511,31 @@ It is very important to our development team to get your feedback in a timely wa
             </objects>
             <point key="canvasLocation" x="1063" y="-3383"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="BY9-40-xEg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vcR-mr-iAC" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="MGp-Fm-pWz">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="qrS-4k-o72">
+                            <connections>
+                                <action selector="save:" destination="IV2-S0-2Cw" id="mHq-5w-mBG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8q6-a2-ayJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="IV2-S0-2Cw" kind="relationship" relationship="rootViewController" id="EZD-Xo-B2V"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dov-1E-Yo5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2507" y="-1026"/>
+        </scene>
     </scenes>
     <resources>
         <image name="10223234c490a541d2f5.jpg" width="200" height="200"/>
@@ -2523,9 +2557,9 @@ It is very important to our development team to get your feedback in a timely wa
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Aa2-h2-Lds"/>
-        <segue reference="5Hs-c3-pvd"/>
-        <segue reference="VzF-Tm-dQi"/>
         <segue reference="gHh-eZ-Rmr"/>
+        <segue reference="VzF-Tm-dQi"/>
+        <segue reference="5Hs-c3-pvd"/>
+        <segue reference="Aa2-h2-Lds"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -60,6 +60,7 @@
 		0CE717F019C03C7800D9F56D /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717EF19C03C7800D9F56D /* SignUpViewController.m */; };
 		0CE717F319C04C0400D9F56D /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */; };
 		D84DD4A419C90413001B61ED /* images.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = D84DD4A319C90413001B61ED /* images.jpeg */; };
+		D8B976EB19C90DDA00A09C07 /* NewGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B976EA19C90DDA00A09C07 /* NewGroupViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,7 +143,9 @@
 		0CE717EF19C03C7800D9F56D /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		0CE717F119C04C0400D9F56D /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
-		D84DD4A319C90413001B61ED /* images.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = images.jpeg; sourceTree = "<group>"; };
+		D84DD4A319C90413001B61ED /* images.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = images.jpeg; path = ../images.jpeg; sourceTree = "<group>"; };
+		D8B976E919C90DDA00A09C07 /* NewGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewGroupViewController.h; sourceTree = "<group>"; };
+		D8B976EA19C90DDA00A09C07 /* NewGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGroupViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +186,6 @@
 		0C6E5F5E19B72750000594BF = {
 			isa = PBXGroup;
 			children = (
-				D84DD4A319C90413001B61ED /* images.jpeg */,
 				0CE717F119C04C0400D9F56D /* ForgotPasswordViewController.h */,
 				0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */,
 				0CE717EB19C033D800D9F56D /* LogInViewController.h */,
@@ -236,6 +238,7 @@
 				0C6E5F7919B72750000594BF /* AppDelegate.h */,
 				0C6E5F7A19B72750000594BF /* AppDelegate.m */,
 				0C6E5F7C19B72750000594BF /* Main.storyboard */,
+				D8B976EC19C90EB000A09C07 /* GroupsList */,
 				0C8FD7EE19B7E150002D3D7F /* NewBalanceTableViewController.h */,
 				0C8FD7EF19B7E150002D3D7F /* NewBalanceTableViewController.m */,
 				0C1B96BE19B7628B006AA177 /* GroupSettingsTableViewController.h */,
@@ -248,8 +251,6 @@
 				0C1B96CA19B78617006AA177 /* AccountSettingsTableViewController.h */,
 				0C1B96CB19B78617006AA177 /* AccountSettingsTableViewController.m */,
 				0C1B96C519B76CB6006AA177 /* ExpenseManagementTableViewController.m */,
-				0C192DA919B78DD2008A0CA9 /* GroupsTableViewController.h */,
-				0C192DAA19B78DD2008A0CA9 /* GroupsTableViewController.m */,
 				0C6E5F7F19B72750000594BF /* ViewController.h */,
 				0C6E5F8019B72750000594BF /* ViewController.m */,
 				0C6E5F8219B72750000594BF /* Images.xcassets */,
@@ -301,6 +302,7 @@
 		0C6E5FB019B73197000594BF /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D84DD4A319C90413001B61ED /* images.jpeg */,
 				0C192DC219B79859008A0CA9 /* wallpaper-1536424.jpg */,
 				0C192DC419B79880008A0CA9 /* boy_with_flower_by_tuyetdinhsinhvat-d39q20z.jpg */,
 				0C192DC019B79838008A0CA9 /* 10223234c490a541d2f5.jpg */,
@@ -318,6 +320,17 @@
 				0C6E5FB419B731A5000594BF /* login.jpg */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		D8B976EC19C90EB000A09C07 /* GroupsList */ = {
+			isa = PBXGroup;
+			children = (
+				D8B976E919C90DDA00A09C07 /* NewGroupViewController.h */,
+				D8B976EA19C90DDA00A09C07 /* NewGroupViewController.m */,
+				0C192DA919B78DD2008A0CA9 /* GroupsTableViewController.h */,
+				0C192DAA19B78DD2008A0CA9 /* GroupsTableViewController.m */,
+			);
+			name = GroupsList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -442,6 +455,7 @@
 				0C8FD7F019B7E150002D3D7F /* NewBalanceTableViewController.m in Sources */,
 				0CE717ED19C033D800D9F56D /* LogInViewController.m in Sources */,
 				0C1B96CC19B78617006AA177 /* AccountSettingsTableViewController.m in Sources */,
+				D8B976EB19C90DDA00A09C07 /* NewGroupViewController.m in Sources */,
 				0C1B96C919B773AE006AA177 /* BalanceManagementTableViewController.m in Sources */,
 				0C6E5F7719B72750000594BF /* main.m in Sources */,
 				0C1B96C619B76CB6006AA177 /* ExpenseManagementTableViewController.m in Sources */,
