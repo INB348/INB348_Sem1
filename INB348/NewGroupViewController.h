@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-#import "GroupsTableViewController.h"
 
 @interface NewGroupViewController : UITableViewController
 @property (strong, nonatomic) IBOutlet UITextField *nameTextField;

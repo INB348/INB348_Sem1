@@ -11,6 +11,8 @@
 
 @interface BalanceManagementTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
+@property (strong) NSArray *groupUsers;
+@property (strong) NSString *groupName;
 @end
 
 @implementation BalanceManagementTableViewController
@@ -24,6 +26,65 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+
+- (void)refresh{
+    //Setting groupname
+    self.groupName = @"XK9fgs2xM5";
+    
+    //Retrieving Group Object
+    PFQuery *query = [PFQuery queryWithClassName:@"Group"];
+    [query getObjectInBackgroundWithId:self.groupName block:^(PFObject *group, NSError *error) {
+        
+        //Retrieving GroupUser list
+        PFQuery *query = [PFQuery queryWithClassName:@"UserGroup"];
+            [query includeKey:@"user"];
+            [query whereKey:@"group" equalTo:group];
+            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    // The find succeeded.
+                    NSLog(@"Successfully retrieved %d UserGroups.", objects.count);
+                    
+                    // Do something with the found objects
+                    self.groupUsers = [objects mutableCopy];
+                    [self.tableView reloadData];
+                } else {
+                    // Log details of the failure
+                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                }
+        }];
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // Fetch the devices from persistent data store
+    [self refresh];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return self.groupUsers.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"groupUserCell";
+    UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    // Configure the cell...
+    PFObject *groupUser = self.groupUsers[indexPath.row];
+    NSString *groupName = groupUser[@"user"][@"name"];
+    NSNumber *balance = groupUser[@"balance"];
+    
+    [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
+    [groupUserCell.detailTextLabel setText:[balance stringValue]];
+    groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+    
+    return groupUserCell;
 }
 
 - (void)customSetup

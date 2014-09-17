@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface BalanceManagementTableViewController : UITableViewController
-
+@property (nonatomic, strong) IBOutlet UITableView *groupUserTableView;
 @end

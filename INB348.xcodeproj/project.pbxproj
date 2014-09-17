@@ -238,6 +238,7 @@
 				0C6E5F7919B72750000594BF /* AppDelegate.h */,
 				0C6E5F7A19B72750000594BF /* AppDelegate.m */,
 				0C6E5F7C19B72750000594BF /* Main.storyboard */,
+				D8B976ED19C9270300A09C07 /* Group */,
 				D8B976EC19C90EB000A09C07 /* GroupsList */,
 				0C8FD7EE19B7E150002D3D7F /* NewBalanceTableViewController.h */,
 				0C8FD7EF19B7E150002D3D7F /* NewBalanceTableViewController.m */,
@@ -245,8 +246,6 @@
 				0C1B96BF19B7628B006AA177 /* GroupSettingsTableViewController.m */,
 				0C1B96C119B76887006AA177 /* NotificationsTableViewController.h */,
 				0C1B96C219B76887006AA177 /* NotificationsTableViewController.m */,
-				0C1B96C719B773AE006AA177 /* BalanceManagementTableViewController.h */,
-				0C1B96C819B773AE006AA177 /* BalanceManagementTableViewController.m */,
 				0C1B96C419B76CB6006AA177 /* ExpenseManagementTableViewController.h */,
 				0C1B96CA19B78617006AA177 /* AccountSettingsTableViewController.h */,
 				0C1B96CB19B78617006AA177 /* AccountSettingsTableViewController.m */,
@@ -331,6 +330,15 @@
 				0C192DAA19B78DD2008A0CA9 /* GroupsTableViewController.m */,
 			);
 			name = GroupsList;
+			sourceTree = "<group>";
+		};
+		D8B976ED19C9270300A09C07 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				0C1B96C719B773AE006AA177 /* BalanceManagementTableViewController.h */,
+				0C1B96C819B773AE006AA177 /* BalanceManagementTableViewController.m */,
+			);
+			name = Group;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
