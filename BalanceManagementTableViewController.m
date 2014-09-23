@@ -68,10 +68,10 @@
     
     // Configure the cell...
     PFObject *groupUser = self.groupUsers[indexPath.row];
-    NSString *groupName = groupUser[@"user"][@"name"];
+    NSString *userName = groupUser[@"user"][@"name"];
     NSNumber *balance = groupUser[@"balance"];
     
-    [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
+    [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", userName]];
     [groupUserCell.detailTextLabel setText:[balance stringValue]];
     groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
     
@@ -93,6 +93,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"addNewExpenseSegue"]) {
+        NewExpenseNavigationController *destNavigationController = segue.destinationViewController;
+        NewExpenseDetailsViewController *destViewController = (NewExpenseDetailsViewController *) destNavigationController.topViewController;
+        destViewController.groupUsers = self.groupUsers;
+        destViewController.group = self.group;
+    }
 }
 
 @end

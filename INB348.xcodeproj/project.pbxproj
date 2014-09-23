@@ -59,6 +59,12 @@
 		0CE717ED19C033D800D9F56D /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717EC19C033D800D9F56D /* LogInViewController.m */; };
 		0CE717F019C03C7800D9F56D /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717EF19C03C7800D9F56D /* SignUpViewController.m */; };
 		0CE717F319C04C0400D9F56D /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */; };
+		6F5CE5CC19CA720F00489DDC /* NewExpenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5CB19CA720F00489DDC /* NewExpenseNavigationController.m */; };
+		6F5CE5D019CA723D00489DDC /* NewExpenseDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5CF19CA723D00489DDC /* NewExpenseDetailsViewController.m */; };
+		6F5CE5D319CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5D219CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m */; };
+		6F5CE5D619CA725D00489DDC /* NewExpenseForWhomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5D519CA725D00489DDC /* NewExpenseForWhomTableViewController.m */; };
+		6F5CE5D919CA726900489DDC /* NewExpenseSummaryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5D819CA726900489DDC /* NewExpenseSummaryTableViewController.m */; };
+		D800A3BE19D01F8400201202 /* NewGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D800A3BD19D01F8400201202 /* NewGroupViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +147,18 @@
 		0CE717EF19C03C7800D9F56D /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = ../SignUpViewController.m; sourceTree = "<group>"; };
 		0CE717F119C04C0400D9F56D /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgotPasswordViewController.h; path = ../ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForgotPasswordViewController.m; path = ../ForgotPasswordViewController.m; sourceTree = "<group>"; };
+		6F5CE5CA19CA720F00489DDC /* NewExpenseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExpenseNavigationController.h; sourceTree = "<group>"; };
+		6F5CE5CB19CA720F00489DDC /* NewExpenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExpenseNavigationController.m; sourceTree = "<group>"; };
+		6F5CE5CE19CA723D00489DDC /* NewExpenseDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExpenseDetailsViewController.h; sourceTree = "<group>"; };
+		6F5CE5CF19CA723D00489DDC /* NewExpenseDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExpenseDetailsViewController.m; sourceTree = "<group>"; };
+		6F5CE5D119CA724F00489DDC /* NewExpenseWhoPaidTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExpenseWhoPaidTableViewController.h; sourceTree = "<group>"; };
+		6F5CE5D219CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExpenseWhoPaidTableViewController.m; sourceTree = "<group>"; };
+		6F5CE5D419CA725D00489DDC /* NewExpenseForWhomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExpenseForWhomTableViewController.h; sourceTree = "<group>"; };
+		6F5CE5D519CA725D00489DDC /* NewExpenseForWhomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExpenseForWhomTableViewController.m; sourceTree = "<group>"; };
+		6F5CE5D719CA726900489DDC /* NewExpenseSummaryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExpenseSummaryTableViewController.h; sourceTree = "<group>"; };
+		6F5CE5D819CA726900489DDC /* NewExpenseSummaryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExpenseSummaryTableViewController.m; sourceTree = "<group>"; };
+		D800A3BC19D01F8400201202 /* NewGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewGroupViewController.h; sourceTree = "<group>"; };
+		D800A3BD19D01F8400201202 /* NewGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGroupViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,20 +246,19 @@
 				0C6E5F7919B72750000594BF /* AppDelegate.h */,
 				0C6E5F7A19B72750000594BF /* AppDelegate.m */,
 				0C6E5F7C19B72750000594BF /* Main.storyboard */,
+				6F5CE5CD19CA721200489DDC /* NewExpense */,
 				0C8FD7EE19B7E150002D3D7F /* NewBalanceTableViewController.h */,
 				0C8FD7EF19B7E150002D3D7F /* NewBalanceTableViewController.m */,
 				0C1B96BE19B7628B006AA177 /* GroupSettingsTableViewController.h */,
 				0C1B96BF19B7628B006AA177 /* GroupSettingsTableViewController.m */,
 				0C1B96C119B76887006AA177 /* NotificationsTableViewController.h */,
 				0C1B96C219B76887006AA177 /* NotificationsTableViewController.m */,
-				0C1B96C719B773AE006AA177 /* BalanceManagementTableViewController.h */,
-				0C1B96C819B773AE006AA177 /* BalanceManagementTableViewController.m */,
-				0C1B96C419B76CB6006AA177 /* ExpenseManagementTableViewController.h */,
+				6F5CE5DA19CA752200489DDC /* Group */,
 				0C1B96CA19B78617006AA177 /* AccountSettingsTableViewController.h */,
 				0C1B96CB19B78617006AA177 /* AccountSettingsTableViewController.m */,
+				0C1B96C419B76CB6006AA177 /* ExpenseManagementTableViewController.h */,
 				0C1B96C519B76CB6006AA177 /* ExpenseManagementTableViewController.m */,
-				0C192DA919B78DD2008A0CA9 /* GroupsTableViewController.h */,
-				0C192DAA19B78DD2008A0CA9 /* GroupsTableViewController.m */,
+				6F5CE5DB19CA752C00489DDC /* GroupList */,
 				0C6E5F7F19B72750000594BF /* ViewController.h */,
 				0C6E5F8019B72750000594BF /* ViewController.m */,
 				0C6E5F8219B72750000594BF /* Images.xcassets */,
@@ -323,6 +340,43 @@
 				0CE717EF19C03C7800D9F56D /* SignUpViewController.m */,
 			);
 			name = Front;
+			sourceTree = "<group>";
+		};
+		6F5CE5CD19CA721200489DDC /* NewExpense */ = {
+			isa = PBXGroup;
+			children = (
+				6F5CE5CA19CA720F00489DDC /* NewExpenseNavigationController.h */,
+				6F5CE5CB19CA720F00489DDC /* NewExpenseNavigationController.m */,
+				6F5CE5CE19CA723D00489DDC /* NewExpenseDetailsViewController.h */,
+				6F5CE5CF19CA723D00489DDC /* NewExpenseDetailsViewController.m */,
+				6F5CE5D119CA724F00489DDC /* NewExpenseWhoPaidTableViewController.h */,
+				6F5CE5D219CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m */,
+				6F5CE5D419CA725D00489DDC /* NewExpenseForWhomTableViewController.h */,
+				6F5CE5D519CA725D00489DDC /* NewExpenseForWhomTableViewController.m */,
+				6F5CE5D719CA726900489DDC /* NewExpenseSummaryTableViewController.h */,
+				6F5CE5D819CA726900489DDC /* NewExpenseSummaryTableViewController.m */,
+			);
+			name = NewExpense;
+			sourceTree = "<group>";
+		};
+		6F5CE5DA19CA752200489DDC /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				0C1B96C719B773AE006AA177 /* BalanceManagementTableViewController.h */,
+				0C1B96C819B773AE006AA177 /* BalanceManagementTableViewController.m */,
+			);
+			name = Group;
+			sourceTree = "<group>";
+		};
+		6F5CE5DB19CA752C00489DDC /* GroupList */ = {
+			isa = PBXGroup;
+			children = (
+				D800A3BC19D01F8400201202 /* NewGroupViewController.h */,
+				D800A3BD19D01F8400201202 /* NewGroupViewController.m */,
+				0C192DA919B78DD2008A0CA9 /* GroupsTableViewController.h */,
+				0C192DAA19B78DD2008A0CA9 /* GroupsTableViewController.m */,
+			);
+			name = GroupList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,8 +491,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F5CE5D319CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m in Sources */,
 				0C1B96C319B76887006AA177 /* NotificationsTableViewController.m in Sources */,
 				0C6E5F8119B72750000594BF /* ViewController.m in Sources */,
+				6F5CE5D019CA723D00489DDC /* NewExpenseDetailsViewController.m in Sources */,
+				6F5CE5CC19CA720F00489DDC /* NewExpenseNavigationController.m in Sources */,
+				6F5CE5D619CA725D00489DDC /* NewExpenseForWhomTableViewController.m in Sources */,
 				0C6E5F7B19B72750000594BF /* AppDelegate.m in Sources */,
 				0CE717F319C04C0400D9F56D /* ForgotPasswordViewController.m in Sources */,
 				0C1B96C019B7628B006AA177 /* GroupSettingsTableViewController.m in Sources */,
@@ -448,7 +506,9 @@
 				0C1B96CC19B78617006AA177 /* AccountSettingsTableViewController.m in Sources */,
 				0C1B96C919B773AE006AA177 /* BalanceManagementTableViewController.m in Sources */,
 				0C6E5F7719B72750000594BF /* main.m in Sources */,
+				D800A3BE19D01F8400201202 /* NewGroupViewController.m in Sources */,
 				0C1B96C619B76CB6006AA177 /* ExpenseManagementTableViewController.m in Sources */,
+				6F5CE5D919CA726900489DDC /* NewExpenseSummaryTableViewController.m in Sources */,
 				0C6E5FA219B727D3000594BF /* SWRevealViewController.m in Sources */,
 				0CE717F019C03C7800D9F56D /* SignUpViewController.m in Sources */,
 				0C6E5FA519B72900000594BF /* MenuViewController.m in Sources */,
