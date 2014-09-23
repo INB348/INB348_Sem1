@@ -13,6 +13,8 @@
 @end
 
 @implementation NewExpenseSummaryTableViewController
+NSNumber *expenseUserAmount;
+NSNumber *expensePayerAmount;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,7 +34,14 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-        NSLog(@"%@",self.amount);
+    
+    NSNumber *numberOfExpensePayers = [NSNumber numberWithInt:[self.expenseUsers count]];
+    double expensePayerAmountDouble = [self.amount doubleValue]/[numberOfExpensePayers doubleValue];
+    expensePayerAmount = [NSNumber numberWithDouble:expensePayerAmountDouble];
+    
+    NSNumber *numberOfExpenseUsers = [NSNumber numberWithInt:[self.expenseUsers count]];
+    double expenseUserAmountDouble = [self.amount doubleValue]/[numberOfExpenseUsers doubleValue];
+    expenseUserAmount = [NSNumber numberWithDouble:expenseUserAmountDouble];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,76 +55,84 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    return self.expenseUsers.count;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(NSNumber*)getNewExpensePayerBalance:(NSNumber*)oldBalance:(NSNumber*)change{
+    return [NSNumber numberWithDouble:[oldBalance doubleValue]+[change doubleValue]];
+}
+
+-(NSNumber*)getNewExpenseUserBalance:(NSNumber*)oldBalance:(NSNumber*)change{
+    return [NSNumber numberWithDouble:[oldBalance doubleValue]-[change doubleValue]];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"summaryCell";
+    UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    PFObject *groupUser = self.expensePayers[indexPath.row];
+    NSString *userName = groupUser[@"user"][@"name"];
+    NSNumber *balance = groupUser[@"balance"];
+    NSNumber *newBalance = [self getNewExpensePayerBalance:balance:expensePayerAmount];
+    NSString *details = [[[[[balance stringValue] stringByAppendingString:@" + "] stringByAppendingString:[expenseUserAmount stringValue]] stringByAppendingString:@" = " ] stringByAppendingString:[newBalance stringValue]];
     
-    return cell;
+    [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", userName]];
+    [groupUserCell.detailTextLabel setText:[NSString stringWithFormat:@"%@", details]];
+    groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+    
+    return groupUserCell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(NSString *)returnStringIfNotNull:(NSString*)string{
+    if(string == nil){
+        return @"";
+    } else{
+        return string;
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)save:(id)sender {
+    // Create a new Expense
+    PFObject *expense= [PFObject objectWithClassName:@"Expense"];
+    [expense setValue:[self returnStringIfNotNull:self.name] forKey:@"name"];
+    [expense setValue:self.amount forKey:@"amount"];
+    [expense setValue:self.date forKey:@"date"];
+    [expense setValue:[self returnStringIfNotNull:self.description] forKey:@"description"];
+    [expense setObject:self.group forKey:@"group"];
+    [expense saveInBackground];
+    
+    //Create each ExpensePayer
+    for (PFObject *user in self.expensePayers) {
+        PFObject *expensePayer= [PFObject objectWithClassName:@"ExpensePayment"];
+        [expensePayer setObject:expense forKey:@"expense"];
+        [expensePayer setObject:user forKey:@"user"];
+        [expensePayer setValue:expensePayerAmount forKey:@"amount"];
+        [expensePayer saveInBackground];
+        
+        [user setValue:[self getNewExpensePayerBalance:user[@"balance"]:expensePayerAmount] forKey:@"balance"];
+        [user save];
+    }
+    
+    //Create each ExpenseUser
+    for (PFObject *user in self.expenseUsers) {
+        PFObject *expenseUser= [PFObject objectWithClassName:@"ExpenseUsage"];
+        [expenseUser setObject:expense forKey:@"expense"];
+        [expenseUser setObject:user forKey:@"user"];
+        [expenseUser setValue:expenseUserAmount forKey:@"amount"];
+        [expenseUser saveInBackground];
+        
+        [user setValue:[self getNewExpenseUserBalance:user[@"balance"]:expenseUserAmount] forKey:@"balance"];
+        [user save];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

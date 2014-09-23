@@ -64,6 +64,7 @@
 		6F5CE5D319CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5D219CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m */; };
 		6F5CE5D619CA725D00489DDC /* NewExpenseForWhomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5D519CA725D00489DDC /* NewExpenseForWhomTableViewController.m */; };
 		6F5CE5D919CA726900489DDC /* NewExpenseSummaryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5D819CA726900489DDC /* NewExpenseSummaryTableViewController.m */; };
+		D800A3BE19D01F8400201202 /* NewGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D800A3BD19D01F8400201202 /* NewGroupViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,8 @@
 		6F5CE5D519CA725D00489DDC /* NewExpenseForWhomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExpenseForWhomTableViewController.m; sourceTree = "<group>"; };
 		6F5CE5D719CA726900489DDC /* NewExpenseSummaryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExpenseSummaryTableViewController.h; sourceTree = "<group>"; };
 		6F5CE5D819CA726900489DDC /* NewExpenseSummaryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExpenseSummaryTableViewController.m; sourceTree = "<group>"; };
+		D800A3BC19D01F8400201202 /* NewGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewGroupViewController.h; sourceTree = "<group>"; };
+		D800A3BD19D01F8400201202 /* NewGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGroupViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,6 +371,8 @@
 		6F5CE5DB19CA752C00489DDC /* GroupList */ = {
 			isa = PBXGroup;
 			children = (
+				D800A3BC19D01F8400201202 /* NewGroupViewController.h */,
+				D800A3BD19D01F8400201202 /* NewGroupViewController.m */,
 				0C192DA919B78DD2008A0CA9 /* GroupsTableViewController.h */,
 				0C192DAA19B78DD2008A0CA9 /* GroupsTableViewController.m */,
 			);
@@ -501,6 +506,7 @@
 				0C1B96CC19B78617006AA177 /* AccountSettingsTableViewController.m in Sources */,
 				0C1B96C919B773AE006AA177 /* BalanceManagementTableViewController.m in Sources */,
 				0C6E5F7719B72750000594BF /* main.m in Sources */,
+				D800A3BE19D01F8400201202 /* NewGroupViewController.m in Sources */,
 				0C1B96C619B76CB6006AA177 /* ExpenseManagementTableViewController.m in Sources */,
 				6F5CE5D919CA726900489DDC /* NewExpenseSummaryTableViewController.m in Sources */,
 				0C6E5FA219B727D3000594BF /* SWRevealViewController.m in Sources */,

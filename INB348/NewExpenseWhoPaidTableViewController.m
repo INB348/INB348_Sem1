@@ -9,7 +9,6 @@
 #import "NewExpenseWhoPaidTableViewController.h"
 
 @interface NewExpenseWhoPaidTableViewController ()
-
 @end
 
 @implementation NewExpenseWhoPaidTableViewController
@@ -32,6 +31,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.allowsMultipleSelection = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,74 +46,65 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
+    tableViewCell.accessoryView.hidden = NO;
+    //tableViewCell.selected = NO;
+    // if you don't use custom image tableViewCell.accessoryType = UITableViewCellAccessoryCheckmark;
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
+    tableViewCell.accessoryView.hidden = YES;
+    //tableViewCell.selected = YES;
+    // if you don't use custom image tableViewCell.accessoryType = UITableViewCellAccessoryNone;
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.groupUsers.count;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"whoPaidCell";
+    UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    PFObject *groupUser = self.groupUsers[indexPath.row];
+    NSString *groupName = groupUser[@"user"][@"name"];
     
-    return cell;
+    [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
+    groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+    
+    return groupUserCell;
 }
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    //Adding selected users to array
+    NSMutableArray *selectedExpensePayers = [[NSMutableArray alloc] init];
+    for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
+        [selectedExpensePayers addObject:[self.groupUsers objectAtIndex:selectedExpensePayerIndex.row]];
+    }
+    
     if ([segue.identifier isEqualToString:@"showForWhom"]) {
         NewExpenseForWhomTableViewController *destViewController = segue.destinationViewController;
         destViewController.name = self.name;
         destViewController.amount = self.amount;
         destViewController.date = self.date;
         destViewController.description = self.description;
+        destViewController.groupUsers=self.groupUsers;
+        destViewController.expensePayers=selectedExpensePayers;
+        destViewController.group = self.group;
     }
 }
 

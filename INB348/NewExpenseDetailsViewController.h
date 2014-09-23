@@ -14,5 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *amountTextField;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextField;
-
+@property (strong) PFObject  *group;
+@property (strong) NSArray *groupUsers;
+- (IBAction)cancel:(id)sender;
 @end

@@ -43,7 +43,13 @@
         NewExpenseWhoPaidTableViewController *destViewController = segue.destinationViewController;
         destViewController.name = self.nameTextField.text;
         destViewController.amount = @([self.amountTextField.text intValue]);
+        destViewController.date = self.datePicker.date;
+        destViewController.groupUsers=self.groupUsers;
+        destViewController.group = self.group;
     }
 }
 
+- (IBAction)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

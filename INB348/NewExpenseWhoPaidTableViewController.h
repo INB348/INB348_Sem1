@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 #import "NewExpenseForWhomTableViewController.h"
 
 @interface NewExpenseWhoPaidTableViewController : UITableViewController
@@ -14,4 +15,6 @@
 @property (strong) NSNumber  *amount;
 @property (strong) NSDate  *date;
 @property (strong) NSString *description;
+@property (strong) NSArray *groupUsers;
+@property (strong) PFObject  *group;
 @end
