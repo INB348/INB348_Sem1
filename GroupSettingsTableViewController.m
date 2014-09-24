@@ -11,6 +11,7 @@
 
 @interface GroupSettingsTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
+@property (strong) PFObject  *group;
 @end
 
 @implementation GroupSettingsTableViewController
@@ -24,6 +25,9 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.group = [(GroupTabBarController *)[(GroupSettingsNavigationViewController *)[self navigationController] parentViewController] group];
+    self.title = self.group[@"name"];
+    
 }
 
 - (void)customSetup

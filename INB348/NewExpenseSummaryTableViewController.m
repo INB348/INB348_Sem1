@@ -15,6 +15,7 @@
 @implementation NewExpenseSummaryTableViewController
 NSNumber *expenseUserAmount;
 NSNumber *expensePayerAmount;
+NewExpenseNavigationController *navigationController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,19 +29,14 @@ NSNumber *expensePayerAmount;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    navigationController = (NewExpenseNavigationController *)[self navigationController];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    NSNumber *numberOfExpensePayers = [NSNumber numberWithInt:[self.expenseUsers count]];
-    double expensePayerAmountDouble = [self.amount doubleValue]/[numberOfExpensePayers doubleValue];
+    NSNumber *numberOfExpensePayers = [NSNumber numberWithInt:[navigationController.expenseUsers count]];
+    double expensePayerAmountDouble = [navigationController.amount doubleValue]/[numberOfExpensePayers doubleValue];
     expensePayerAmount = [NSNumber numberWithDouble:expensePayerAmountDouble];
     
-    NSNumber *numberOfExpenseUsers = [NSNumber numberWithInt:[self.expenseUsers count]];
-    double expenseUserAmountDouble = [self.amount doubleValue]/[numberOfExpenseUsers doubleValue];
+    NSNumber *numberOfExpenseUsers = [NSNumber numberWithInt:[navigationController.expenseUsers count]];
+    double expenseUserAmountDouble = [navigationController.amount doubleValue]/[numberOfExpenseUsers doubleValue];
     expenseUserAmount = [NSNumber numberWithDouble:expenseUserAmountDouble];
 }
 
@@ -61,7 +57,7 @@ NSNumber *expensePayerAmount;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.expenseUsers.count;
+    return navigationController.expenseUsers.count;
 }
 
 -(NSNumber*)getNewExpensePayerBalance:(NSNumber*)oldBalance:(NSNumber*)change{
@@ -78,7 +74,7 @@ NSNumber *expensePayerAmount;
     UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    PFObject *groupUser = self.expensePayers[indexPath.row];
+    PFObject *groupUser = navigationController.expensePayers[indexPath.row];
     NSString *userName = groupUser[@"user"][@"name"];
     NSNumber *balance = groupUser[@"balance"];
     NSNumber *newBalance = [self getNewExpensePayerBalance:balance:expensePayerAmount];
@@ -102,16 +98,16 @@ NSNumber *expensePayerAmount;
 - (IBAction)save:(id)sender {
     // Create a new Expense
     PFObject *expense= [PFObject objectWithClassName:@"Expense"];
-    [expense setValue:[self returnStringIfNotNull:self.name] forKey:@"name"];
-    [expense setValue:self.amount forKey:@"amount"];
-    [expense setValue:self.date forKey:@"date"];
-    [expense setValue:[self returnStringIfNotNull:self.description] forKey:@"description"];
-    [expense setObject:self.group forKey:@"group"];
+    [expense setValue:[self returnStringIfNotNull:navigationController.name] forKey:@"name"];
+    [expense setValue:navigationController.amount forKey:@"amount"];
+    [expense setValue:navigationController.date forKey:@"date"];
+    [expense setValue:[self returnStringIfNotNull:navigationController.comment] forKey:@"description"];
+    [expense setObject:navigationController.group forKey:@"group"];
     [expense saveInBackground];
     
     //Create each ExpensePayer
-    for (PFObject *user in self.expensePayers) {
-        PFObject *expensePayer= [PFObject objectWithClassName:@"ExpensePayment"];
+    for (PFObject *user in navigationController.expensePayers) {
+        PFObject *expensePayer= [PFObject objectWithClassName:@"ExpensePayer"];
         [expensePayer setObject:expense forKey:@"expense"];
         [expensePayer setObject:user forKey:@"user"];
         [expensePayer setValue:expensePayerAmount forKey:@"amount"];
@@ -122,8 +118,8 @@ NSNumber *expensePayerAmount;
     }
     
     //Create each ExpenseUser
-    for (PFObject *user in self.expenseUsers) {
-        PFObject *expenseUser= [PFObject objectWithClassName:@"ExpenseUsage"];
+    for (PFObject *user in navigationController.expenseUsers) {
+        PFObject *expenseUser= [PFObject objectWithClassName:@"ExpenseUser"];
         [expenseUser setObject:expense forKey:@"expense"];
         [expenseUser setObject:user forKey:@"user"];
         [expenseUser setValue:expenseUserAmount forKey:@"amount"];

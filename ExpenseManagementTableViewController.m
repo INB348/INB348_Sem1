@@ -15,16 +15,53 @@
 
 @implementation ExpenseManagementTableViewController
 
+- (PFObject *)getGroup{
+    return [(GroupTabBarController *)[(HistoryNavigationViewController *)[self navigationController] parentViewController] group];
+}
+
+- (NSArray *)getGroupUsers{
+    return [(GroupTabBarController *)[(HistoryNavigationViewController *)[self navigationController] parentViewController] groupUsers];
+}
+
+- (NSArray *)getGroupExpenses{
+    return [(GroupTabBarController *)[(HistoryNavigationViewController *)[self navigationController] parentViewController] expenses];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self customSetup];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.title = [self getGroup][@"name"];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    return [self getGroupExpenses].count;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"expenseHistoryCell";
+    UITableViewCell *expenseHistoryCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    // Configure the cell...
+    PFObject *groupExpense = [self getGroupExpenses][indexPath.row];
+    NSString *expenseName = groupExpense[@"name"];
+    NSNumber *expenseAmount = groupExpense[@"amount"];
+    
+    [expenseHistoryCell.textLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
+    [expenseHistoryCell.detailTextLabel setText:[expenseAmount stringValue]];
+    
+    return expenseHistoryCell;
 }
 
 - (void)customSetup
@@ -42,6 +79,22 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"addNewExpenseSegue"]) {
+        NewExpenseNavigationController *destNavigationController = segue.destinationViewController;
+        destNavigationController.groupUsers = [self getGroupUsers];
+        destNavigationController.group = [self getGroup];
+    }
+    if ([segue.identifier isEqualToString:@"editExpenseSegue"]) {
+        NewExpenseNavigationController *destNavigationController = segue.destinationViewController;
+        destNavigationController.groupUsers = [self getGroupUsers];
+        destNavigationController.group = [self getGroup];
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        destNavigationController.oldExpense = [self getGroupExpenses][indexPath.row];
+    }
 }
 
 @end

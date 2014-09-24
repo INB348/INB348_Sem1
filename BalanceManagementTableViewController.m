@@ -11,10 +11,17 @@
 
 @interface BalanceManagementTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
-@property (strong) NSArray *groupUsers;
 @end
 
 @implementation BalanceManagementTableViewController
+
+- (NSArray *)getGroupUsers{
+    return [(GroupTabBarController *)[(BalanceNavigationController *)[self navigationController] parentViewController] groupUsers];
+}
+
+- (PFObject *)getGroup{
+    return [(GroupTabBarController *)[(BalanceNavigationController *)[self navigationController] parentViewController] group];
+}
 
 - (void)viewDidLoad
 {
@@ -25,40 +32,22 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-
-- (void)refresh{
-        //Retrieving GroupUser list
-        PFQuery *query = [PFQuery queryWithClassName:@"UserGroup"];
-            [query includeKey:@"user"];
-            [query whereKey:@"group" equalTo:self.group];
-            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                if (!error) {
-                    // The find succeeded.
-                    NSLog(@"Successfully retrieved %d UserGroups.", objects.count);
-                    
-                    // Do something with the found objects
-                    self.groupUsers = [objects mutableCopy];
-                    [self.tableView reloadData];
-                } else {
-                    // Log details of the failure
-                    NSLog(@"Error: %@ %@", error, [error userInfo]);
-                }
-        }];
+    self.title = [self getGroup][@"name"];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     // Fetch the devices from persistent data store
-    [self refresh];
+    //[self refresh];
+    [self.tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.groupUsers.count;
+    return [self getGroupUsers].count;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -67,7 +56,7 @@
     UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    PFObject *groupUser = self.groupUsers[indexPath.row];
+    PFObject *groupUser = [self getGroupUsers][indexPath.row];
     NSString *userName = groupUser[@"user"][@"name"];
     NSNumber *balance = groupUser[@"balance"];
     
@@ -98,9 +87,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"addNewExpenseSegue"]) {
         NewExpenseNavigationController *destNavigationController = segue.destinationViewController;
-        NewExpenseDetailsViewController *destViewController = (NewExpenseDetailsViewController *) destNavigationController.topViewController;
-        destViewController.groupUsers = self.groupUsers;
-        destViewController.group = self.group;
+        destNavigationController.groupUsers = [self getGroupUsers];
+        destNavigationController.group = [self getGroup];
     }
 }
 

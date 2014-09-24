@@ -13,6 +13,7 @@
 @end
 
 @implementation NewExpenseDetailsViewController
+NewExpenseNavigationController *navigationController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,7 +27,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.descriptionTextField.layer.borderWidth = 5.0f;
+    self.descriptionTextField.layer.borderColor = [[UIColor grayColor] CGColor];
+    self.descriptionTextField.layer.cornerRadius = 8;
+    navigationController = (NewExpenseNavigationController *)[self navigationController];
+    
+    if(navigationController.oldExpense != nil){
+        self.nameTextField.text=navigationController.oldExpense[@"name"];
+        self.amountTextField.text=[navigationController.oldExpense[@"amount"] stringValue];
+        self.datePicker.date=navigationController.oldExpense[@"date"];
+        self.descriptionTextField.text=navigationController.oldExpense[@"description"];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,12 +51,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showWhoPaid"]) {
-        NewExpenseWhoPaidTableViewController *destViewController = segue.destinationViewController;
-        destViewController.name = self.nameTextField.text;
-        destViewController.amount = @([self.amountTextField.text intValue]);
-        destViewController.date = self.datePicker.date;
-        destViewController.groupUsers=self.groupUsers;
-        destViewController.group = self.group;
+        navigationController.name = self.nameTextField.text;
+        NSLog(@"%@",self.descriptionTextField.text);
+        navigationController.comment = self.descriptionTextField.text;
+        navigationController.amount = @([self.amountTextField.text intValue]);
+        navigationController.date = self.datePicker.date;
     }
 }
 

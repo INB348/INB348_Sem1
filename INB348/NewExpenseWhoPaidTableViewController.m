@@ -12,6 +12,7 @@
 @end
 
 @implementation NewExpenseWhoPaidTableViewController
+NewExpenseNavigationController *navigationController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -25,13 +26,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    navigationController = (NewExpenseNavigationController *)[self navigationController];    
     self.tableView.allowsMultipleSelection = YES;
+
+    if(navigationController.oldExpense != nil){
+        for (PFObject *oldExpensePayer in navigationController.oldExpensePayers) {
+            for (PFObject *expesePayer in navigationController.expensePayers) {
+                if(oldExpensePayer[@"user"] == expesePayer){
+                    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:[navigationController.expensePayers indexOfObject:expesePayer]];
+                    [self.tableView cellForRowAtIndexPath:indexPath].accessoryView.hidden = TRUE;
+                    
+                }
+            }
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,14 +52,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:indexPath];
     tableViewCell.accessoryView.hidden = NO;
     //tableViewCell.selected = NO;
     // if you don't use custom image tableViewCell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -69,7 +76,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.groupUsers.count;
+    return navigationController.groupUsers.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -78,7 +85,7 @@
     UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    PFObject *groupUser = self.groupUsers[indexPath.row];
+    PFObject *groupUser = navigationController.groupUsers[indexPath.row];
     NSString *groupName = groupUser[@"user"][@"name"];
     
     [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
@@ -93,18 +100,11 @@
     //Adding selected users to array
     NSMutableArray *selectedExpensePayers = [[NSMutableArray alloc] init];
     for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
-        [selectedExpensePayers addObject:[self.groupUsers objectAtIndex:selectedExpensePayerIndex.row]];
+        [selectedExpensePayers addObject:[navigationController.groupUsers objectAtIndex:selectedExpensePayerIndex.row]];
     }
     
     if ([segue.identifier isEqualToString:@"showForWhom"]) {
-        NewExpenseForWhomTableViewController *destViewController = segue.destinationViewController;
-        destViewController.name = self.name;
-        destViewController.amount = self.amount;
-        destViewController.date = self.date;
-        destViewController.description = self.description;
-        destViewController.groupUsers=self.groupUsers;
-        destViewController.expensePayers=selectedExpensePayers;
-        destViewController.group = self.group;
+        navigationController.expensePayers=selectedExpensePayers;
     }
 }
 
