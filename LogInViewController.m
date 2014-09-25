@@ -115,4 +115,12 @@
     }];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"LogInSuccessful"]) {
+        GroupsTableNavigationController *destinationNavigationController = [segue destinationViewController];
+        GroupsTableViewController *destinationViewController = (GroupsTableViewController *)[destinationNavigationController topViewController ];
+        destinationViewController.managedObjectContext = self.managedObjectContext;
+    }
+}
+
 @end
