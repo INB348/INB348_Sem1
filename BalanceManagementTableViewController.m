@@ -95,6 +95,7 @@ GroupTabBarController *groupTabBarController;
 {
     // Fetch Record
     NSManagedObject *record = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
     
     //Update Cell
     [cell.textLabel setText:[[record valueForKey:@"user"] valueForKey:@"name"]];

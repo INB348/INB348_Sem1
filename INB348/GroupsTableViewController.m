@@ -50,7 +50,7 @@
                     [groupUserRecord setValue:object.objectId forKey:@"objectId"];
                     [groupUserRecord setValue:groupRecord forKey:@"group"];
                 }
-                [self.tableView reloadData];
+                //[self.tableView reloadData];
             } else {
                 // Log details of the failure
                 NSLog(@"Error: %@ %@", error, [error userInfo]);

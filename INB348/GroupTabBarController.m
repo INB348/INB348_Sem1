@@ -45,10 +45,11 @@
                 //User
                 NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
                 NSManagedObject *userRecord = [[NSManagedObject alloc] initWithEntity:userEntity insertIntoManagedObjectContext:self.managedObjectContext];
-                PFObject *userObject = object[@"user"];
+                PFUser *userObject = object[@"user"];
+                [userObject fetchIfNeeded];
                 [userRecord setValue:userObject[@"name"] forKey:@"name"];
                 [userRecord setValue:userObject.objectId forKey:@"objectId"];
-                
+                NSLog(@"%@", userObject);
                 //UserGroup
                 NSEntityDescription *groupUserEntity = [NSEntityDescription entityForName:@"UserGroup" inManagedObjectContext:self.managedObjectContext];
                 NSManagedObject *groupUserRecord = [[NSManagedObject alloc] initWithEntity:groupUserEntity insertIntoManagedObjectContext:self.managedObjectContext];
