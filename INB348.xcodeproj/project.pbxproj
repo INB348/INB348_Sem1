@@ -59,10 +59,6 @@
 		0CE717ED19C033D800D9F56D /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717EC19C033D800D9F56D /* LogInViewController.m */; };
 		0CE717F019C03C7800D9F56D /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717EF19C03C7800D9F56D /* SignUpViewController.m */; };
 		0CE717F319C04C0400D9F56D /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */; };
-		6F1DA7E819D3969B002935E6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6F1DA7E619D3969B002935E6 /* Model.xcdatamodeld */; };
-		6F1DA7EB19D39DDA002935E6 /* GroupListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1DA7EA19D39DDA002935E6 /* GroupListCell.m */; };
-		6F1DA7EE19D3A4DB002935E6 /* GroupsTableNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1DA7ED19D3A4DB002935E6 /* GroupsTableNavigationController.m */; };
-		6F1DA7F119D3C6BE002935E6 /* GroupUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1DA7F019D3C6BE002935E6 /* GroupUserCell.m */; };
 		6F5CE5CC19CA720F00489DDC /* NewExpenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5CB19CA720F00489DDC /* NewExpenseNavigationController.m */; };
 		6F5CE5D019CA723D00489DDC /* NewExpenseDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5CF19CA723D00489DDC /* NewExpenseDetailsViewController.m */; };
 		6F5CE5D319CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5D219CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m */; };
@@ -155,13 +151,6 @@
 		0CE717EF19C03C7800D9F56D /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = ../SignUpViewController.m; sourceTree = "<group>"; };
 		0CE717F119C04C0400D9F56D /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForgotPasswordViewController.h; path = ../ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ForgotPasswordViewController.m; path = ../ForgotPasswordViewController.m; sourceTree = "<group>"; };
-		6F1DA7E719D3969B002935E6 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		6F1DA7E919D39DDA002935E6 /* GroupListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListCell.h; sourceTree = "<group>"; };
-		6F1DA7EA19D39DDA002935E6 /* GroupListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListCell.m; sourceTree = "<group>"; };
-		6F1DA7EC19D3A4DB002935E6 /* GroupsTableNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsTableNavigationController.h; sourceTree = "<group>"; };
-		6F1DA7ED19D3A4DB002935E6 /* GroupsTableNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsTableNavigationController.m; sourceTree = "<group>"; };
-		6F1DA7EF19D3C6BE002935E6 /* GroupUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupUserCell.h; sourceTree = "<group>"; };
-		6F1DA7F019D3C6BE002935E6 /* GroupUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupUserCell.m; sourceTree = "<group>"; };
 		6F5CE5CA19CA720F00489DDC /* NewExpenseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExpenseNavigationController.h; sourceTree = "<group>"; };
 		6F5CE5CB19CA720F00489DDC /* NewExpenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewExpenseNavigationController.m; sourceTree = "<group>"; };
 		6F5CE5CE19CA723D00489DDC /* NewExpenseDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewExpenseDetailsViewController.h; sourceTree = "<group>"; };
@@ -270,7 +259,6 @@
 				0C6E5F9F19B727BF000594BF /* Library */,
 				0C6E5F7919B72750000594BF /* AppDelegate.h */,
 				0C6E5F7A19B72750000594BF /* AppDelegate.m */,
-				6F1DA7E619D3969B002935E6 /* Model.xcdatamodeld */,
 				0C6E5F7C19B72750000594BF /* Main.storyboard */,
 				0C8FD7EE19B7E150002D3D7F /* NewBalanceTableViewController.h */,
 				0C8FD7EF19B7E150002D3D7F /* NewBalanceTableViewController.m */,
@@ -397,10 +385,6 @@
 				D84F130719D1060E00D9FDD4 /* NewGroup */,
 				0C192DA919B78DD2008A0CA9 /* GroupsTableViewController.h */,
 				0C192DAA19B78DD2008A0CA9 /* GroupsTableViewController.m */,
-				6F1DA7EC19D3A4DB002935E6 /* GroupsTableNavigationController.h */,
-				6F1DA7ED19D3A4DB002935E6 /* GroupsTableNavigationController.m */,
-				6F1DA7E919D39DDA002935E6 /* GroupListCell.h */,
-				6F1DA7EA19D39DDA002935E6 /* GroupListCell.m */,
 			);
 			name = GroupList;
 			sourceTree = "<group>";
@@ -432,8 +416,6 @@
 				0C1B96C819B773AE006AA177 /* BalanceManagementTableViewController.m */,
 				D84F130C19D106C400D9FDD4 /* BalanceNavigationController.h */,
 				D84F130D19D106C400D9FDD4 /* BalanceNavigationController.m */,
-				6F1DA7EF19D3C6BE002935E6 /* GroupUserCell.h */,
-				6F1DA7F019D3C6BE002935E6 /* GroupUserCell.m */,
 			);
 			name = Balance;
 			sourceTree = "<group>";
@@ -561,7 +543,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F1DA7EE19D3A4DB002935E6 /* GroupsTableNavigationController.m in Sources */,
 				6F5CE5D319CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m in Sources */,
 				0C1B96C319B76887006AA177 /* NotificationsTableViewController.m in Sources */,
 				0C6E5F8119B72750000594BF /* ViewController.m in Sources */,
@@ -569,15 +550,12 @@
 				6F5CE5D019CA723D00489DDC /* NewExpenseDetailsViewController.m in Sources */,
 				6F5CE5CC19CA720F00489DDC /* NewExpenseNavigationController.m in Sources */,
 				D8BB982119D1532100D47F5C /* GroupSettingsNavigationViewController.m in Sources */,
-				6F1DA7EB19D39DDA002935E6 /* GroupListCell.m in Sources */,
 				D84F130E19D106C400D9FDD4 /* BalanceNavigationController.m in Sources */,
 				6F5CE5D619CA725D00489DDC /* NewExpenseForWhomTableViewController.m in Sources */,
 				0C6E5F7B19B72750000594BF /* AppDelegate.m in Sources */,
 				0CE717F319C04C0400D9F56D /* ForgotPasswordViewController.m in Sources */,
-				6F1DA7E819D3969B002935E6 /* Model.xcdatamodeld in Sources */,
 				0C1B96C019B7628B006AA177 /* GroupSettingsTableViewController.m in Sources */,
 				0C192DAB19B78DD2008A0CA9 /* GroupsTableViewController.m in Sources */,
-				6F1DA7F119D3C6BE002935E6 /* GroupUserCell.m in Sources */,
 				0C8FD7F019B7E150002D3D7F /* NewBalanceTableViewController.m in Sources */,
 				0CE717ED19C033D800D9F56D /* LogInViewController.m in Sources */,
 				0C1B96CC19B78617006AA177 /* AccountSettingsTableViewController.m in Sources */,
@@ -814,19 +792,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		6F1DA7E619D3969B002935E6 /* Model.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				6F1DA7E719D3969B002935E6 /* Model.xcdatamodel */,
-			);
-			currentVersion = 6F1DA7E719D3969B002935E6 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 0C6E5F5F19B72750000594BF /* Project object */;
 }

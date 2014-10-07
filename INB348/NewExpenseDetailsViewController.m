@@ -52,6 +52,7 @@ NewExpenseNavigationController *navigationController;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showWhoPaid"]) {
         navigationController.name = self.nameTextField.text;
+        NSLog(@"%@",self.descriptionTextField.text);
         navigationController.comment = self.descriptionTextField.text;
         navigationController.amount = @([self.amountTextField.text intValue]);
         navigationController.date = self.datePicker.date;

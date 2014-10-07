@@ -34,28 +34,29 @@
     //Retrieving GroupUser list
     PFQuery *groupUsersQuery = [PFQuery queryWithClassName:@"UserGroup"];
     [groupUsersQuery includeKey:@"user"];
-    NSString *groupObjectId = [[self.record valueForKey:@"group"] valueForKey:@"objectId"];
-    [groupUsersQuery whereKey:@"group" equalTo:[PFObject objectWithoutDataWithClassName:@"Group" objectId:groupObjectId]];
+    [groupUsersQuery whereKey:@"group" equalTo:self.group];
     [groupUsersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
             NSLog(@"Successfully retrieved %d UserGroups.", objects.count);
+            
             // Do something with the found objects
-            for (PFObject *object in objects) {
-                //User
-                NSEntityDescription *userEntity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
-                NSManagedObject *userRecord = [[NSManagedObject alloc] initWithEntity:userEntity insertIntoManagedObjectContext:self.managedObjectContext];
-                PFObject *userObject = object[@"user"];
-                [userRecord setValue:userObject[@"name"] forKey:@"name"];
-                [userRecord setValue:userObject.objectId forKey:@"objectId"];
-                
-                //UserGroup
-                NSEntityDescription *groupUserEntity = [NSEntityDescription entityForName:@"UserGroup" inManagedObjectContext:self.managedObjectContext];
-                NSManagedObject *groupUserRecord = [[NSManagedObject alloc] initWithEntity:groupUserEntity insertIntoManagedObjectContext:self.managedObjectContext];
-                [groupUserRecord setValue:object[@"balance"] forKey:@"balance"];
-                [groupUserRecord setValue:object.objectId forKey:@"objectId"];
-                [groupUserRecord setValue:userRecord forKey:@"user"];
-            }
+            self.groupUsers = [objects mutableCopy];
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
+    PFQuery *expensesQuery = [PFQuery queryWithClassName:@"Expense"];
+    [expensesQuery whereKey:@"group" equalTo:self.group];
+    [expensesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %d Expenses.", objects.count);
+            
+            // Do something with the found objects
+            self.expenses = [objects mutableCopy];
         } else {
             // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);

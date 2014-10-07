@@ -11,9 +11,7 @@
 #import "GroupTabBarController.h"
 #import "BalanceNavigationController.h"
 #import "NewExpenseNavigationController.h"
-#import "GroupUserCell.h"
 
 @interface BalanceManagementTableViewController : UITableViewController
 @property (nonatomic, strong) IBOutlet UITableView *groupUserTableView;
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @end
