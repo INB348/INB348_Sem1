@@ -7,6 +7,8 @@
 //
 
 #import "GroupTabBarController.h"
+#import "BalanceNavigationController.h"
+#import "BalanceManagementTableViewController.h"
 
 @interface GroupTabBarController ()
 
@@ -27,42 +29,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self refresh];
+    //[self refresh];
 }
 
-- (void)refresh{
-    //Retrieving GroupUser list
-    PFQuery *groupUsersQuery = [PFQuery queryWithClassName:@"UserGroup"];
-    [groupUsersQuery includeKey:@"user"];
-    [groupUsersQuery whereKey:@"group" equalTo:self.group];
-    [groupUsersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            // The find succeeded.
-            NSLog(@"Successfully retrieved %d UserGroups.", objects.count);
-            
-            // Do something with the found objects
-            self.groupUsers = [objects mutableCopy];
-        } else {
-            // Log details of the failure
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-        }
-    }];
-    
-    PFQuery *expensesQuery = [PFQuery queryWithClassName:@"Expense"];
-    [expensesQuery whereKey:@"group" equalTo:self.group];
-    [expensesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            // The find succeeded.
-            NSLog(@"Successfully retrieved %d Expenses.", objects.count);
-            
-            // Do something with the found objects
-            self.expenses = [objects mutableCopy];
-        } else {
-            // Log details of the failure
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-        }
-    }];
-}
+
 
 - (void)didReceiveMemoryWarning
 {

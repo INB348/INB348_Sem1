@@ -28,18 +28,6 @@ NewExpenseNavigationController *navigationController;
     [super viewDidLoad];
     navigationController = (NewExpenseNavigationController *)[self navigationController];    
     self.tableView.allowsMultipleSelection = YES;
-
-    if(navigationController.oldExpense != nil){
-        for (PFObject *oldExpensePayer in navigationController.oldExpensePayers) {
-            for (PFObject *expesePayer in navigationController.expensePayers) {
-                if(oldExpensePayer[@"user"] == expesePayer){
-                    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:[navigationController.expensePayers indexOfObject:expesePayer]];
-                    [self.tableView cellForRowAtIndexPath:indexPath].accessoryView.hidden = TRUE;
-                    
-                }
-            }
-        }
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,10 +74,19 @@ NewExpenseNavigationController *navigationController;
     
     // Configure the cell...
     PFObject *groupUser = navigationController.groupUsers[indexPath.row];
-    NSString *groupName = groupUser[@"user"][@"name"];
+    NSString *userName = groupUser[@"user"][@"name"];
     
-    [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
+    [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", userName]];
     groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+    
+    if(navigationController.oldExpense != nil){
+        for (PFObject *oldExpensePayer in navigationController.oldExpensePayers) {
+                PFObject *user =oldExpensePayer[@"user"];
+                if([user.objectId isEqualToString:groupUser.objectId]){
+                    groupUserCell.accessoryView.hidden = NO;
+                }
+        }
+    }
     
     return groupUserCell;
 }

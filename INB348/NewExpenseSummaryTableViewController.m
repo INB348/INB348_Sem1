@@ -8,6 +8,7 @@
 
 #import "NewExpenseSummaryTableViewController.h"
 
+
 @interface NewExpenseSummaryTableViewController ()
 
 @end
@@ -16,6 +17,7 @@
 NSNumber *expenseUserAmount;
 NSNumber *expensePayerAmount;
 NewExpenseNavigationController *navigationController;
+NSMutableArray *participators;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -31,13 +33,27 @@ NewExpenseNavigationController *navigationController;
     [super viewDidLoad];
     navigationController = (NewExpenseNavigationController *)[self navigationController];
     
-    NSNumber *numberOfExpensePayers = [NSNumber numberWithInt:[navigationController.expenseUsers count]];
-    double expensePayerAmountDouble = [navigationController.amount doubleValue]/[numberOfExpensePayers doubleValue];
-    expensePayerAmount = [NSNumber numberWithDouble:expensePayerAmountDouble];
+    participators = [NSMutableArray array];
     
-    NSNumber *numberOfExpenseUsers = [NSNumber numberWithInt:[navigationController.expenseUsers count]];
-    double expenseUserAmountDouble = [navigationController.amount doubleValue]/[numberOfExpenseUsers doubleValue];
-    expenseUserAmount = [NSNumber numberWithDouble:expenseUserAmountDouble];
+    for (PFObject *groupUser in navigationController.groupUsers) {
+       if([self isUserAnExpensePayer:groupUser] || [self isUserAnExpenseUser:groupUser]){
+           PFObject *participator = [PFObject objectWithClassName:@"ExpenseParticipator"];
+           [participator setObject:groupUser forKey:@"user"];
+           if([self isUserAnExpensePayer:groupUser]){
+               [participator setValue:[self getPartOfPayment] forKey:@"payment"];
+           }else{
+               [participator setValue:@0 forKey:@"payment"];
+           }
+           if([self isUserAnExpenseUser:groupUser]){
+                [participator setObject:[self getPartOfUsage] forKey:@"usage"];
+           }else{
+               [participator setValue:@0 forKey:@"usage"];
+           }
+           [participators addObject:participator];
+       }
+    }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,34 +73,71 @@ NewExpenseNavigationController *navigationController;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return navigationController.expenseUsers.count;
+    return participators.count;
 }
 
--(NSNumber*)getNewExpensePayerBalance:(NSNumber*)oldBalance:(NSNumber*)change{
-    return [NSNumber numberWithDouble:[oldBalance doubleValue]+[change doubleValue]];
+-(NSNumber*)getNewBalance:(PFObject*)participator{
+    return [NSNumber numberWithDouble:[participator[@"user"][@"balance"] doubleValue]+[participator[@"payment"]  doubleValue]-[participator[@"usage"]  doubleValue]];
 }
 
--(NSNumber*)getNewExpenseUserBalance:(NSNumber*)oldBalance:(NSNumber*)change{
-    return [NSNumber numberWithDouble:[oldBalance doubleValue]-[change doubleValue]];
+
+-(NSNumber*)getPartOfPayment{
+    return [NSNumber numberWithDouble:[navigationController.amount doubleValue]/navigationController.expensePayers.count];
+}
+
+-(NSNumber*)getPartOfUsage{
+    return [NSNumber numberWithDouble:[navigationController.amount doubleValue]/navigationController.expenseUsers.count];
+}
+
+-(BOOL)isUserAnExpensePayer:(PFObject *)user{
+    for (PFObject *expensePayer in navigationController.expensePayers) {
+        if([expensePayer.objectId isEqualToString:user.objectId]){
+            return true;
+        }
+    }
+    return false;
+}
+
+-(BOOL)isUserAnExpenseUser:(PFObject *)user{
+    for (PFObject *expenseUser in navigationController.expenseUsers) {
+        if([expenseUser.objectId isEqualToString:user.objectId]){
+            return true;
+        }
+    }
+    return false;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"summaryCell";
-    UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"SummaryCell";
+    SummaryCell *summaryCell = (SummaryCell *)[groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    if (summaryCell == nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SummaryCell" owner:self options:nil];
+        summaryCell = [nib objectAtIndex:0];
+    }
     
     // Configure the cell...
-    PFObject *groupUser = navigationController.expensePayers[indexPath.row];
-    NSString *userName = groupUser[@"user"][@"name"];
-    NSNumber *balance = groupUser[@"balance"];
-    NSNumber *newBalance = [self getNewExpensePayerBalance:balance:expensePayerAmount];
-    NSString *details = [[[[[balance stringValue] stringByAppendingString:@" + "] stringByAppendingString:[expenseUserAmount stringValue]] stringByAppendingString:@" = " ] stringByAppendingString:[newBalance stringValue]];
+    PFObject *expenseParticipator = participators[indexPath.row];
+   
+    //Set name
+    NSString *userName = expenseParticipator[@"user"][@"user"][@"name"];
+    [summaryCell.nameLabel setText:[NSString stringWithFormat:@"%@", userName]];
     
-    [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", userName]];
-    [groupUserCell.detailTextLabel setText:[NSString stringWithFormat:@"%@", details]];
-    groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+    //Set old balance
+    NSNumber *oldBalance = expenseParticipator[@"user"][@"balance"];
+    [summaryCell.oldBalance setText:[NSString stringWithFormat:@"%@", [oldBalance stringValue]]];
     
-    return groupUserCell;
+    //Set payment
+    [summaryCell.payed setText:[NSString stringWithFormat:@"%@", [expenseParticipator[@"payment"] stringValue]]];
+    //Set usage
+    [summaryCell.used setText:[NSString stringWithFormat:@"%@", [expenseParticipator[@"usage"] stringValue]]];
+    //Set new balance
+    NSNumber *newBalance = [self getNewBalance:expenseParticipator];
+    [summaryCell.updatedBalance setText:[NSString stringWithFormat:@"%@", [newBalance stringValue]]];
+    
+    return summaryCell;
 }
 
 -(NSString *)returnStringIfNotNull:(NSString*)string{
@@ -105,28 +158,13 @@ NewExpenseNavigationController *navigationController;
     [expense setObject:navigationController.group forKey:@"group"];
     [expense saveInBackground];
     
-    //Create each ExpensePayer
-    for (PFObject *user in navigationController.expensePayers) {
-        PFObject *expensePayer= [PFObject objectWithClassName:@"ExpensePayer"];
-        [expensePayer setObject:expense forKey:@"expense"];
-        [expensePayer setObject:user forKey:@"user"];
-        [expensePayer setValue:expensePayerAmount forKey:@"amount"];
-        [expensePayer saveInBackground];
+    for (PFObject *participator in participators) {
+        [participator setObject:expense forKey:@"expense"];
+        [participator saveInBackground];
         
-        [user setValue:[self getNewExpensePayerBalance:user[@"balance"]:expensePayerAmount] forKey:@"balance"];
-        [user save];
-    }
-    
-    //Create each ExpenseUser
-    for (PFObject *user in navigationController.expenseUsers) {
-        PFObject *expenseUser= [PFObject objectWithClassName:@"ExpenseUser"];
-        [expenseUser setObject:expense forKey:@"expense"];
-        [expenseUser setObject:user forKey:@"user"];
-        [expenseUser setValue:expenseUserAmount forKey:@"amount"];
-        [expenseUser saveInBackground];
-        
-        [user setValue:[self getNewExpenseUserBalance:user[@"balance"]:expenseUserAmount] forKey:@"balance"];
-        [user save];
+        PFObject *user = participator[@"user"];
+        [user setValue:[self getNewBalance:participator] forKey:@"balance"];
+        [user saveInBackground];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SummaryCell.h"
 #import "NewExpenseNavigationController.h"
 
 @interface NewExpenseSummaryTableViewController : UITableViewController
