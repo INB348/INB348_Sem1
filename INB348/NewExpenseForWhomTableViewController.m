@@ -13,6 +13,7 @@
 @end
 
 @implementation NewExpenseForWhomTableViewController
+NewExpenseNavigationController *navigationController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -26,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    navigationController = (NewExpenseNavigationController *)[self navigationController];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -62,7 +64,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
@@ -70,7 +71,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.groupUsers.count;
+    return navigationController.groupUsers.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -79,7 +80,7 @@
     UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    PFObject *groupUser = self.groupUsers[indexPath.row];
+    PFObject *groupUser = navigationController.groupUsers[indexPath.row];
     NSString *groupName = groupUser[@"user"][@"name"];
     
     [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
@@ -93,18 +94,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSMutableArray *selectedExpenseUsers = [[NSMutableArray alloc] init];
     for (NSIndexPath *selectedExpenseUserIndex in self.tableView.indexPathsForSelectedRows) {
-        [selectedExpenseUsers addObject:[self.groupUsers objectAtIndex:selectedExpenseUserIndex.row]];
+        [selectedExpenseUsers addObject:[navigationController.groupUsers objectAtIndex:selectedExpenseUserIndex.row]];
     }
     
     if ([segue.identifier isEqualToString:@"showSummary"]) {
-        NewExpenseSummaryTableViewController *destViewController = segue.destinationViewController;
-        destViewController.name = self.name;
-        destViewController.amount = self.amount;
-        destViewController.date = self.date;
-        destViewController.description = self.description;
-        destViewController.expensePayers=self.expensePayers;
-        destViewController.expenseUsers=selectedExpenseUsers;
-        destViewController.group = self.group;
+        NewExpenseNavigationController *navigationController = (NewExpenseNavigationController *)[self navigationController];
+        navigationController.expenseUsers=selectedExpenseUsers;
     }
 }
 

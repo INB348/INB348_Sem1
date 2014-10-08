@@ -1,20 +1,20 @@
 //
-//  NewExpenseNavigationController.m
+//  GroupTabBarController.m
 //  INB348
 //
-//  Created by Kristian Matzen on 18/09/2014.
+//  Created by Kristian M Matzen on 23/09/14.
 //  Copyright (c) 2014 nOrJ. All rights reserved.
 //
 
-#import "NewExpenseNavigationController.h"
+#import "GroupTabBarController.h"
+#import "BalanceNavigationController.h"
+#import "BalanceManagementTableViewController.h"
 
-@interface NewExpenseNavigationController ()
+@interface GroupTabBarController ()
 
 @end
 
-@implementation NewExpenseNavigationController
-@synthesize groupUsers;
-@synthesize group;
+@implementation GroupTabBarController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,7 +29,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //[self refresh];
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {

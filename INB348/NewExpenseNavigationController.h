@@ -7,11 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NewExpenseDetailsViewController.h"
-#import "NewExpenseWhoPaidTableViewController.h"
-#import "NewExpenseForWhomTableViewController.h"
-#import "NewExpenseSummaryTableViewController.h"
+#import <Parse/Parse.h>
 
 @interface NewExpenseNavigationController : UINavigationController
+@property (strong) NSString  *name;
+@property (strong) NSNumber  *amount;
+@property (strong) NSDate  *date;
+@property (strong) NSArray *expensePayers;
+@property (strong) NSArray *expenseUsers;
+@property (strong) PFObject *group;
+@property (strong) NSArray *groupUsers;
+@property (strong) NSString *comment;
 
+//If editing
+@property (strong) PFObject *oldExpense;
+@property (strong) NSArray *oldExpensePayers;
+@property (strong) NSArray *oldExpenseUsers;
 @end

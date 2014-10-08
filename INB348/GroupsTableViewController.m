@@ -7,7 +7,6 @@
 //
 
 #import "GroupsTableViewController.h"
-#import "SWRevealViewController.h"
 
 @interface GroupsTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
@@ -93,8 +92,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showGroup"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        BalanceManagementTableViewController *destViewController = segue.destinationViewController;
-        destViewController.group = self.userGroups[indexPath.row][@"group"];
+        GroupTabBarController *groupTabBarController = segue.destinationViewController;
+        groupTabBarController.group = self.userGroups[indexPath.row][@"group"];
     }
 }
 

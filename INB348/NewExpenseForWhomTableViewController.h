@@ -7,15 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Parse/Parse.h>
-#import "NewExpenseSummaryTableViewController.h"
+#import "NewExpenseNavigationController.h"
 
 @interface NewExpenseForWhomTableViewController : UITableViewController
-@property (strong) NSString  *name;
-@property (strong) NSNumber  *amount;
-@property (strong) NSDate  *date;
-@property (strong) NSString *description;
-@property (strong) NSArray *expensePayers;
-@property (strong) NSArray *groupUsers;
-@property (strong) PFObject  *group;
 @end

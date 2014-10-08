@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-#import "NewExpenseDetailsViewController.h"
+#import "GroupTabBarController.h"
+#import "BalanceNavigationController.h"
 #import "NewExpenseNavigationController.h"
-
 
 @interface BalanceManagementTableViewController : UITableViewController
 @property (nonatomic, strong) IBOutlet UITableView *groupUserTableView;
-@property (strong) PFObject  *group;
 @end

@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+#import "GroupTabBarController.h"
+#import "HistoryNavigationViewController.h"
+#import "NewExpenseNavigationController.h"
 
 @interface ExpenseManagementTableViewController : UITableViewController
 

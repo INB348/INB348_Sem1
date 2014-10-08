@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+#import "GroupTabBarController.h"
+#import "GroupSettingsNavigationViewController.h"
 
 @interface GroupSettingsTableViewController : UITableViewController
 
