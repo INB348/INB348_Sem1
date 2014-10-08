@@ -54,6 +54,7 @@ GroupTabBarController *groupTabBarController;
 {
     [super viewDidAppear:animated];
     // Fetch the devices from persistent data store
+    [self.tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
