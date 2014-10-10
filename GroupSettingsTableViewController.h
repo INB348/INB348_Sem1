@@ -10,12 +10,13 @@
 #import <Parse/Parse.h>
 #import "GroupTabBarController.h"
 #import "GroupSettingsNavigationViewController.h"
+#import "MembersTableViewController.h"
+#import "AddMemberNavigationController.h"
+#import "AddMemberToGroupViewController.h"
 
-@interface GroupSettingsTableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-
+@interface GroupSettingsTableViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UITextField *nameLabel;
-- (IBAction)addMember:(id)sender;
 - (IBAction)deleteGroup:(id)sender;
-@property (strong, nonatomic) IBOutlet UITableView *membersTableView;
+- (IBAction)nameChanged:(id)sender;
 
 @end

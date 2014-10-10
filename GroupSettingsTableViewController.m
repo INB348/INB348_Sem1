@@ -11,12 +11,10 @@
 
 @interface GroupSettingsTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
-@property (strong) PFObject  *group;
 @end
 
 @implementation GroupSettingsTableViewController
 GroupTabBarController *groupTabBarController;
-@synthesize membersTableView;
 
 - (void)viewDidLoad
 {
@@ -28,8 +26,15 @@ GroupTabBarController *groupTabBarController;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+- (void)viewDidAppear:(BOOL)animated{
     self.title = groupTabBarController.group[@"name"];
     self.nameLabel.text = groupTabBarController.group[@"name"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [groupTabBarController.group setValue:self.nameLabel.text forKey:@"name"];
+    [groupTabBarController.group save];
 }
 
 - (void)customSetup
@@ -49,31 +54,53 @@ GroupTabBarController *groupTabBarController;
     // Dispose of any resources that can be recreated.
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return groupTabBarController.groupUsers.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"memberCell";
-    UITableViewCell *memberCell = [self.membersTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    NSString *name =[NSString stringWithFormat:@"%@", groupTabBarController.groupUsers[indexPath.row][@"user"][@"name"]];
-    [memberCell.textLabel setText:name];
-    
-    return memberCell;
-}
-
-- (IBAction)addMember:(id)sender {
+- (BOOL)isBalanceZero{
+    for (PFObject *groupUser in groupTabBarController.groupUsers) {
+        if(![groupUser[@"balance"] isEqualToNumber:@0]){
+            return false;
+        }
+    }
+    return true;
 }
 
 - (IBAction)deleteGroup:(id)sender {
+
+    if([self isBalanceZero]){
+        [groupTabBarController.group deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                for(PFObject *groupUser in groupTabBarController.groupUsers){
+                    [groupUser deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if(succeeded){
+                            [self dismissViewControllerAnimated:YES completion:nil];
+                        } else{
+                            NSLog(@"%@", error);
+                        }
+                    }];
+                }
+            }else{
+                NSLog(@"%@", error);
+            }
+        }];
+    } else{
+        NSLog(@"Users balance is not 0");
+    }
+}
+
+- (IBAction)nameChanged:(id)sender {
+    self.title = self.nameLabel.text;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showMembers"]) {
+        MembersTableViewController *membersViewController = segue.destinationViewController;
+        membersViewController.groupUsers = groupTabBarController.groupUsers;
+        membersViewController.group = groupTabBarController.group;
+    }
+    if ([segue.identifier isEqualToString:@"addMember"]) {
+        AddMemberNavigationController *addMemberNavigationController = segue.destinationViewController;
+        AddMemberToGroupViewController *addMemberViewController = (AddMemberToGroupViewController *)addMemberNavigationController.topViewController;
+        addMemberViewController.groupUsers = groupTabBarController.groupUsers;
+    }
+    
 }
 @end
