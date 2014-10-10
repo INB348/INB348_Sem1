@@ -68,7 +68,10 @@
 		D8171E4B19D151FD001DF24E /* HistoryNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8171E4A19D151FD001DF24E /* HistoryNavigationViewController.m */; };
 		D84F130B19D1067900D9FDD4 /* GroupTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F130A19D1067900D9FDD4 /* GroupTabBarController.m */; };
 		D84F130E19D106C400D9FDD4 /* BalanceNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F130D19D106C400D9FDD4 /* BalanceNavigationController.m */; };
+		D88FB28619E7A463005A5CEE /* AddMemberNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88FB28519E7A463005A5CEE /* AddMemberNavigationController.m */; };
 		D8BB982119D1532100D47F5C /* GroupSettingsNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8BB982019D1532100D47F5C /* GroupSettingsNavigationViewController.m */; };
+		D8D8B02E19E7828700C9DB03 /* AddMemberToGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D8B02D19E7828700C9DB03 /* AddMemberToGroupViewController.m */; };
+		D8D8B03119E78D8500C9DB03 /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D8B03019E78D8500C9DB03 /* MembersTableViewController.m */; };
 		D8FA019319E5001D005C6BC7 /* SummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8FA019219E5001D005C6BC7 /* SummaryCell.m */; };
 /* End PBXBuildFile section */
 
@@ -170,8 +173,14 @@
 		D84F130A19D1067900D9FDD4 /* GroupTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupTabBarController.m; sourceTree = "<group>"; };
 		D84F130C19D106C400D9FDD4 /* BalanceNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalanceNavigationController.h; sourceTree = "<group>"; };
 		D84F130D19D106C400D9FDD4 /* BalanceNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalanceNavigationController.m; sourceTree = "<group>"; };
+		D88FB28419E7A463005A5CEE /* AddMemberNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMemberNavigationController.h; sourceTree = "<group>"; };
+		D88FB28519E7A463005A5CEE /* AddMemberNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMemberNavigationController.m; sourceTree = "<group>"; };
 		D8BB981F19D1532100D47F5C /* GroupSettingsNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupSettingsNavigationViewController.h; sourceTree = "<group>"; };
 		D8BB982019D1532100D47F5C /* GroupSettingsNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupSettingsNavigationViewController.m; sourceTree = "<group>"; };
+		D8D8B02C19E7828700C9DB03 /* AddMemberToGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMemberToGroupViewController.h; sourceTree = "<group>"; };
+		D8D8B02D19E7828700C9DB03 /* AddMemberToGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMemberToGroupViewController.m; sourceTree = "<group>"; };
+		D8D8B02F19E78D8500C9DB03 /* MembersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MembersTableViewController.h; sourceTree = "<group>"; };
+		D8D8B03019E78D8500C9DB03 /* MembersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersTableViewController.m; sourceTree = "<group>"; };
 		D8FA019119E5001D005C6BC7 /* SummaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryCell.h; sourceTree = "<group>"; };
 		D8FA019219E5001D005C6BC7 /* SummaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -425,6 +434,17 @@
 			name = Balance;
 			sourceTree = "<group>";
 		};
+		D88FB28319E7A430005A5CEE /* AddMemberToGroup */ = {
+			isa = PBXGroup;
+			children = (
+				D8D8B02C19E7828700C9DB03 /* AddMemberToGroupViewController.h */,
+				D8D8B02D19E7828700C9DB03 /* AddMemberToGroupViewController.m */,
+				D88FB28419E7A463005A5CEE /* AddMemberNavigationController.h */,
+				D88FB28519E7A463005A5CEE /* AddMemberNavigationController.m */,
+			);
+			name = AddMemberToGroup;
+			sourceTree = "<group>";
+		};
 		D8BB981E19D152F500D47F5C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -432,6 +452,9 @@
 				0C1B96BF19B7628B006AA177 /* GroupSettingsTableViewController.m */,
 				D8BB981F19D1532100D47F5C /* GroupSettingsNavigationViewController.h */,
 				D8BB982019D1532100D47F5C /* GroupSettingsNavigationViewController.m */,
+				D88FB28319E7A430005A5CEE /* AddMemberToGroup */,
+				D8D8B02F19E78D8500C9DB03 /* MembersTableViewController.h */,
+				D8D8B03019E78D8500C9DB03 /* MembersTableViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -555,7 +578,9 @@
 				6F5CE5D019CA723D00489DDC /* NewExpenseDetailsViewController.m in Sources */,
 				6F5CE5CC19CA720F00489DDC /* NewExpenseNavigationController.m in Sources */,
 				D8BB982119D1532100D47F5C /* GroupSettingsNavigationViewController.m in Sources */,
+				D8D8B02E19E7828700C9DB03 /* AddMemberToGroupViewController.m in Sources */,
 				D84F130E19D106C400D9FDD4 /* BalanceNavigationController.m in Sources */,
+				D8D8B03119E78D8500C9DB03 /* MembersTableViewController.m in Sources */,
 				6F5CE5D619CA725D00489DDC /* NewExpenseForWhomTableViewController.m in Sources */,
 				0C6E5F7B19B72750000594BF /* AppDelegate.m in Sources */,
 				0CE717F319C04C0400D9F56D /* ForgotPasswordViewController.m in Sources */,
@@ -567,6 +592,7 @@
 				D8171E4B19D151FD001DF24E /* HistoryNavigationViewController.m in Sources */,
 				0C1B96C919B773AE006AA177 /* BalanceManagementTableViewController.m in Sources */,
 				0C6E5F7719B72750000594BF /* main.m in Sources */,
+				D88FB28619E7A463005A5CEE /* AddMemberNavigationController.m in Sources */,
 				D800A3BE19D01F8400201202 /* NewGroupViewController.m in Sources */,
 				0C1B96C619B76CB6006AA177 /* ExpenseManagementTableViewController.m in Sources */,
 				6F5CE5D919CA726900489DDC /* NewExpenseSummaryTableViewController.m in Sources */,

@@ -22,7 +22,6 @@ GroupTabBarController *groupTabBarController;
     [self customSetup];
     groupTabBarController = (GroupTabBarController *)[(HistoryNavigationViewController *)[self navigationController] parentViewController];
 
-    self.title = groupTabBarController.group[@"name"];
     [self refresh];
 
 }
@@ -49,6 +48,7 @@ GroupTabBarController *groupTabBarController;
 {
     [super viewDidAppear:animated];
     [self.tableView reloadData];
+    self.title = groupTabBarController.group[@"name"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

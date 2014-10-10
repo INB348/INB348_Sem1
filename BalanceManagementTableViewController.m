@@ -16,7 +16,7 @@
 @implementation BalanceManagementTableViewController
 GroupTabBarController *groupTabBarController;
 
-- (void)refresh{
+- (void)reloadGroupUsers{
     //Retrieving GroupUser list
     PFQuery *groupUsersQuery = [PFQuery queryWithClassName:@"UserGroup"];
     [groupUsersQuery includeKey:@"user"];
@@ -34,6 +34,7 @@ GroupTabBarController *groupTabBarController;
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
+    self.title = groupTabBarController.group[@"name"];
 }
 
 - (void)viewDidLoad
@@ -46,14 +47,15 @@ GroupTabBarController *groupTabBarController;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.title = groupTabBarController.group[@"name"];
-    [self refresh];
+    [self reloadGroupUsers];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     // Fetch the devices from persistent data store
+    [self.tableView reloadData];
+    self.title = groupTabBarController.group[@"name"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
