@@ -34,7 +34,7 @@ GroupTabBarController *groupTabBarController;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [groupTabBarController.group setValue:self.nameLabel.text forKey:@"name"];
-    [groupTabBarController.group save];
+    [groupTabBarController.group saveInBackground];
 }
 
 - (void)customSetup
