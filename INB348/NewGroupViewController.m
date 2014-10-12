@@ -40,22 +40,26 @@
     // Create a new Group and set name
     PFObject *group= [PFObject objectWithClassName:@"Group"];
     [group setValue:self.nameTextField.text forKey:@"name"];
-    [group save];
-    
-    // Create a new UserGroup relation
-    PFObject *userGroup= [PFObject objectWithClassName:@"UserGroup"];
-    [userGroup setObject:[PFUser currentUser] forKey:@"user"];
-    [userGroup setObject:group forKey:@"group"];
-    
-    //Set default balance of 0
-    userGroup[@"balance"] = @0;
-    
-    //Save
-    [userGroup saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(succeeded){
-           [self.delegate refresh];
+            // Create a new UserGroup relation
+            PFObject *userGroup= [PFObject objectWithClassName:@"UserGroup"];
+            [userGroup setObject:[PFUser currentUser] forKey:@"user"];
+            [userGroup setObject:group forKey:@"group"];
+            
+            //Set default balance of 0
+            userGroup[@"balance"] = @0;
+            
+            //Save
+            [userGroup saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if(succeeded){
+                    [self.delegate refresh];
+                }
+            }];
         }
     }];
+    
+
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

@@ -90,6 +90,10 @@ GroupTabBarController *groupTabBarController;
     self.navigationItem.title = self.nameLabel.text;
 }
 
+- (IBAction)back:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showMembers"]) {
         MembersTableViewController *membersViewController = segue.destinationViewController;

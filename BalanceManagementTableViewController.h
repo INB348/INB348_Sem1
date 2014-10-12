@@ -13,5 +13,6 @@
 #import "NewExpenseNavigationController.h"
 
 @interface BalanceManagementTableViewController : UITableViewController <NewExpenseNavigationController>
+- (IBAction)back:(id)sender;
 @property (nonatomic, strong) IBOutlet UITableView *groupUserTableView;
 @end

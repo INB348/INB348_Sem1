@@ -18,5 +18,6 @@
 @property (strong, nonatomic) IBOutlet UITextField *nameLabel;
 - (IBAction)deleteGroup:(id)sender;
 - (IBAction)nameChanged:(id)sender;
+- (IBAction)back:(id)sender;
 
 @end

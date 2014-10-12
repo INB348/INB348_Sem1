@@ -15,5 +15,6 @@
 #import "EditExpenseViewController.h"
 
 @interface ExpenseManagementTableViewController : UITableViewController <EditExpenseViewController, NewExpenseNavigationController>
+- (IBAction)back:(id)sender;
 
 @end

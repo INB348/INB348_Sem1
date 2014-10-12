@@ -208,7 +208,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="0v0-YL-GMx" kind="push" identifier="showGroup" id="gOn-RB-uDh"/>
+                                    <segue destination="0v0-YL-GMx" kind="modal" identifier="showGroup" id="gOn-RB-uDh"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -829,7 +829,11 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Group Settings" id="zme-cO-egj" userLabel="Settings">
                         <barButtonItem key="backBarButtonItem" title="Back" id="Rey-dU-y9A"/>
-                        <barButtonItem key="leftBarButtonItem" image="Burger" id="2uc-H4-Irz"/>
+                        <barButtonItem key="leftBarButtonItem" title="&lt; Groups" id="ILn-eM-cRx">
+                            <connections>
+                                <action selector="back:" destination="uKk-Ke-nJu" id="Rbv-mq-FXU"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -911,7 +915,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="BalanceManagementTableViewController.h" useStoryboardIdentifierAsRestorationIdentifier="YES" id="djj-bA-Und" customClass="BalanceManagementTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="sx3-ZK-i6k">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -946,17 +950,22 @@
                             <outlet property="delegate" destination="djj-bA-Und" id="iPN-fU-pm8"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Balance Management" id="dHv-qh-VJs">
-                        <barButtonItem key="leftBarButtonItem" image="Burger" id="oZa-m8-s9b"/>
+                        <barButtonItem key="leftBarButtonItem" title="&lt; Groups" id="ay4-35-GAw">
+                            <connections>
+                                <action selector="back:" destination="djj-bA-Und" id="ugi-ko-EXK"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="VdR-Fj-VE4">
                             <connections>
                                 <segue destination="Jqd-bn-59v" kind="modal" identifier="addNewExpenseSegue" id="jTv-Yn-TmP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="groupUserTableView" destination="sx3-ZK-i6k" id="VRo-ws-ZN2"/>
-                        <outlet property="revealButtonItem" destination="oZa-m8-s9b" id="2cc-8T-Jaa"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FCz-Og-Us5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1167,16 +1176,17 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="History" id="TIP-3u-9XM">
                         <barButtonItem key="backBarButtonItem" title="Back" id="nCu-WE-Rkl"/>
-                        <barButtonItem key="leftBarButtonItem" image="Burger" id="CRS-OU-CW3"/>
+                        <barButtonItem key="leftBarButtonItem" title="&lt; Groups" id="jut-vY-b1d">
+                            <connections>
+                                <action selector="back:" destination="rwt-dg-BZn" id="KSl-ut-NIK"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="oDu-bn-wEp">
                             <connections>
                                 <segue destination="Jqd-bn-59v" kind="modal" identifier="addNewExpenseSegue" id="r84-v2-Taf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="revealButtonItem" destination="CRS-OU-CW3" id="xg3-RD-71f"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0QC-7S-Mwg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2126,9 +2136,9 @@ It is very important to our development team to get your feedback in a timely wa
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="aG3-MC-N10"/>
         <segue reference="gHh-eZ-Rmr"/>
-        <segue reference="5Hs-c3-pvd"/>
+        <segue reference="r84-v2-Taf"/>
         <segue reference="3Cj-as-CbW"/>
-        <segue reference="jTv-Yn-TmP"/>
     </inferredMetricsTieBreakers>
 </document>

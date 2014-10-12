@@ -47,6 +47,7 @@ GroupTabBarController *groupTabBarController;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self refresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -108,4 +109,7 @@ GroupTabBarController *groupTabBarController;
     }
 }
 
+- (IBAction)back:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
