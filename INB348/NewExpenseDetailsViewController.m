@@ -31,13 +31,6 @@ NewExpenseNavigationController *navigationController;
     self.descriptionTextField.layer.borderColor = [[UIColor grayColor] CGColor];
     self.descriptionTextField.layer.cornerRadius = 8;
     navigationController = (NewExpenseNavigationController *)[self navigationController];
-    
-    if(navigationController.oldExpense != nil){
-        self.nameTextField.text=navigationController.oldExpense[@"name"];
-        self.amountTextField.text=[navigationController.oldExpense[@"amount"] stringValue];
-        self.datePicker.date=navigationController.oldExpense[@"date"];
-        self.descriptionTextField.text=navigationController.oldExpense[@"description"];
-    }
 }
 
 - (void)didReceiveMemoryWarning

@@ -56,8 +56,6 @@ NewExpenseNavigationController *navigationController;
 {
     UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
     tableViewCell.accessoryView.hidden = YES;
-    //tableViewCell.selected = YES;
-    // if you don't use custom image tableViewCell.accessoryType = UITableViewCellAccessoryNone;
     
 }
 
@@ -78,15 +76,6 @@ NewExpenseNavigationController *navigationController;
     
     [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", userName]];
     groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
-    
-    if(navigationController.oldExpense != nil){
-        for (PFObject *oldExpensePayer in navigationController.oldExpensePayers) {
-                PFObject *user =oldExpensePayer[@"user"];
-                if([user.objectId isEqualToString:groupUser.objectId]){
-                    groupUserCell.accessoryView.hidden = NO;
-                }
-        }
-    }
     
     return groupUserCell;
 }
