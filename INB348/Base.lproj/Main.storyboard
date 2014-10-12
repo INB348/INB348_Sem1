@@ -222,7 +222,7 @@
                         <barButtonItem key="leftBarButtonItem" image="Burger" id="IQe-M3-vgf"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="vSy-ep-1ux">
                             <connections>
-                                <segue destination="vcR-mr-iAC" kind="modal" id="eqG-4v-P4K"/>
+                                <segue destination="vcR-mr-iAC" kind="modal" identifier="newGroup" id="eqG-4v-P4K"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -763,7 +763,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="te0-a2-WL4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4137" y="-913"/>
+            <point key="canvasLocation" x="4137" y="-881"/>
         </scene>
         <!--Group Settings-->
         <scene sceneID="bzd-nb-aGw">
@@ -791,17 +791,8 @@
                                     <action selector="nameChanged:" destination="uKk-Ke-nJu" eventType="editingChanged" id="pe1-O9-lJQ"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6uP-35-9aG">
-                                <rect key="frame" x="0.0" y="422" width="320" height="30"/>
-                                <state key="normal" title="Delete">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="deleteGroup:" destination="uKk-Ke-nJu" eventType="touchUpInside" id="Wjr-cW-zhp"/>
-                                </connections>
-                            </button>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p5Z-8m-ujw">
-                                <rect key="frame" x="0.0" y="133" width="320" height="281"/>
+                                <rect key="frame" x="0.0" y="133" width="320" height="197"/>
                                 <connections>
                                     <segue destination="28T-eW-jK7" kind="embed" identifier="showMembers" id="7ca-nw-xpU"/>
                                 </connections>
@@ -820,6 +811,16 @@
                                 </state>
                                 <connections>
                                     <segue destination="s64-Yt-3ll" kind="modal" identifier="addMember" id="HRl-Ae-SnP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6uP-35-9aG">
+                                <rect key="frame" x="0.0" y="333" width="320" height="30"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteGroup:" destination="uKk-Ke-nJu" eventType="touchUpInside" id="Wjr-cW-zhp"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1783,7 +1784,7 @@ It is very important to our development team to get your feedback in a timely wa
             <objects>
                 <tableViewController id="28T-eW-jK7" customClass="MembersTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="l28-M4-7Bq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="281"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="197"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -2125,8 +2126,8 @@ It is very important to our development team to get your feedback in a timely wa
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="5Hs-c3-pvd"/>
         <segue reference="gHh-eZ-Rmr"/>
+        <segue reference="5Hs-c3-pvd"/>
         <segue reference="3Cj-as-CbW"/>
         <segue reference="jTv-Yn-TmP"/>
     </inferredMetricsTieBreakers>

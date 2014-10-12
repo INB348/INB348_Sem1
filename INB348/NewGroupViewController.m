@@ -51,7 +51,11 @@
     userGroup[@"balance"] = @0;
     
     //Save
-    [userGroup save];
+    [userGroup saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+           [self.delegate refresh];
+        }
+    }];
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }

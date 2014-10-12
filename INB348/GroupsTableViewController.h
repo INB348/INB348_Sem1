@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "NewGroupViewController.h"
 #import "BalanceManagementTableViewController.h"
 #import "GroupTabBarController.h"
 #import "BalanceNavigationController.h"
 #import "SWRevealViewController.h"
 
-@interface GroupsTableViewController : UITableViewController
+@interface GroupsTableViewController : UITableViewController <NewGroupViewController>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @end

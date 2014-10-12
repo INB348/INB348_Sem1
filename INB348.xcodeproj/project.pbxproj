@@ -397,11 +397,11 @@
 			children = (
 				D8BB981E19D152F500D47F5C /* Settings */,
 				D8171E4519D14DC4001DF24E /* History */,
+				D869F5CB19E90A0C000C31FC /* EditExpense */,
 				6F5CE5CD19CA721200489DDC /* NewExpense */,
 				D84F130819D1062400D9FDD4 /* Balance */,
 				D84F130919D1067900D9FDD4 /* GroupTabBarController.h */,
 				D84F130A19D1067900D9FDD4 /* GroupTabBarController.m */,
-				D869F5CB19E90A0C000C31FC /* EditExpense */,
 			);
 			name = Group;
 			sourceTree = "<group>";

@@ -101,6 +101,7 @@
 }
 
 -(void)calculateNewUserBalance{
+    NSMutableArray *updatedUsers = [NSMutableArray array];
     for (PFObject *user in self.groupUsers) {
         PFQuery *query = [PFQuery queryWithClassName:@"ExpenseParticipator"];
         [query whereKey:@"user" equalTo:user];
@@ -114,12 +115,17 @@
                     balance = balance+payment-usage;
                 }
                 [user setValue:[NSNumber numberWithDouble:balance] forKey:@"balance"];
-                [user saveInBackground];
+                [updatedUsers addObject:user];
             } else{
                 NSLog(@"Erro: %@",error);
             }
         }];
     }
+    [PFObject saveAllInBackground:updatedUsers block:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+            
+        }
+    }];
 }
 
 -(void)addNewExpenseParticipators{
