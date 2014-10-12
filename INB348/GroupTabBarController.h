@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "SWRevealViewController.h"
 
 @interface GroupTabBarController : UITabBarController
 @property (strong) PFObject *group;
