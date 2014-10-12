@@ -40,7 +40,6 @@ GroupTabBarController *groupTabBarController;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self customSetup];
     groupTabBarController =(GroupTabBarController*)[(BalanceNavigationController *)[self navigationController] parentViewController];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -80,17 +79,6 @@ GroupTabBarController *groupTabBarController;
     groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
     
     return groupUserCell;
-}
-
-- (void)customSetup
-{
-    SWRevealViewController *revealViewController = self.revealViewController;
-    if ( revealViewController )
-    {
-        [self.revealButtonItem setTarget: revealViewController];
-        [self.revealButtonItem setAction: @selector( revealToggle: )];
-        [self.navigationController.navigationBar addGestureRecognizer:revealViewController.panGestureRecognizer];
-    }
 }
 
 - (void)didReceiveMemoryWarning
