@@ -42,13 +42,14 @@ GroupTabBarController *groupTabBarController;
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
+    self.navigationItem.title = groupTabBarController.group[@"name"];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self.tableView reloadData];
-    self.title = groupTabBarController.group[@"name"];
+    self.navigationItem.title = groupTabBarController.group[@"name"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -96,45 +97,27 @@ GroupTabBarController *groupTabBarController;
         NewExpenseNavigationController *destNavigationController = segue.destinationViewController;
         destNavigationController.groupUsers = groupTabBarController.groupUsers;
         destNavigationController.group = groupTabBarController.group;
+        
+        [destNavigationController setDelegate:self];
     }
     if ([segue.identifier isEqualToString:@"editExpenseSegue"]) {
-        NewExpenseNavigationController *destNavigationController = segue.destinationViewController;
-        destNavigationController.groupUsers = groupTabBarController.groupUsers;
-        destNavigationController.group = groupTabBarController.group;
+        EditExpenseNavigationController *destNavigationController = segue.destinationViewController;
+        EditExpenseViewController *destViewController = (EditExpenseViewController *)destNavigationController.topViewController;
+        
+        destViewController.groupUsers = groupTabBarController.groupUsers;
+        destViewController.group = groupTabBarController.group;
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         PFObject *oldExpense = groupTabBarController.expenses[indexPath.row];
         
         //Retrieve expensepayers
-        PFQuery *expensePayersQuery = [PFQuery queryWithClassName:@"ExpensePayer"];
+        PFQuery *expensePayersQuery = [PFQuery queryWithClassName:@"ExpenseParticipator"];
         [expensePayersQuery whereKey:@"expense" equalTo:oldExpense];
-        [expensePayersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (!error) {
-                // The find succeeded.
-                NSLog(@"Successfully retrieved %d ExpensePayers.", objects.count);
-                destNavigationController.oldExpensePayers = objects;
-            } else {
-                // Log details of the failure
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
-            }
-        }];
+        destViewController.oldExpenseParticipators = [expensePayersQuery findObjects];
         
-        //Retrieve expenseusers
-        PFQuery *expenseUsersQuery = [PFQuery queryWithClassName:@"ExpenseUser"];
-        [expenseUsersQuery whereKey:@"expense" equalTo:oldExpense];
-        [expenseUsersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (!error) {
-                // The find succeeded.
-                NSLog(@"Successfully retrieved %d ExpenseUsers.", objects.count);
-                destNavigationController.oldExpenseUsers = objects;
-            } else {
-                // Log details of the failure
-                NSLog(@"Error: %@ %@", error, [error userInfo]);
-            }
-        }];
+        destViewController.expense = oldExpense;
         
-        destNavigationController.oldExpense = oldExpense;
-        
+        [destViewController setDelegate:self];
     }
 }
 

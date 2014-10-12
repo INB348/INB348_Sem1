@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
+@protocol NewExpenseNavigationController
+- (void)refresh;
+@end
+
 @interface NewExpenseNavigationController : UINavigationController
 @property (strong) NSString  *name;
 @property (strong) NSNumber  *amount;
@@ -19,8 +23,5 @@
 @property (strong) NSArray *groupUsers;
 @property (strong) NSString *comment;
 
-//If editing
-@property (strong) PFObject *oldExpense;
-@property (strong) NSArray *oldExpensePayers;
-@property (strong) NSArray *oldExpenseUsers;
+@property (nonatomic, assign) id <NewExpenseNavigationController> delegate;
 @end

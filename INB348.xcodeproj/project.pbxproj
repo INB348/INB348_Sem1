@@ -68,6 +68,10 @@
 		D8171E4B19D151FD001DF24E /* HistoryNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8171E4A19D151FD001DF24E /* HistoryNavigationViewController.m */; };
 		D84F130B19D1067900D9FDD4 /* GroupTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F130A19D1067900D9FDD4 /* GroupTabBarController.m */; };
 		D84F130E19D106C400D9FDD4 /* BalanceNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F130D19D106C400D9FDD4 /* BalanceNavigationController.m */; };
+		D869F5CA19E90A04000C31FC /* EditExpenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D869F5C919E90A04000C31FC /* EditExpenseViewController.m */; };
+		D869F5CE19E90AC1000C31FC /* EditExpenseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D869F5CD19E90AC1000C31FC /* EditExpenseNavigationController.m */; };
+		D869F5D119E90FEE000C31FC /* EditOptionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D869F5D019E90FEE000C31FC /* EditOptionsTableViewController.m */; };
+		D869F5D419E9145A000C31FC /* EditExpenseParticipatorsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D869F5D319E9145A000C31FC /* EditExpenseParticipatorsTableViewController.m */; };
 		D88FB28619E7A463005A5CEE /* AddMemberNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88FB28519E7A463005A5CEE /* AddMemberNavigationController.m */; };
 		D8BB982119D1532100D47F5C /* GroupSettingsNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8BB982019D1532100D47F5C /* GroupSettingsNavigationViewController.m */; };
 		D8D8B02E19E7828700C9DB03 /* AddMemberToGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D8B02D19E7828700C9DB03 /* AddMemberToGroupViewController.m */; };
@@ -173,6 +177,14 @@
 		D84F130A19D1067900D9FDD4 /* GroupTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupTabBarController.m; sourceTree = "<group>"; };
 		D84F130C19D106C400D9FDD4 /* BalanceNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalanceNavigationController.h; sourceTree = "<group>"; };
 		D84F130D19D106C400D9FDD4 /* BalanceNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalanceNavigationController.m; sourceTree = "<group>"; };
+		D869F5C819E90A04000C31FC /* EditExpenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseViewController.h; sourceTree = "<group>"; };
+		D869F5C919E90A04000C31FC /* EditExpenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditExpenseViewController.m; sourceTree = "<group>"; };
+		D869F5CC19E90AC1000C31FC /* EditExpenseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseNavigationController.h; sourceTree = "<group>"; };
+		D869F5CD19E90AC1000C31FC /* EditExpenseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditExpenseNavigationController.m; sourceTree = "<group>"; };
+		D869F5CF19E90FEE000C31FC /* EditOptionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditOptionsTableViewController.h; sourceTree = "<group>"; };
+		D869F5D019E90FEE000C31FC /* EditOptionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditOptionsTableViewController.m; sourceTree = "<group>"; };
+		D869F5D219E9145A000C31FC /* EditExpenseParticipatorsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseParticipatorsTableViewController.h; sourceTree = "<group>"; };
+		D869F5D319E9145A000C31FC /* EditExpenseParticipatorsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditExpenseParticipatorsTableViewController.m; sourceTree = "<group>"; };
 		D88FB28419E7A463005A5CEE /* AddMemberNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMemberNavigationController.h; sourceTree = "<group>"; };
 		D88FB28519E7A463005A5CEE /* AddMemberNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMemberNavigationController.m; sourceTree = "<group>"; };
 		D8BB981F19D1532100D47F5C /* GroupSettingsNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupSettingsNavigationViewController.h; sourceTree = "<group>"; };
@@ -389,6 +401,7 @@
 				D84F130819D1062400D9FDD4 /* Balance */,
 				D84F130919D1067900D9FDD4 /* GroupTabBarController.h */,
 				D84F130A19D1067900D9FDD4 /* GroupTabBarController.m */,
+				D869F5CB19E90A0C000C31FC /* EditExpense */,
 			);
 			name = Group;
 			sourceTree = "<group>";
@@ -432,6 +445,21 @@
 				D84F130D19D106C400D9FDD4 /* BalanceNavigationController.m */,
 			);
 			name = Balance;
+			sourceTree = "<group>";
+		};
+		D869F5CB19E90A0C000C31FC /* EditExpense */ = {
+			isa = PBXGroup;
+			children = (
+				D869F5CC19E90AC1000C31FC /* EditExpenseNavigationController.h */,
+				D869F5CD19E90AC1000C31FC /* EditExpenseNavigationController.m */,
+				D869F5C819E90A04000C31FC /* EditExpenseViewController.h */,
+				D869F5C919E90A04000C31FC /* EditExpenseViewController.m */,
+				D869F5CF19E90FEE000C31FC /* EditOptionsTableViewController.h */,
+				D869F5D019E90FEE000C31FC /* EditOptionsTableViewController.m */,
+				D869F5D219E9145A000C31FC /* EditExpenseParticipatorsTableViewController.h */,
+				D869F5D319E9145A000C31FC /* EditExpenseParticipatorsTableViewController.m */,
+			);
+			name = EditExpense;
 			sourceTree = "<group>";
 		};
 		D88FB28319E7A430005A5CEE /* AddMemberToGroup */ = {
@@ -572,12 +600,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F5CE5D319CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m in Sources */,
+				D869F5CA19E90A04000C31FC /* EditExpenseViewController.m in Sources */,
+				D869F5D419E9145A000C31FC /* EditExpenseParticipatorsTableViewController.m in Sources */,
 				0C1B96C319B76887006AA177 /* NotificationsTableViewController.m in Sources */,
 				0C6E5F8119B72750000594BF /* ViewController.m in Sources */,
 				D84F130B19D1067900D9FDD4 /* GroupTabBarController.m in Sources */,
 				6F5CE5D019CA723D00489DDC /* NewExpenseDetailsViewController.m in Sources */,
 				6F5CE5CC19CA720F00489DDC /* NewExpenseNavigationController.m in Sources */,
 				D8BB982119D1532100D47F5C /* GroupSettingsNavigationViewController.m in Sources */,
+				D869F5D119E90FEE000C31FC /* EditOptionsTableViewController.m in Sources */,
 				D8D8B02E19E7828700C9DB03 /* AddMemberToGroupViewController.m in Sources */,
 				D84F130E19D106C400D9FDD4 /* BalanceNavigationController.m in Sources */,
 				D8D8B03119E78D8500C9DB03 /* MembersTableViewController.m in Sources */,
@@ -589,6 +620,7 @@
 				0C8FD7F019B7E150002D3D7F /* NewBalanceTableViewController.m in Sources */,
 				0CE717ED19C033D800D9F56D /* LogInViewController.m in Sources */,
 				0C1B96CC19B78617006AA177 /* AccountSettingsTableViewController.m in Sources */,
+				D869F5CE19E90AC1000C31FC /* EditExpenseNavigationController.m in Sources */,
 				D8171E4B19D151FD001DF24E /* HistoryNavigationViewController.m in Sources */,
 				0C1B96C919B773AE006AA177 /* BalanceManagementTableViewController.m in Sources */,
 				0C6E5F7719B72750000594BF /* main.m in Sources */,

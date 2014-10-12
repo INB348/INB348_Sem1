@@ -11,7 +11,9 @@
 #import "GroupTabBarController.h"
 #import "HistoryNavigationViewController.h"
 #import "NewExpenseNavigationController.h"
+#import "EditExpenseNavigationController.h"
+#import "EditExpenseViewController.h"
 
-@interface ExpenseManagementTableViewController : UITableViewController
+@interface ExpenseManagementTableViewController : UITableViewController <EditExpenseViewController, NewExpenseNavigationController>
 
 @end

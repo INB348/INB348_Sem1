@@ -16,7 +16,7 @@
 @implementation BalanceManagementTableViewController
 GroupTabBarController *groupTabBarController;
 
-- (void)reloadGroupUsers{
+- (void)refresh{
     //Retrieving GroupUser list
     PFQuery *groupUsersQuery = [PFQuery queryWithClassName:@"UserGroup"];
     [groupUsersQuery includeKey:@"user"];
@@ -34,7 +34,7 @@ GroupTabBarController *groupTabBarController;
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
-    self.title = groupTabBarController.group[@"name"];
+    self.navigationItem.title = groupTabBarController.group[@"name"];
 }
 
 - (void)viewDidLoad
@@ -47,7 +47,7 @@ GroupTabBarController *groupTabBarController;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self reloadGroupUsers];
+    [self refresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -55,7 +55,7 @@ GroupTabBarController *groupTabBarController;
     [super viewDidAppear:animated];
     // Fetch the devices from persistent data store
     [self.tableView reloadData];
-    self.title = groupTabBarController.group[@"name"];
+    self.navigationItem.title = groupTabBarController.group[@"name"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -104,6 +104,8 @@ GroupTabBarController *groupTabBarController;
         NewExpenseNavigationController *destNavigationController = segue.destinationViewController;
         destNavigationController.groupUsers = groupTabBarController.groupUsers;
         destNavigationController.group = groupTabBarController.group;
+        
+        [destNavigationController setDelegate:self];
     }
 }
 

@@ -12,6 +12,6 @@
 #import "BalanceNavigationController.h"
 #import "NewExpenseNavigationController.h"
 
-@interface BalanceManagementTableViewController : UITableViewController
+@interface BalanceManagementTableViewController : UITableViewController <NewExpenseNavigationController>
 @property (nonatomic, strong) IBOutlet UITableView *groupUserTableView;
 @end

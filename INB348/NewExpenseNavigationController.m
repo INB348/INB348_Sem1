@@ -15,6 +15,7 @@
 @implementation NewExpenseNavigationController
 @synthesize groupUsers;
 @synthesize group;
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

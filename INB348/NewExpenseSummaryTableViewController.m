@@ -148,6 +148,29 @@ NSMutableArray *participators;
     }
 }
 
+-(void)calculateNewUserBalance{
+    NSMutableArray *updatedGroupUsers = [NSMutableArray array];
+    for (PFObject *user in navigationController.groupUsers) {
+        PFQuery *query = [PFQuery queryWithClassName:@"ExpenseParticipator"];
+        [query whereKey:@"user" equalTo:user];
+        NSArray *objects = [query findObjects];
+        NSLog(@"Found %d ExpenseParticipations for User %@",objects.count, user[@"user"][@"name"]);
+        double balance = 0;
+        for (PFObject *expenseParticipator in objects) {
+            double payment = (double)[expenseParticipator[@"payment"] doubleValue];
+            double usage = (double)[expenseParticipator[@"usage"] doubleValue];
+            balance = balance+payment-usage;
+        }
+        [user setValue:[NSNumber numberWithDouble:balance] forKey:@"balance"];
+        [updatedGroupUsers addObject:user];
+    }
+    [PFObject saveAllInBackground:updatedGroupUsers block:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+            [navigationController.delegate refresh];
+        }
+    }];
+}
+
 - (IBAction)save:(id)sender {
     // Create a new Expense
     PFObject *expense= [PFObject objectWithClassName:@"Expense"];
@@ -158,15 +181,16 @@ NSMutableArray *participators;
     [expense setObject:navigationController.group forKey:@"group"];
     [expense saveInBackground];
     
+    NSMutableArray *newParticipators = [NSMutableArray array];
     for (PFObject *participator in participators) {
         [participator setObject:expense forKey:@"expense"];
-        [participator saveInBackground];
-        
-        PFObject *user = participator[@"user"];
-        [user setValue:[self getNewBalance:participator] forKey:@"balance"];
-        [user saveInBackground];
+        [newParticipators addObject:participator];
     }
-    
+    [PFObject saveAllInBackground:newParticipators block:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+            [self calculateNewUserBalance];
+        }
+    }];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

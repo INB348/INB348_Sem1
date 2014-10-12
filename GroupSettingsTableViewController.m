@@ -28,7 +28,7 @@ GroupTabBarController *groupTabBarController;
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 - (void)viewDidAppear:(BOOL)animated{
-    self.title = groupTabBarController.group[@"name"];
+    self.navigationItem.title = groupTabBarController.group[@"name"];
     self.nameLabel.text = groupTabBarController.group[@"name"];
 }
 
@@ -87,7 +87,7 @@ GroupTabBarController *groupTabBarController;
 }
 
 - (IBAction)nameChanged:(id)sender {
-    self.title = self.nameLabel.text;
+    self.navigationItem.title = self.nameLabel.text;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
