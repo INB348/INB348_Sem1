@@ -35,6 +35,13 @@
     self.txt_ReTypePassword.delegate = self;
     self.txt_Name.delegate = self;
     
+    /* Profile Image Format */
+    self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
+    self.img_Profile.clipsToBounds = YES;
+    self.img_Profile.layer.borderWidth = 3.0f;
+    self.img_Profile.layer.borderColor = [UIColor whiteColor].CGColor;
+    /* */
+    
 }
 
 /** Choose a photo in Photo Library */
@@ -63,6 +70,14 @@
     
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.img_Profile.image = chosenImage;
+    
+    /* Profile Image Format */
+    self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
+    self.img_Profile.clipsToBounds = YES;
+    self.img_Profile.layer.borderWidth = 3.0f;
+    self.img_Profile.layer.borderColor = [UIColor whiteColor].CGColor;
+    /* */
+    
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }
