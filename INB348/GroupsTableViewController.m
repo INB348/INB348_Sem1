@@ -95,10 +95,11 @@
         GroupTabBarController *groupTabBarController = segue.destinationViewController;
         groupTabBarController.group = self.userGroups[indexPath.row][@"group"];
     }
-    if ([segue.identifier isEqualToString:@"newGroup"]) {
-        NewGroupViewController *destViewController = (NewGroupViewController *)((UINavigationController *)segue.destinationViewController).topViewController;
-        [destViewController setDelegate:self];
-    }
+    
+//    if ([segue.identifier isEqualToString:@"newGroup"]) {
+//        NewGroupViewController *destViewController = (NewGroupViewController *)((UINavigationController *)segue.destinationViewController).topViewController;
+//        [destViewController setDelegate:self];
+//    }
 }
 
 

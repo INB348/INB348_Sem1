@@ -14,8 +14,12 @@
 @end
 
 @interface NewGroupViewController : UITableViewController
+
 @property (strong, nonatomic) IBOutlet UITextField *nameTextField;
+@property (strong, nonatomic) IBOutlet UIImageView *img_Profile;
+@property (nonatomic, assign) id <NewGroupViewController> delegate;
+
+- (IBAction)selectPhoto:(UIButton *)sender;
 - (IBAction)save:(id)sender;
 
-@property (nonatomic, assign) id <NewGroupViewController> delegate;
 @end

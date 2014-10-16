@@ -100,8 +100,12 @@
 //Login button pressed
 -(IBAction)logInPressed:(id)sender
 {
+    /** For testing */
     self.txt_Email.text=@"kristianmatzen@icloud.com";
     self.txt_Password.text=@"1234";
+    
+//    [self performSegueWithIdentifier:@"LogInSuccessful" sender:self];
+    
     [PFUser logInWithUsernameInBackground:self.txt_Email.text password:self.txt_Password.text block:^(PFUser *user, NSError *error) {
         if (user)
         {
