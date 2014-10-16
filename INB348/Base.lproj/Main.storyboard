@@ -720,7 +720,11 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="New Group" id="7WP-RR-PEp">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="6Vx-3f-mqB"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="6Vx-3f-mqB">
+                            <connections>
+                                <action selector="cancel:" destination="IV2-S0-2Cw" id="TpK-Yz-SoV"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Q0i-zf-w62">
                             <connections>
                                 <action selector="save:" destination="IV2-S0-2Cw" id="Scw-Mz-3iN"/>

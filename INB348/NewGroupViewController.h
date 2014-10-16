@@ -21,5 +21,6 @@
 
 - (IBAction)selectPhoto:(UIButton *)sender;
 - (IBAction)save:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end
