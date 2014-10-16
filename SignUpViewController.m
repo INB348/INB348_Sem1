@@ -159,7 +159,7 @@
                 } else {
                     //Something bad has ocurred
                     NSString *errorText = [NSString stringWithFormat: @"Sorry, it looks like '%@' belongs to an existing account.\nWould you like to reset password?", self.txt_NewEmail.text];
-                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorText delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorText delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
                     [errorAlertView show];
                 }
             }];

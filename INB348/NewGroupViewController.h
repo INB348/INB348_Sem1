@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "MBProgressHUD.h"
 
 @protocol NewGroupViewController
 - (void)refresh;
 @end
 
-@interface NewGroupViewController : UITableViewController
+@interface NewGroupViewController : UITableViewController <MBProgressHUDDelegate> {
+    MBProgressHUD *hud;
+}
 
 @property (strong, nonatomic) IBOutlet UITextField *nameTextField;
 @property (strong, nonatomic) IBOutlet UIImageView *img_Profile;

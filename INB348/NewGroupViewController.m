@@ -8,6 +8,7 @@
 
 #import "NewGroupViewController.h"
 
+
 @interface NewGroupViewController ()
 
 @end
@@ -108,20 +109,40 @@
 }
 
 - (IBAction)save:(id)sender {
-    //The registration was succesful, go to the wall
-    //Profile Picture
- 
-    NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
-    
-    NSString *imageName = [NSString stringWithFormat:@"%@_GroupPhoto", self.nameTextField.text];
-    PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
-    [imageFile saveInBackground];
-    
     // Create a new Group and set name
     PFObject *group= [PFObject objectWithClassName:@"Group"];
-    [group setValue:self.nameTextField.text forKey:@"name"];
+    [group setObject:self.nameTextField.text forKey:@"name"];
+    
+    
+    //Profile Picture
+    NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
+    NSString *imageName = [NSString stringWithFormat:@"%@_GroupPhoto", self.nameTextField.text];
+    PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
+    [group setObject:imageFile forKey:@"groupPic"];
+    
+    // Show progress
+    hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:hud];
+    hud.mode = MBProgressHUDModeAnnularDeterminate;
+    hud.labelText = @"Uploading";
+    [hud show:YES];
+    
+    // myProgressTask uses the HUD instance to update progress
+    [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+    
+    // Upload recipe to Parse
     [group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [hud hide:YES];
+        
+        
         if(succeeded) {
+            
+            // Show success message
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully created new group" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+            
+            // Notify table view to reload the recipes from Parse cloud
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
             
             // Create a new UserGroup relation
             PFObject *userGroup= [PFObject objectWithClassName:@"UserGroup"];
@@ -135,22 +156,31 @@
             [userGroup saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if(succeeded){
                     [self.delegate refresh];
+                    
+                    // Dismiss the controller
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                } else {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Relation Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
                 }
             }];
-            
-            // waiting for uploading photo
-            [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (succeeded) {
-                    PFObject *group= [PFObject objectWithClassName:@"Group"];
-                    [group setObject:imageFile forKey:@"groupPic"];
-                }
-            } progressBlock:^(int percentDone) {
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
         }
     }];
     
 //    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)myProgressTask {
+    // This just increases the progress indicator in a loop
+    float progress = 0.0f;
+    while (progress < 1.0f) {
+        progress += 0.01f;
+        hud.progress = progress;
+        usleep(50000);
+    }
 }
 
 - (IBAction)cancel:(id)sender {

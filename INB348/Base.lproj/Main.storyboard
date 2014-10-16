@@ -39,24 +39,9 @@
                         <view key="tableFooterView" contentMode="scaleToFill" id="RIJ-az-Kc7">
                             <rect key="frame" x="0.0" y="285" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohy-P5-V07">
-                                    <rect key="frame" x="9" y="0.0" width="260" height="44"/>
-                                    <color key="backgroundColor" red="0.23921568630000001" green="0.33333333329999998" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
-                                    <state key="normal" title="Log Out">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="logOut:" destination="Xaz-Jl-Pki" eventType="touchUpInside" id="hgR-Xd-TGA"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" red="0.23921568630000001" green="0.33333333329999998" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Username" id="0Kc-vx-5SE">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Username" rowHeight="44" id="0Kc-vx-5SE">
                                 <rect key="frame" x="0.0" y="55" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Kc-vx-5SE" id="o58-Rp-xPq">
@@ -64,14 +49,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Minh Phat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8bF-39-t0j">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="1" width="320" height="44"/>
                                             <color key="backgroundColor" red="0.23921568630000001" green="0.33333333329999998" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="boy_with_flower_by_tuyetdinhsinhvat-d39q20z.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="iY3-hn-Jyx">
-                                            <rect key="frame" x="38" y="3" width="38" height="38"/>
+                                            <rect key="frame" x="20" y="3" width="38" height="38"/>
                                         </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -83,15 +68,15 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="RSS_Feed-128.png" translatesAutoresizingMaskIntoConstraints="NO" id="tlk-yY-a9h">
+                                            <rect key="frame" x="19" y="3" width="38" height="38"/>
+                                        </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8Z-FJ-yBd">
-                                            <rect key="frame" x="65" y="4" width="190" height="36"/>
+                                            <rect key="frame" x="75" y="4" width="190" height="36"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <color key="textColor" red="0.0" green="0.30787889219999998" blue="0.62896603949999996" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tones-50.png" translatesAutoresizingMaskIntoConstraints="NO" id="tlk-yY-a9h">
-                                            <rect key="frame" x="19" y="3" width="38" height="38"/>
-                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
@@ -106,12 +91,12 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Groups" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ute-z6-lbQ">
-                                            <rect key="frame" x="65" y="4" width="190" height="36"/>
+                                            <rect key="frame" x="75" y="4" width="190" height="36"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <color key="textColor" red="0.0" green="0.30787889219999998" blue="0.62896603949999996" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="group-50.png" translatesAutoresizingMaskIntoConstraints="NO" id="0g5-PV-9Sy">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Group_of_People-128.png" translatesAutoresizingMaskIntoConstraints="NO" id="0g5-PV-9Sy">
                                             <rect key="frame" x="20" y="3" width="38" height="38"/>
                                         </imageView>
                                     </subviews>
@@ -128,12 +113,12 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YT4-yE-c14">
-                                            <rect key="frame" x="65" y="4" width="190" height="36"/>
+                                            <rect key="frame" x="75" y="4" width="190" height="36"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <color key="textColor" red="0.0" green="0.30787889219999998" blue="0.62896603949999996" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="edit_user-50.png" translatesAutoresizingMaskIntoConstraints="NO" id="XVD-Q2-kfg">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Address_Book-128.png" translatesAutoresizingMaskIntoConstraints="NO" id="XVD-Q2-kfg">
                                             <rect key="frame" x="20" y="3" width="38" height="38"/>
                                         </imageView>
                                     </subviews>
@@ -150,12 +135,12 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="About Us" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5LM-cm-W0g">
-                                            <rect key="frame" x="65" y="4" width="190" height="36"/>
+                                            <rect key="frame" x="75" y="4" width="190" height="36"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <color key="textColor" red="0.0" green="0.30787889219999998" blue="0.62896603949999996" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="about-50.png" translatesAutoresizingMaskIntoConstraints="NO" id="Zk3-ex-q43">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Twitter_Bird-128.png" translatesAutoresizingMaskIntoConstraints="NO" id="Zk3-ex-q43">
                                             <rect key="frame" x="20" y="3" width="38" height="38"/>
                                         </imageView>
                                     </subviews>
@@ -163,6 +148,25 @@
                                 <connections>
                                     <segue destination="vIf-sl-QAo" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="cbP-Aa-Yox"/>
                                 </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogOut" id="wwl-eh-AAw">
+                                <rect key="frame" x="0.0" y="231" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wwl-eh-AAw" id="oWz-cb-cvZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logout-128.png" translatesAutoresizingMaskIntoConstraints="NO" id="Gz0-bp-sdg">
+                                            <rect key="frame" x="22" y="3" width="38" height="38"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Log Out" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UxH-cU-tYB">
+                                            <rect key="frame" x="75" y="-1" width="245" height="45"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                            <color key="textColor" red="0.0" green="0.30787889219999998" blue="0.62896603949999996" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -173,7 +177,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5TU-Xd-o7d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="471" y="-2056"/>
+            <point key="canvasLocation" x="471" y="-2060"/>
         </scene>
         <!--Groups-->
         <scene sceneID="8l9-Zk-O4l">
@@ -301,7 +305,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Image" id="d72-Qe-5CD">
+                            <tableViewSection headerTitle="Profile Photo" id="d72-Qe-5CD">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="130" id="XA4-lp-OKh">
                                         <rect key="frame" x="0.0" y="331" width="320" height="130"/>
@@ -310,20 +314,18 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="uG2-JN-ROM">
-                                                    <rect key="frame" x="36" y="14" width="80" height="80"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" restorationIdentifier="img_Profile" image="pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="8vo-CF-Epr">
+                                                    <rect key="frame" x="117" y="21" width="87" height="88"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Default Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIm-Lu-Ejl">
-                                                    <rect key="frame" x="36" y="102" width="80" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="0.0" green="0.37591193769999998" blue="0.75948660710000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbS-TS-J4A">
-                                                    <rect key="frame" x="170" y="40" width="130" height="49"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.37591193769999998" blue="0.75948660710000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="19"/>
-                                                    <state key="normal" title="Add Image"/>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="btn_ChoosePhoto" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pn-XG-e8L">
+                                                    <rect key="frame" x="145" y="52" width="30" height="25"/>
+                                                    <state key="normal" image="camera.png">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="selectPhoto:" destination="ojK-4B-bXC" eventType="touchUpInside" id="sRI-5r-gSj"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -338,11 +340,12 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Account Settings" id="tBv-ap-XZY">
                         <barButtonItem key="leftBarButtonItem" image="Burger" id="8uF-0M-2qh"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="u1b-g6-z6R"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="u1b-g6-z6R"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
-                        <outlet property="revealButtonItem" destination="8uF-0M-2qh" id="vCG-eM-hIG"/>
+                        <outlet property="img_Profile" destination="8vo-CF-Epr" id="1l2-OJ-ned"/>
+                        <outlet property="revealButtonItem" destination="8uF-0M-2qh" id="3af-5a-YYB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fig-9s-8Pn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2115,18 +2118,19 @@ It is very important to our development team to get your feedback in a timely wa
     </scenes>
     <resources>
         <image name="10223234c490a541d2f5.jpg" width="200" height="200"/>
+        <image name="Address_Book-128.png" width="128" height="128"/>
         <image name="Burger" width="24" height="17"/>
-        <image name="about-50.png" width="50" height="50"/>
+        <image name="Group_of_People-128.png" width="128" height="128"/>
+        <image name="RSS_Feed-128.png" width="128" height="128"/>
+        <image name="Twitter_Bird-128.png" width="128" height="128"/>
         <image name="balance.png" width="25" height="25"/>
         <image name="bill.png" width="25" height="25"/>
         <image name="boy_with_flower_by_tuyetdinhsinhvat-d39q20z.jpg" width="600" height="600"/>
         <image name="camera.png" width="51" height="42"/>
-        <image name="edit_user-50.png" width="50" height="50"/>
-        <image name="group-50.png" width="50" height="50"/>
         <image name="login.jpg" width="1024" height="631"/>
+        <image name="logout-128.png" width="128" height="128"/>
         <image name="pill.png" width="531" height="531"/>
         <image name="settings.png" width="25" height="25"/>
-        <image name="tones-50.png" width="50" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -2134,8 +2138,8 @@ It is very important to our development team to get your feedback in a timely wa
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="gHh-eZ-Rmr"/>
-        <segue reference="aG3-MC-N10"/>
+        <segue reference="5Hs-c3-pvd"/>
+        <segue reference="ADN-J7-yNz"/>
         <segue reference="r84-v2-Taf"/>
         <segue reference="3Cj-as-CbW"/>
     </inferredMetricsTieBreakers>

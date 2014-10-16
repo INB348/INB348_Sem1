@@ -32,7 +32,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -59,6 +59,10 @@
             
         case 4:
             CellIdentifier = @"About";
+            break;
+            
+        case 5:
+            CellIdentifier = @"LogOut";
             break;
     }
 
