@@ -41,7 +41,12 @@
     [query whereKey:@"username" equalTo:self.usernameLabel.text];
     PFUser *user = (PFUser *)[query getFirstObject];
     if(user != nil){
-        NSLog(@"User exists - Sending request");
+        PFObject *newGroupUser = [PFObject objectWithClassName:@"UserGroup"];
+        [newGroupUser setObject:self.group forKey:@"group"];
+        [newGroupUser setObject:user forKey:@"user"];
+        [newGroupUser setValue:[NSNumber numberWithBool:NO] forKey:@"accepted"];
+        [newGroupUser setValue:@0 forKey:@"balance"];
+        [newGroupUser saveEventually];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else{
         NSLog(@"User doesn't exist");

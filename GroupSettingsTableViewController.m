@@ -104,6 +104,7 @@ GroupTabBarController *groupTabBarController;
         AddMemberNavigationController *addMemberNavigationController = segue.destinationViewController;
         AddMemberToGroupViewController *addMemberViewController = (AddMemberToGroupViewController *)addMemberNavigationController.topViewController;
         addMemberViewController.groupUsers = groupTabBarController.groupUsers;
+        addMemberViewController.group = groupTabBarController.group;
     }
     
 }
