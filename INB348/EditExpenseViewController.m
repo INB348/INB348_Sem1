@@ -186,4 +186,22 @@
         [destinationViewController setDelegate:self];
     }
 }
+- (IBAction)delete:(id)sender {
+    [self.expense deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+            [PFObject deleteAllInBackground:self.oldExpenseParticipators block:^(BOOL succeeded, NSError *error) {
+                if(succeeded){
+                    [self calculateNewUserBalance];
+                    [self.delegate refresh];
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                } else{
+                    NSLog(@"%@", error);
+                }
+            }];
+
+        }else{
+            NSLog(@"%@", error);
+        }
+    }];
+}
 @end

@@ -30,6 +30,7 @@
 
 @property (strong) NSMutableArray *expensePayerIndexes;
 @property (strong) NSMutableArray *expenseUserIndexes;
+- (IBAction)delete:(id)sender;
 
 @property (nonatomic, assign) id <EditExpenseViewController> delegate;
 @end
