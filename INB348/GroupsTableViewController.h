@@ -12,7 +12,6 @@
 #import "BalanceManagementTableViewController.h"
 #import "GroupTabBarController.h"
 #import "BalanceNavigationController.h"
-#import "SWRevealViewController.h"
 
 @interface GroupsTableViewController : UITableViewController <NewGroupViewController>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
