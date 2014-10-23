@@ -9,7 +9,6 @@
 #import "GroupsTableViewController.h"
 
 @interface GroupsTableViewController ()
-@property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
 @property (strong) NSArray *userGroups;
 @end
 
@@ -21,6 +20,7 @@
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser) {
         [query whereKey:@"user" equalTo:currentUser];
+        [query whereKey:@"accepted" equalTo:[NSNumber numberWithBool:YES]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 // The find succeeded.
@@ -40,12 +40,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self customSetup];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -78,28 +72,12 @@
     return userGroupCell;
 }
 
-- (void)customSetup
-{
-    SWRevealViewController *revealViewController = self.revealViewController;
-    if ( revealViewController )
-    {
-        [self.revealButtonItem setTarget: revealViewController];
-        [self.revealButtonItem setAction: @selector( revealToggle: )];
-        [self.navigationController.navigationBar addGestureRecognizer:revealViewController.panGestureRecognizer];
-    }
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showGroup"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         GroupTabBarController *groupTabBarController = segue.destinationViewController;
         groupTabBarController.group = self.userGroups[indexPath.row][@"group"];
     }
-    
-//    if ([segue.identifier isEqualToString:@"newGroup"]) {
-//        NewGroupViewController *destViewController = (NewGroupViewController *)((UINavigationController *)segue.destinationViewController).topViewController;
-//        [destViewController setDelegate:self];
-//    }
 }
 
 

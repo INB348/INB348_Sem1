@@ -77,6 +77,10 @@
 		D8BB982119D1532100D47F5C /* GroupSettingsNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8BB982019D1532100D47F5C /* GroupSettingsNavigationViewController.m */; };
 		D8D8B02E19E7828700C9DB03 /* AddMemberToGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D8B02D19E7828700C9DB03 /* AddMemberToGroupViewController.m */; };
 		D8D8B03119E78D8500C9DB03 /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D8B03019E78D8500C9DB03 /* MembersTableViewController.m */; };
+		D8EF367019F8786500B6B4DC /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF366F19F8786500B6B4DC /* GroupsViewController.m */; };
+		D8EF367419F87ED600B6B4DC /* GroupRequestsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF367319F87ED600B6B4DC /* GroupRequestsTableViewController.m */; };
+		D8EF367719F8808600B6B4DC /* GroupsRequestListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF367619F8808600B6B4DC /* GroupsRequestListTableViewController.m */; };
+		D8EF368019F88EFD00B6B4DC /* GroupRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF367F19F88EFD00B6B4DC /* GroupRequestCell.m */; };
 		D8FA019319E5001D005C6BC7 /* SummaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8FA019219E5001D005C6BC7 /* SummaryCell.m */; };
 /* End PBXBuildFile section */
 
@@ -196,6 +200,14 @@
 		D8D8B02D19E7828700C9DB03 /* AddMemberToGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMemberToGroupViewController.m; sourceTree = "<group>"; };
 		D8D8B02F19E78D8500C9DB03 /* MembersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MembersTableViewController.h; sourceTree = "<group>"; };
 		D8D8B03019E78D8500C9DB03 /* MembersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersTableViewController.m; sourceTree = "<group>"; };
+		D8EF366E19F8786500B6B4DC /* GroupsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsViewController.h; sourceTree = "<group>"; };
+		D8EF366F19F8786500B6B4DC /* GroupsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
+		D8EF367219F87ED600B6B4DC /* GroupRequestsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupRequestsTableViewController.h; sourceTree = "<group>"; };
+		D8EF367319F87ED600B6B4DC /* GroupRequestsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupRequestsTableViewController.m; sourceTree = "<group>"; };
+		D8EF367519F8808600B6B4DC /* GroupsRequestListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsRequestListTableViewController.h; sourceTree = "<group>"; };
+		D8EF367619F8808600B6B4DC /* GroupsRequestListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsRequestListTableViewController.m; sourceTree = "<group>"; };
+		D8EF367E19F88EFD00B6B4DC /* GroupRequestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupRequestCell.h; sourceTree = "<group>"; };
+		D8EF367F19F88EFD00B6B4DC /* GroupRequestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupRequestCell.m; sourceTree = "<group>"; };
 		D8FA019119E5001D005C6BC7 /* SummaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryCell.h; sourceTree = "<group>"; };
 		D8FA019219E5001D005C6BC7 /* SummaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -414,9 +426,12 @@
 		6F5CE5DB19CA752C00489DDC /* GroupList */ = {
 			isa = PBXGroup;
 			children = (
+				D8EF367119F87EBD00B6B4DC /* GroupRequests */,
 				D84F130719D1060E00D9FDD4 /* NewGroup */,
 				0C192DA919B78DD2008A0CA9 /* GroupsTableViewController.h */,
 				0C192DAA19B78DD2008A0CA9 /* GroupsTableViewController.m */,
+				D8EF366E19F8786500B6B4DC /* GroupsViewController.h */,
+				D8EF366F19F8786500B6B4DC /* GroupsViewController.m */,
 			);
 			name = GroupList;
 			sourceTree = "<group>";
@@ -490,6 +505,19 @@
 				D8D8B03019E78D8500C9DB03 /* MembersTableViewController.m */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		D8EF367119F87EBD00B6B4DC /* GroupRequests */ = {
+			isa = PBXGroup;
+			children = (
+				D8EF367E19F88EFD00B6B4DC /* GroupRequestCell.h */,
+				D8EF367F19F88EFD00B6B4DC /* GroupRequestCell.m */,
+				D8EF367219F87ED600B6B4DC /* GroupRequestsTableViewController.h */,
+				D8EF367319F87ED600B6B4DC /* GroupRequestsTableViewController.m */,
+				D8EF367519F8808600B6B4DC /* GroupsRequestListTableViewController.h */,
+				D8EF367619F8808600B6B4DC /* GroupsRequestListTableViewController.m */,
+			);
+			name = GroupRequests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -605,6 +633,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F5CE5D319CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m in Sources */,
+				D8EF368019F88EFD00B6B4DC /* GroupRequestCell.m in Sources */,
 				D869F5CA19E90A04000C31FC /* EditExpenseViewController.m in Sources */,
 				D869F5D419E9145A000C31FC /* EditExpenseParticipatorsTableViewController.m in Sources */,
 				0C1B96C319B76887006AA177 /* NotificationsTableViewController.m in Sources */,
@@ -617,6 +646,7 @@
 				D8D8B02E19E7828700C9DB03 /* AddMemberToGroupViewController.m in Sources */,
 				D84F130E19D106C400D9FDD4 /* BalanceNavigationController.m in Sources */,
 				D8D8B03119E78D8500C9DB03 /* MembersTableViewController.m in Sources */,
+				D8EF367419F87ED600B6B4DC /* GroupRequestsTableViewController.m in Sources */,
 				6F5CE5D619CA725D00489DDC /* NewExpenseForWhomTableViewController.m in Sources */,
 				0C6E5F7B19B72750000594BF /* AppDelegate.m in Sources */,
 				0CE717F319C04C0400D9F56D /* ForgotPasswordViewController.m in Sources */,
@@ -625,6 +655,7 @@
 				0C8FD7F019B7E150002D3D7F /* NewBalanceTableViewController.m in Sources */,
 				0CE717ED19C033D800D9F56D /* LogInViewController.m in Sources */,
 				0C1B96CC19B78617006AA177 /* AccountSettingsTableViewController.m in Sources */,
+				D8EF367019F8786500B6B4DC /* GroupsViewController.m in Sources */,
 				D869F5CE19E90AC1000C31FC /* EditExpenseNavigationController.m in Sources */,
 				D8171E4B19D151FD001DF24E /* HistoryNavigationViewController.m in Sources */,
 				0C1B96C919B773AE006AA177 /* BalanceManagementTableViewController.m in Sources */,
@@ -633,6 +664,7 @@
 				0C56510719EF7798008E667C /* MBProgressHUD.m in Sources */,
 				D800A3BE19D01F8400201202 /* NewGroupViewController.m in Sources */,
 				0C1B96C619B76CB6006AA177 /* ExpenseManagementTableViewController.m in Sources */,
+				D8EF367719F8808600B6B4DC /* GroupsRequestListTableViewController.m in Sources */,
 				6F5CE5D919CA726900489DDC /* NewExpenseSummaryTableViewController.m in Sources */,
 				D8FA019319E5001D005C6BC7 /* SummaryCell.m in Sources */,
 				0C6E5FA219B727D3000594BF /* SWRevealViewController.m in Sources */,

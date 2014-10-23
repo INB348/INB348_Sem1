@@ -21,6 +21,7 @@ GroupTabBarController *groupTabBarController;
     PFQuery *groupUsersQuery = [PFQuery queryWithClassName:@"UserGroup"];
     [groupUsersQuery includeKey:@"user"];
     [groupUsersQuery whereKey:@"group" equalTo:groupTabBarController.group];
+    [groupUsersQuery whereKey:@"accepted" equalTo:[NSNumber numberWithBool:YES]];
     [groupUsersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.

@@ -11,6 +11,7 @@
 
 @interface AddMemberToGroupViewController : UIViewController
 @property (strong) NSArray *groupUsers;
+@property (strong) PFObject *group;
 - (IBAction)cancel:(id)sender;
 - (IBAction)add:(id)sender;
 @property (strong, nonatomic) IBOutlet UITextField *usernameLabel;
