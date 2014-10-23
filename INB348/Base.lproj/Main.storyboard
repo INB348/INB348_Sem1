@@ -1277,7 +1277,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yF8-Sa-Hnj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4050" y="-2259"/>
+            <point key="canvasLocation" x="3576" y="-2296"/>
         </scene>
         <!--History-->
         <scene sceneID="wyv-iI-iVu">
@@ -2280,7 +2280,7 @@ It is very important to our development team to get your feedback in a timely wa
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H1A-hT-KiV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3518" y="-2259"/>
+            <point key="canvasLocation" x="3116" y="-2296"/>
         </scene>
     </scenes>
     <resources>
