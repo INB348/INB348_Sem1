@@ -105,21 +105,16 @@
     for (PFObject *user in self.groupUsers) {
         PFQuery *query = [PFQuery queryWithClassName:@"ExpenseParticipator"];
         [query whereKey:@"user" equalTo:user];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if(!error){
-                NSLog(@"Found %d ExpenseParticipations for User %@",objects.count, user[@"user"][@"name"]);
-                double balance = 0;
-                for (PFObject *expenseParticipator in objects) {
-                    double payment = (double)[expenseParticipator[@"payment"] doubleValue];
-                    double usage = (double)[expenseParticipator[@"usage"] doubleValue];
-                    balance = balance+payment-usage;
-                }
-                [user setValue:[NSNumber numberWithDouble:balance] forKey:@"balance"];
-                [updatedUsers addObject:user];
-            } else{
-                NSLog(@"Erro: %@",error);
-            }
-        }];
+        NSArray *objects = [query findObjects];
+        NSLog(@"Found %d ExpenseParticipations for User %@",objects.count, user[@"user"][@"name"]);
+        double balance = 0;
+        for (PFObject *expenseParticipator in objects) {
+            double payment = (double)[expenseParticipator[@"payment"] doubleValue];
+            double usage = (double)[expenseParticipator[@"usage"] doubleValue];
+            balance = balance+payment-usage;
+        }
+        [user setValue:[NSNumber numberWithDouble:balance] forKey:@"balance"];
+        [updatedUsers addObject:user];
     }
     [PFObject saveAllInBackground:updatedUsers block:^(BOOL succeeded, NSError *error) {
         if(succeeded){
@@ -186,6 +181,7 @@
         [destinationViewController setDelegate:self];
     }
 }
+
 - (IBAction)delete:(id)sender {
     [self.expense deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(succeeded){
@@ -198,7 +194,7 @@
                     NSLog(@"%@", error);
                 }
             }];
-
+            
         }else{
             NSLog(@"%@", error);
         }

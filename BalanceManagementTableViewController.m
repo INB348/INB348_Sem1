@@ -15,6 +15,8 @@
 
 @implementation BalanceManagementTableViewController
 GroupTabBarController *groupTabBarController;
+NSUInteger indexOfLowestBalance;
+double lowestBalance = 0.0;
 
 - (void)refresh{
     //Retrieving GroupUser list
@@ -25,7 +27,7 @@ GroupTabBarController *groupTabBarController;
     [groupUsersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
-            NSLog(@"Successfully retrieved %d UserGroups.", objects.count);
+            NSLog(@"Successfully retrieved %lu UserGroups.", (unsigned long)objects.count);
             
             // Do something with the found objects
             groupTabBarController.groupUsers = [objects mutableCopy];
@@ -42,11 +44,6 @@ GroupTabBarController *groupTabBarController;
 {
     [super viewDidLoad];
     groupTabBarController =(GroupTabBarController*)[(BalanceNavigationController *)[self navigationController] parentViewController];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self refresh];
 }
 
@@ -56,6 +53,26 @@ GroupTabBarController *groupTabBarController;
     // Fetch the devices from persistent data store
     [self.tableView reloadData];
     self.navigationItem.title = groupTabBarController.group[@"name"];
+    
+    [groupTabBarController.groupUsers enumerateObjectsUsingBlock:^(PFObject *groupUser, NSUInteger idx, BOOL *stop) {
+        if([groupUser[@"balance"] doubleValue] < lowestBalance){
+            lowestBalance = [groupUser[@"balance"] doubleValue];
+            indexOfLowestBalance = idx;
+        };
+    }];
+    if(lowestBalance != 0.0){
+    UITableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfLowestBalance inSection:0]];
+    [tableViewCell.contentView.layer setBorderColor:[UIColor redColor].CGColor];
+    [tableViewCell.contentView.layer setBorderWidth:2.0f];
+    lowestBalance = 0.0;
+    }
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    UITableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfLowestBalance inSection:0]];
+    [tableViewCell.contentView.layer setBorderColor:[UIColor whiteColor].CGColor];
+    [tableViewCell.contentView.layer setBorderWidth:0.0f];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -74,6 +91,12 @@ GroupTabBarController *groupTabBarController;
     PFObject *groupUser = groupTabBarController.groupUsers[indexPath.row];
     NSString *userName = groupUser[@"user"][@"name"];
     NSNumber *balance = groupUser[@"balance"];
+    
+    if([balance longValue] >= 0){
+        [groupUserCell.detailTextLabel setTextColor:[UIColor greenColor]];
+    } else {
+        [groupUserCell.detailTextLabel setTextColor:[UIColor redColor]];
+    }
     
     [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", userName]];
     [groupUserCell.detailTextLabel setText:[balance stringValue]];

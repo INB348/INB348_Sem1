@@ -65,6 +65,12 @@
     NSString *groupName = userGroup[@"group"][@"name"];
     NSNumber *balance = userGroup[@"balance"];
     
+    if([balance longValue] >= 0){
+        [userGroupCell.detailTextLabel setTextColor:[UIColor greenColor]];
+    } else {
+        [userGroupCell.detailTextLabel setTextColor:[UIColor redColor]];
+    }
+    
     [userGroupCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
     [userGroupCell.detailTextLabel setText:[balance stringValue]];
     userGroupCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];

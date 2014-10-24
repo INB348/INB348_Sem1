@@ -29,7 +29,7 @@ bool readyForReload = false;
 - (void)setBalanceLabel {
     NSNumber *balance = self.groupUser[@"balance"];
     self.balanceLabel.title = [balance stringValue];
-    if([balance longValue] > 0){
+    if([balance longValue] >= 0){
         [self.balanceLabel setTintColor:[UIColor greenColor]];
     } else {
         [self.balanceLabel setTintColor:[UIColor redColor]];
