@@ -67,6 +67,7 @@
 		6F5CE5D919CA726900489DDC /* NewExpenseSummaryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CE5D819CA726900489DDC /* NewExpenseSummaryTableViewController.m */; };
 		D800A3BE19D01F8400201202 /* NewGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D800A3BD19D01F8400201202 /* NewGroupViewController.m */; };
 		D8171E4B19D151FD001DF24E /* HistoryNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8171E4A19D151FD001DF24E /* HistoryNavigationViewController.m */; };
+		D81C553419FAA08F00896D8E /* UserExpenseHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D81C553319FAA08F00896D8E /* UserExpenseHistoryTableViewController.m */; };
 		D84F130B19D1067900D9FDD4 /* GroupTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F130A19D1067900D9FDD4 /* GroupTabBarController.m */; };
 		D84F130E19D106C400D9FDD4 /* BalanceNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F130D19D106C400D9FDD4 /* BalanceNavigationController.m */; };
 		D869F5CA19E90A04000C31FC /* EditExpenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D869F5C919E90A04000C31FC /* EditExpenseViewController.m */; };
@@ -180,6 +181,8 @@
 		D800A3BD19D01F8400201202 /* NewGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGroupViewController.m; sourceTree = "<group>"; };
 		D8171E4919D151FD001DF24E /* HistoryNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryNavigationViewController.h; sourceTree = "<group>"; };
 		D8171E4A19D151FD001DF24E /* HistoryNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryNavigationViewController.m; sourceTree = "<group>"; };
+		D81C553219FAA08F00896D8E /* UserExpenseHistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserExpenseHistoryTableViewController.h; sourceTree = "<group>"; };
+		D81C553319FAA08F00896D8E /* UserExpenseHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserExpenseHistoryTableViewController.m; sourceTree = "<group>"; };
 		D84F130919D1067900D9FDD4 /* GroupTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupTabBarController.h; sourceTree = "<group>"; };
 		D84F130A19D1067900D9FDD4 /* GroupTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupTabBarController.m; sourceTree = "<group>"; };
 		D84F130C19D106C400D9FDD4 /* BalanceNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalanceNavigationController.h; sourceTree = "<group>"; };
@@ -443,6 +446,8 @@
 				0C1B96C519B76CB6006AA177 /* ExpenseManagementTableViewController.m */,
 				D8171E4919D151FD001DF24E /* HistoryNavigationViewController.h */,
 				D8171E4A19D151FD001DF24E /* HistoryNavigationViewController.m */,
+				D81C553219FAA08F00896D8E /* UserExpenseHistoryTableViewController.h */,
+				D81C553319FAA08F00896D8E /* UserExpenseHistoryTableViewController.m */,
 			);
 			name = History;
 			sourceTree = "<group>";
@@ -644,6 +649,7 @@
 				D8BB982119D1532100D47F5C /* GroupSettingsNavigationViewController.m in Sources */,
 				D869F5D119E90FEE000C31FC /* EditOptionsTableViewController.m in Sources */,
 				D8D8B02E19E7828700C9DB03 /* AddMemberToGroupViewController.m in Sources */,
+				D81C553419FAA08F00896D8E /* UserExpenseHistoryTableViewController.m in Sources */,
 				D84F130E19D106C400D9FDD4 /* BalanceNavigationController.m in Sources */,
 				D8D8B03119E78D8500C9DB03 /* MembersTableViewController.m in Sources */,
 				D8EF367419F87ED600B6B4DC /* GroupRequestsTableViewController.m in Sources */,

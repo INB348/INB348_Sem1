@@ -11,6 +11,7 @@
 #import "GroupTabBarController.h"
 #import "BalanceNavigationController.h"
 #import "NewExpenseNavigationController.h"
+#import "UserExpenseHistoryTableViewController.h"
 
 @interface BalanceManagementTableViewController : UITableViewController <NewExpenseNavigationController>
 - (IBAction)back:(id)sender;
