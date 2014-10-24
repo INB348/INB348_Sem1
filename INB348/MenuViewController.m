@@ -67,6 +67,25 @@
     }
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: CellIdentifier forIndexPath: indexPath];
+    
+    if(indexPath.row == 0) {
+        UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
+        nameLabel.text = [[PFUser currentUser] objectForKey:@"name"];
+        
+        // Configure the cell
+        PFFile *thumbnail = [[PFUser currentUser] objectForKey:@"profilePic"];
+        UIImageView *chosenImage = (UIImageView*) [cell viewWithTag:99];
+        
+        [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            // Now that the data is fetched, update the cell's image property.
+            if(!error) {
+                chosenImage.image = [UIImage imageWithData:data];
+            } else{
+                chosenImage.image = [UIImage imageNamed:@"pill.png"];
+            }
+        }];
+    }
+
  
     return cell;
 }
