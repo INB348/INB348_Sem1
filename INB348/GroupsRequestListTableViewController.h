@@ -10,7 +10,7 @@
 #import <Parse/Parse.h>
 #import "GroupRequestCell.h"
 
-@interface GroupsRequestListTableViewController : UITableViewController
+@interface GroupsRequestListTableViewController : UITableViewController <GroupRequestCell>
 - (IBAction)back:(id)sender;
 @property (strong) NSArray *requestedGroupUsers;
 @end
