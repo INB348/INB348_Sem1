@@ -36,6 +36,7 @@
     self.txt_Name.delegate = self;
     
     /* Profile Image Format */
+    self.img_Profile.image = [UIImage imageNamed:@"pill.png"];
     self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
     self.img_Profile.clipsToBounds = YES;
     self.img_Profile.layer.borderWidth = 3.0f;

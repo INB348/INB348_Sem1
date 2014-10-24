@@ -247,6 +247,7 @@
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Change your name" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WD1-WQ-Avg">
                                                     <rect key="frame" x="24" y="7" width="273" height="30"/>
+                                                    <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -266,8 +267,9 @@
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type new password" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="aCR-25-7YH">
                                                     <rect key="frame" x="24" y="7" width="273" height="30"/>
+                                                    <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -285,8 +287,9 @@
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Re-type your password" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="e9N-f2-0uj">
                                                     <rect key="frame" x="24" y="7" width="273" height="30"/>
+                                                    <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -328,12 +331,19 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Account Settings" id="tBv-ap-XZY">
                         <barButtonItem key="leftBarButtonItem" image="Burger" id="8uF-0M-2qh"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="u1b-g6-z6R"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="u1b-g6-z6R">
+                            <connections>
+                                <action selector="save:" destination="ojK-4B-bXC" id="HnA-Ii-6nv"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="img_Profile" destination="8vo-CF-Epr" id="1l2-OJ-ned"/>
                         <outlet property="revealButtonItem" destination="8uF-0M-2qh" id="3af-5a-YYB"/>
+                        <outlet property="txt_NewName" destination="WD1-WQ-Avg" id="EVP-OA-ZWv"/>
+                        <outlet property="txt_NewPassword" destination="aCR-25-7YH" id="IOQ-MU-QbJ"/>
+                        <outlet property="txt_ReTypePassword" destination="e9N-f2-0uj" id="hmb-k2-0fV"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fig-9s-8Pn" userLabel="First Responder" sceneMemberID="firstResponder"/>
