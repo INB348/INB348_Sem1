@@ -96,6 +96,13 @@ GroupTabBarController *groupTabBarController;
         
         [destNavigationController setDelegate:self];
     }
+    if ([segue.identifier isEqualToString:@"showUserExpenses"]) {
+        UserExpenseHistoryTableViewController *destViewController = (UserExpenseHistoryTableViewController *)[(UINavigationController *)segue.destinationViewController topViewController];
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        destViewController.groupUser = groupTabBarController.groupUsers[indexPath.row];
+        destViewController.group = groupTabBarController.group;
+        destViewController.groupUsers = groupTabBarController.groupUsers;
+    }
 }
 
 - (IBAction)back:(id)sender {
