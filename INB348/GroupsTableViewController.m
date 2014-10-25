@@ -15,6 +15,8 @@
 @implementation GroupsTableViewController
 
 - (void)refresh{
+    [[PFUser currentUser] fetchInBackground];
+    
     PFQuery *query = [PFQuery queryWithClassName:@"UserGroup"];
     [query includeKey:@"group"];
     PFUser *currentUser = [PFUser currentUser];

@@ -70,7 +70,17 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.img_Profile.image = chosenImage;
+    // Resize image
+    UIGraphicsBeginImageContext(CGSizeMake(256, 256));
+    [chosenImage drawInRect: CGRectMake(0, 0, 256, 256)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // Set maximun compression in order to decrease file size and enable faster uploads & downloads
+    NSData *imageData = UIImageJPEGRepresentation(newImage, 0.0f);
+    UIImage *processedImage = [UIImage imageWithData:imageData];
+    
+    self.img_Profile.image = processedImage;
     
     /* Profile Image Format */
     self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
@@ -136,12 +146,21 @@
             PFUser *user = [PFUser user];
             user.username = self.txt_NewEmail.text;
             user.password = self.txt_NewPassword.text;
+
+            // Show progress
+            hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+            [self.navigationController.view addSubview:hud];
+            hud.mode = MBProgressHUDModeAnnularDeterminate;
+            hud.labelText = @"Uploading";
+            [hud show:YES];
+            
+            // myProgressTask uses the HUD instance to update progress
+            [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
             
             [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
+                    
                     //The registration was succesful, go to the wall
-                    //Profile Picture
-                    //UIImage *image = [UIImage imageNamed:@"pill"];
                     NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
                     
                     NSString *imageName = [NSString stringWithFormat:@"%@_ProfilePhoto", self.txt_Name.text];
@@ -151,11 +170,16 @@
                     PFUser *user = [PFUser currentUser];
                     [user setObject:self.txt_Name.text forKey:@"name"];
                     [user setObject:imageFile forKey:@"profilePic"];
-                    [user saveInBackground];
-                    [self performSegueWithIdentifier:@"SignUpSuccessful" sender:self];
                     
-                    UIAlertView *welcomeView = [[UIAlertView alloc] initWithTitle:@"Welcome" message:@"You've successfully signed up to WhoPaysNext :)" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [welcomeView show];
+                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        [hud hide:YES];
+                        if (succeeded) {
+                            [self performSegueWithIdentifier:@"SignUpSuccessful" sender:self];
+                            
+                            UIAlertView *welcomeView = [[UIAlertView alloc] initWithTitle:@"Welcome" message:@"You've successfully signed up to WhoPaysNext :)" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                            [welcomeView show];
+                        }
+                    }];
                     
                 } else {
                     //Something bad has ocurred
@@ -187,6 +211,16 @@
     NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     return [emailTest evaluateWithObject:checkEmail];
+}
+
+- (void)myProgressTask {
+    // This just increases the progress indicator in a loop
+    float progress = 0.0f;
+    while (progress < 1.0f) {
+        progress += 0.01f;
+        hud.progress = progress;
+        usleep(50000);
+    }
 }
 
 //    - (BOOL)passwordcheck:(NSString *)password {

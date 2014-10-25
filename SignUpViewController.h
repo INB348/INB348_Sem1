@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
 
-@interface SignUpViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface SignUpViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MBProgressHUDDelegate> {
+    MBProgressHUD *hud;
+}
+
 
 @property (nonatomic, strong) IBOutlet UITextField *txt_NewEmail;
 @property (nonatomic, strong) IBOutlet UITextField *txt_NewPassword;

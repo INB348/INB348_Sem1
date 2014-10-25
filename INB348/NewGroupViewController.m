@@ -83,7 +83,18 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.img_Profile.image = chosenImage;
+    
+    // Resize image
+    UIGraphicsBeginImageContext(CGSizeMake(256, 256));
+    [chosenImage drawInRect: CGRectMake(0, 0, 256, 256)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // Set maximun compression in order to decrease file size and enable faster uploads & downloads
+    NSData *imageData = UIImageJPEGRepresentation(newImage, 0.0f);
+    UIImage *processedImage = [UIImage imageWithData:imageData];
+    
+    self.img_Profile.image = processedImage;
     
     /* Profile Image Format */
     self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
@@ -133,11 +144,9 @@
     
     // Upload recipe to Parse
     [group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [hud hide:YES];
-        
         
         if(succeeded) {
-            
+            [hud hide:YES];
             // Show success message
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully created new group" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];

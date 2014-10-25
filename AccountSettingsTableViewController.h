@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "MBProgressHUD.h"
 
-@interface AccountSettingsTableViewController : UITableViewController <UIAlertViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
-
+@interface AccountSettingsTableViewController : UITableViewController <UIAlertViewDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MBProgressHUDDelegate> {
+    MBProgressHUD *hud;
+}
 
 @property (strong, nonatomic) IBOutlet UIImageView *img_Profile;
 @property (nonatomic, strong) IBOutlet UITextField *txt_NewPassword;
