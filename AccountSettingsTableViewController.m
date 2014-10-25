@@ -150,49 +150,57 @@
     PFQuery *updateCurrentUserInfo = [PFUser query];
     [updateCurrentUserInfo whereKey:@"objectId" equalTo:[PFUser currentUser].objectId];
     
-    // Show progress
-    hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:hud];
-    hud.mode = MBProgressHUDModeAnnularDeterminate;
-    hud.labelText = @"Uploading";
-    [hud show:YES];
-    
-    // myProgressTask uses the HUD instance to update progress
-    [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
-    
-    [updateCurrentUserInfo getFirstObjectInBackgroundWithBlock:^(PFObject *currentUserInfo, NSError *error) {
+    if (![self.txt_ReTypePassword.text isEqualToString:self.txt_NewPassword.text]) {
+        UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your passwords do not match. Please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [errorAlertView show];
         
-        if(!error) {
-            currentUserInfo[@"name"] = self.txt_NewName.text;
-            currentUserInfo[@"profilePic"] = imageFile;
-            
-            [currentUserInfo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                
-                if (!error) {
-                    [hud hide:YES];
-                    
-                    // Show success message
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Complete" message:@"Successfully updated your account information" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alert show];
-                    
-                    // Dismiss the controller
-//                    [self dismissViewControllerAnimated:YES completion:nil];
-                    
-                } else {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Failure" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alert show];
-                    
-                }
-                
-            }];
-            
-        } else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Failure" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-            
-        }
+    } else {
+    
+        // Show progress
+        hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [self.navigationController.view addSubview:hud];
+        hud.mode = MBProgressHUDModeAnnularDeterminate;
+        hud.labelText = @"Uploading";
+        [hud show:YES];
         
-    }];
+        // myProgressTask uses the HUD instance to update progress
+        [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+        
+        [updateCurrentUserInfo getFirstObjectInBackgroundWithBlock:^(PFObject *currentUserInfo, NSError *error) {
+            
+            if(!error) {
+                currentUserInfo[@"name"] = self.txt_NewName.text;
+                [PFUser currentUser].password = self.txt_NewPassword.text;
+                [[PFUser currentUser] saveInBackground];
+                currentUserInfo[@"profilePic"] = imageFile;
+                
+                [currentUserInfo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    
+                    if (!error) {
+                        [hud hide:YES];
+                        
+                        // Show success message
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Complete" message:@"Successfully updated your account information" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alert show];
+                        
+                        // Dismiss the controller
+                        //                    [self dismissViewControllerAnimated:YES completion:nil];
+                        
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Failure" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alert show];
+                        
+                    }
+                    
+                }];
+                
+            } else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Failure" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+                
+            }
+        }];
+    }
 }
 
 - (void)myProgressTask {
