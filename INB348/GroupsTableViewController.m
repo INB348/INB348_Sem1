@@ -23,6 +23,7 @@
     if (currentUser) {
         [query whereKey:@"user" equalTo:currentUser];
         [query whereKey:@"accepted" equalTo:[NSNumber numberWithBool:YES]];
+        [query orderByDescending:@"createdAt"];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 // The find succeeded.

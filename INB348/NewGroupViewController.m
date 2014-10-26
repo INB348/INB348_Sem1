@@ -121,66 +121,70 @@
 }
 
 - (IBAction)save:(id)sender {
-    // Create a new Group and set name
-    PFObject *group= [PFObject objectWithClassName:@"Group"];
-    [group setObject:self.nameTextField.text forKey:@"name"];
-    
-    
-    //Profile Picture
-    NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
-    NSString *imageName = [NSString stringWithFormat:@"%@_GroupPhoto", self.nameTextField.text];
-    PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
-    [group setObject:imageFile forKey:@"groupPic"];
-    
-    // Show progress
-    hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:hud];
-    hud.mode = MBProgressHUDModeAnnularDeterminate;
-    hud.labelText = @"Uploading";
-    [hud show:YES];
-    
-    // myProgressTask uses the HUD instance to update progress
-    [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
-    
-    // Upload recipe to Parse
-    [group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    if ([self.nameTextField.text length] != 0) {
+        // Create a new Group and set name
+        PFObject *group= [PFObject objectWithClassName:@"Group"];
+        [group setObject:self.nameTextField.text forKey:@"name"];
         
-        if(succeeded) {
-            [hud hide:YES];
-            // Show success message
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully created new group" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
+        
+        //Profile Picture
+        NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
+        NSString *imageName = [NSString stringWithFormat:@"%@_GroupPhoto", self.nameTextField.text];
+        PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
+        [group setObject:imageFile forKey:@"groupPic"];
+        
+        // Show progress
+        hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [self.navigationController.view addSubview:hud];
+        hud.mode = MBProgressHUDModeAnnularDeterminate;
+        hud.labelText = @"Uploading";
+        [hud show:YES];
+        
+        // myProgressTask uses the HUD instance to update progress
+        [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+        
+        // Upload recipe to Parse
+        [group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             
-            // Notify table view to reload the recipes from Parse cloud
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
-            
-            // Create a new UserGroup relation
-            PFObject *userGroup= [PFObject objectWithClassName:@"UserGroup"];
-            [userGroup setObject:[PFUser currentUser] forKey:@"user"];
-            [userGroup setObject:group forKey:@"group"];
-            
-            //Set default balance of 0
-            userGroup[@"balance"] = @0;
-            
-            //Save
-            [userGroup saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if(succeeded){
-                    [self.delegate refresh];
-                    
-                    // Dismiss the controller
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                } else {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Relation Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alert show];
-                }
-            }];
-        } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    }];
-    
-//    [self dismissViewControllerAnimated:YES completion:nil];
+            if(succeeded) {
+                [hud hide:YES];
+                // Show success message
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully created new group" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+                
+                // Notify table view to reload the recipes from Parse cloud
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
+                
+                // Create a new UserGroup relation
+                PFObject *userGroup= [PFObject objectWithClassName:@"UserGroup"];
+                [userGroup setObject:[PFUser currentUser] forKey:@"user"];
+                [userGroup setObject:group forKey:@"group"];
+                
+                //Set default balance of 0
+                userGroup[@"balance"] = @0;
+                userGroup[@"accepted"] = @YES;
+                
+                //Save
+                [userGroup saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if(succeeded){
+                        [self.delegate refresh];
+                        
+                        // Dismiss the controller
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Relation Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alert show];
+                    }
+                }];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure" message:@"Please input the Group name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 - (void)myProgressTask {

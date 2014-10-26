@@ -137,6 +137,7 @@
 //    [self presentViewController:add
 //                       animated:YES
 //                     completion:nil];
+//    [self performSegueWithIdentifier:@"BackToGroupView" sender:self];
 }
 
 @end

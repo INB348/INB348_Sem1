@@ -348,8 +348,8 @@
 		0C6E5F9F19B727BF000594BF /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				0C56510519EF7798008E667C /* MBProgressHUD.h */,
 				0C56510619EF7798008E667C /* MBProgressHUD.m */,
+				0C56510519EF7798008E667C /* MBProgressHUD.h */,
 				0C6E5FA319B72900000594BF /* MenuViewController.h */,
 				0C6E5FA419B72900000594BF /* MenuViewController.m */,
 				0C6E5FA019B727D3000594BF /* SWRevealViewController.h */,
