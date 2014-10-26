@@ -107,6 +107,16 @@ NSMutableArray *participators;
     return false;
 }
 
+- (void)setColorByValue:(UILabel *)label value:(long) value
+{
+    if(value > 0){
+        [label setTextColor:[UIColor greenColor]];
+    } else if(value < 0){
+        [label setTextColor:[UIColor redColor]];
+    }
+
+}
+
 - (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"SummaryCell";
@@ -128,14 +138,20 @@ NSMutableArray *participators;
     //Set old balance
     NSNumber *oldBalance = expenseParticipator[@"user"][@"balance"];
     [summaryCell.oldBalance setText:[NSString stringWithFormat:@"%@", [oldBalance stringValue]]];
+    [self setColorByValue:summaryCell.oldBalance value:[expenseParticipator[@"user"][@"balance"] longValue]];
     
     //Set payment
     [summaryCell.payed setText:[NSString stringWithFormat:@"%@", [expenseParticipator[@"payment"] stringValue]]];
+    [self setColorByValue:summaryCell.payed value:[expenseParticipator[@"payment"] longValue]];
+    
     //Set usage
     [summaryCell.used setText:[NSString stringWithFormat:@"%@", [expenseParticipator[@"usage"] stringValue]]];
+    [self setColorByValue:summaryCell.used value:-[expenseParticipator[@"usage"] longValue]];
+    
     //Set new balance
     NSNumber *newBalance = [self getNewBalance:expenseParticipator];
     [summaryCell.updatedBalance setText:[NSString stringWithFormat:@"%@", [newBalance stringValue]]];
+    [self setColorByValue:summaryCell.updatedBalance value:[newBalance longValue]];
     
     return summaryCell;
 }
