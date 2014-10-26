@@ -85,10 +85,24 @@
                 chosenImage.image = [UIImage imageNamed:@"pill.png"];
             }
         }];
+        
+        chosenImage.layer.cornerRadius = chosenImage.frame.size.width / 2;
+        chosenImage.clipsToBounds = YES;
+        chosenImage.layer.borderWidth = 1.0f;
+        chosenImage.layer.borderColor = [UIColor whiteColor].CGColor;
     }
 
  
     return cell;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        return 60.0f;
+    } else {
+        return 44.0f;
+    }
 }
 
 #pragma mark state preservation / restoration

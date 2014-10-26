@@ -184,7 +184,7 @@
                         [alert show];
                         
                         // Dismiss the controller
-                        //                    [self dismissViewControllerAnimated:YES completion:nil];
+                        [self performSegueWithIdentifier:@"BackToGroupView" sender:self];
                         
                     } else {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Failure" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
