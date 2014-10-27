@@ -32,6 +32,7 @@
 @property (strong) NSMutableDictionary *usageKeysAndMultipliers;
 
 - (IBAction)delete:(id)sender;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (nonatomic, assign) id <EditExpenseViewController> delegate;
 @end

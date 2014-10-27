@@ -15,4 +15,5 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 - (IBAction)cancel:(id)sender;
+@property IBOutlet UIScrollView *scrollView;
 @end

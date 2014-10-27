@@ -33,6 +33,8 @@ NewExpenseNavigationController *navigationController;
     navigationController = (NewExpenseNavigationController *)[self navigationController];
     
     [self setUpTap];
+    [self.scrollView setScrollEnabled:YES];
+    [self.scrollView setContentSize:CGSizeMake(320, 700)];
 }
 
 - (void)didReceiveMemoryWarning
