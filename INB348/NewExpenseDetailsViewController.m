@@ -94,6 +94,9 @@ NewExpenseNavigationController *navigationController;
     return YES;
 }
 
+#pragma mark - Keyboard pushes TextField Up
+
+
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
