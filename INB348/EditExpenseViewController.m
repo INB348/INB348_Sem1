@@ -9,6 +9,7 @@
 #import "EditExpenseViewController.h"
 
 @interface EditExpenseViewController ()
+@property (nonatomic, assign) id currentResponder;
 @end
 
 @implementation EditExpenseViewController
@@ -27,6 +28,7 @@ NSMutableArray *usageMultipliers;
     self.descriptionTextField.text=self.expense[@"description"];
     
     self.title = @"Edit Expense";
+    [self setUpTap];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -224,4 +226,67 @@ NSMutableArray *usageMultipliers;
         }
     }];
 }
+
+#pragma mark - Tap out of keyboard
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.currentResponder = textField;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.currentResponder = nil;
+}
+
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    self.currentResponder = textView;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    self.currentResponder = nil;
+}
+
+- (void)resignOnTap:(id)iSender {
+    [self.currentResponder resignFirstResponder];
+}
+
+- (void)setUpTap
+{
+    //Set Textfield delegates
+    self.amountTextField.delegate = self;
+    self.nameTextField.delegate = self;
+    self.descriptionTextField.delegate = self;
+    
+    //Setup tap
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    singleTap.delegate = self;
+    [self.view addGestureRecognizer:singleTap];
+    
+}
+
+#pragma mark - 'Done' out of Keyboard
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark UIGestureRecognizerDelegate methods
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if (self.currentResponder == nil) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 @end

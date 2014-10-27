@@ -9,6 +9,7 @@
 #import "NewExpenseWhoPaidTableViewController.h"
 
 @interface NewExpenseWhoPaidTableViewController ()
+@property (nonatomic, assign) id currentResponder;
 @end
 
 @implementation NewExpenseWhoPaidTableViewController
@@ -28,6 +29,7 @@ NewExpenseNavigationController *navigationController;
     [super viewDidLoad];
     navigationController = (NewExpenseNavigationController *)[self navigationController];    
     self.tableView.allowsMultipleSelection = YES;
+    [self setUpTap];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -54,20 +56,16 @@ NewExpenseNavigationController *navigationController;
 {
     UITableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:indexPath];
     tableViewCell.accessoryView.hidden = NO;
-    //tableViewCell.selected = NO;
-    // if you don't use custom image tableViewCell.accessoryType = UITableViewCellAccessoryCheckmark;
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
     tableViewCell.accessoryView.hidden = YES;
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return navigationController.groupUsers.count;
 }
 
@@ -80,33 +78,71 @@ NewExpenseNavigationController *navigationController;
     PFObject *groupUser = navigationController.groupUsers[indexPath.row];
     NSString *userName = groupUser[@"user"][@"name"];
     
+    //Setup delegate for tap
+    groupUserCell.multiplier.delegate = self;
+    
     [groupUserCell.nameLabel setText:[NSString stringWithFormat:@"%@", userName]];
     [groupUserCell.multiplier setText:[NSString stringWithFormat:@"1"]];
-    //groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
     
     return groupUserCell;
+}
+
+#pragma mark - Highlight and Tap
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.currentResponder = textField;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.currentResponder = nil;
+}
+
+- (void)resignOnTap:(id)iSender {
+    [self.currentResponder resignFirstResponder];
+}
+
+- (void)setUpTap
+{    
+    //Setup tap
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    singleTap.delegate = self;
+    [self.view addGestureRecognizer:singleTap];
+    
+}
+
+#pragma mark UIGestureRecognizerDelegate methods
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if (self.currentResponder == nil) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    //Adding selected users to array
-    //NSMutableArray *selectedExpensePayers = [[NSMutableArray alloc] init];
-   
-    for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
-        SelectUsersCell *groupUserCell = (SelectUsersCell *)[self.tableView cellForRowAtIndexPath:selectedExpensePayerIndex];
-        
-        PFObject *selectedUser = [navigationController.groupUsers objectAtIndex:selectedExpensePayerIndex.row];
-        for (PFObject *expenseParticipator in navigationController.expenseParticipators) {
-            if([expenseParticipator[@"user"] isEqual:selectedUser]){
-                [expenseParticipator setValue:@([groupUserCell.multiplier.text intValue]) forKey:@"paymentMultiplier"];
+    if(self.tableView.indexPathsForSelectedRows.count != 0){
+        for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
+            SelectUsersCell *groupUserCell = (SelectUsersCell *)[self.tableView cellForRowAtIndexPath:selectedExpensePayerIndex];
+            
+            PFObject *selectedUser = [navigationController.groupUsers objectAtIndex:selectedExpensePayerIndex.row];
+            for (PFObject *expenseParticipator in navigationController.expenseParticipators) {
+                if([expenseParticipator[@"user"] isEqual:selectedUser]){
+                    NSNumber *multiplier = @([groupUserCell.multiplier.text intValue]);
+                    if([multiplier intValue] >0){
+                        [expenseParticipator setValue:multiplier forKey:@"paymentMultiplier"];
+                    } else {
+                        NSLog(@"Multiplier must be at least 1");
+                    }
+                }
             }
         }
+    } else{
+        NSLog(@"You must select at least 1 Member");
     }
-    
-//    if ([segue.identifier isEqualToString:@"showForWhom"]) {
-//        navigationController.expensePayers=selectedExpensePayers;
-//    }
 }
 
 @end

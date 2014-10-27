@@ -9,7 +9,7 @@
 #import "NewExpenseDetailsViewController.h"
 
 @interface NewExpenseDetailsViewController ()
-
+@property (nonatomic, assign) id currentResponder;
 @end
 
 @implementation NewExpenseDetailsViewController
@@ -27,10 +27,12 @@ NewExpenseNavigationController *navigationController;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.descriptionTextField.layer.borderWidth = 5.0f;
-    self.descriptionTextField.layer.borderColor = [[UIColor grayColor] CGColor];
-    self.descriptionTextField.layer.cornerRadius = 8;
+    self.descriptionTextView.layer.borderWidth = 5.0f;
+    self.descriptionTextView.layer.borderColor = [[UIColor grayColor] CGColor];
+    self.descriptionTextView.layer.cornerRadius = 8;
     navigationController = (NewExpenseNavigationController *)[self navigationController];
+    
+    [self setUpTap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,15 +41,72 @@ NewExpenseNavigationController *navigationController;
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Highlight and Tap
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.currentResponder = textField;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.currentResponder = nil;
+}
+
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    self.currentResponder = textView;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    self.currentResponder = nil;
+}
+
+- (void)resignOnTap:(id)iSender {
+    [self.currentResponder resignFirstResponder];
+}
+
+- (void)setUpTap
+{
+    //Set Textfield delegates
+    self.amountTextField.delegate = self;
+    self.nameTextField.delegate = self;
+    self.descriptionTextView.delegate = self;
+    
+    //Setup tap
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    singleTap.delegate = self;
+    [self.view addGestureRecognizer:singleTap];
+
+}
+
+#pragma mark - 'Done' out of Keyboard
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
 
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showWhoPaid"]) {
-        navigationController.name = self.nameTextField.text;
-        NSLog(@"%@",self.descriptionTextField.text);
-        navigationController.comment = self.descriptionTextField.text;
-        navigationController.amount = @([self.amountTextField.text intValue]);
+        if(![self.nameTextField.text isEqualToString:@""]){
+            navigationController.name = self.nameTextField.text;
+        }else {
+            NSLog(@"Must choose a Name");
+        }
+        if(![self.amountTextField.text isEqualToString:@""]){
+           navigationController.amount = @([self.amountTextField.text intValue]);
+        }else {
+            NSLog(@"Must set an Amount");
+        }
+        navigationController.comment = self.descriptionTextView.text;
         navigationController.date = self.datePicker.date;
     }
 }

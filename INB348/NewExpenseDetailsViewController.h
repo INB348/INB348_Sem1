@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "NewExpenseNavigationController.h"
 
-@interface NewExpenseDetailsViewController : UIViewController
+@interface NewExpenseDetailsViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *amountTextField;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (weak, nonatomic) IBOutlet UITextView *descriptionTextField;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 - (IBAction)cancel:(id)sender;
 @end

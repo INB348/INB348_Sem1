@@ -9,7 +9,7 @@
 #import "NewExpenseForWhomTableViewController.h"
 
 @interface NewExpenseForWhomTableViewController ()
-
+@property (nonatomic, assign) id currentResponder;
 @end
 
 @implementation NewExpenseForWhomTableViewController
@@ -28,13 +28,8 @@ NewExpenseNavigationController *navigationController;
 {
     [super viewDidLoad];
     navigationController = (NewExpenseNavigationController *)[self navigationController];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.tableView.allowsMultipleSelection = YES;
+    [self setUpTap];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -55,16 +50,12 @@ NewExpenseNavigationController *navigationController;
 {
     UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
     tableViewCell.accessoryView.hidden = NO;
-    //tableViewCell.selected = NO;
-    // if you don't use custom image tableViewCell.accessoryType = UITableViewCellAccessoryCheckmark;
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
     tableViewCell.accessoryView.hidden = YES;
-    //tableViewCell.selected = YES;
-    // if you don't use custom image tableViewCell.accessoryType = UITableViewCellAccessoryNone;
     
 }
 
@@ -89,26 +80,71 @@ NewExpenseNavigationController *navigationController;
     PFObject *groupUser = navigationController.groupUsers[indexPath.row];
     NSString *groupName = groupUser[@"user"][@"name"];
     
+    //Setup delegate for tap
+    groupUserCell.multiplier.delegate = self;
+    
     [groupUserCell.nameLabel setText:[NSString stringWithFormat:@"%@", groupName]];
     [groupUserCell.multiplier setText:[NSString stringWithFormat:@"1"]];
-    //groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
     
     return groupUserCell;
+}
+
+#pragma mark - Highlight and Tap
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.currentResponder = textField;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.currentResponder = nil;
+}
+
+- (void)resignOnTap:(id)iSender {
+    if(self.currentResponder != nil){
+        [self.currentResponder resignFirstResponder];
+    }
+}
+
+- (void)setUpTap
+{
+    //Setup tap
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    singleTap.delegate = self;
+    [self.view addGestureRecognizer:singleTap];
+}
+
+#pragma mark UIGestureRecognizerDelegate methods
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if (self.currentResponder == nil) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    //NSMutableArray *selectedExpenseUsers = [[NSMutableArray alloc] init];
-    for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
-        SelectUsersCell *groupUserCell = (SelectUsersCell *)[self.tableView cellForRowAtIndexPath:selectedExpensePayerIndex];
-        
-        PFObject *selectedUser = [navigationController.groupUsers objectAtIndex:selectedExpensePayerIndex.row];
-        for (PFObject *expenseParticipator in navigationController.expenseParticipators) {
-            if([expenseParticipator[@"user"] isEqual:selectedUser]){
-                [expenseParticipator setValue:@([groupUserCell.multiplier.text integerValue])forKey:@"usageMultiplier"];
+    if(self.tableView.indexPathsForSelectedRows.count != 0){
+        for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
+            SelectUsersCell *groupUserCell = (SelectUsersCell *)[self.tableView cellForRowAtIndexPath:selectedExpensePayerIndex];
+            
+            PFObject *selectedUser = [navigationController.groupUsers objectAtIndex:selectedExpensePayerIndex.row];
+            for (PFObject *expenseParticipator in navigationController.expenseParticipators) {
+                if([expenseParticipator[@"user"] isEqual:selectedUser]){
+                    NSNumber *multiplier = @([groupUserCell.multiplier.text intValue]);
+                    if([multiplier intValue] >0){
+                        [expenseParticipator setValue:multiplier forKey:@"usageMultiplier"];
+                    } else {
+                        NSLog(@"Multiplier must be at least 1");
+                    }
+                }
             }
         }
+    } else{
+        NSLog(@"You must select at least 1 Member");
     }
     
 //    if ([segue.identifier isEqualToString:@"showSummary"]) {

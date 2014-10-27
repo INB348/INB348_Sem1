@@ -14,7 +14,7 @@
 - (void)refresh;
 @end
 
-@interface EditExpenseViewController : UIViewController <EditOptionsTableViewController>
+@interface EditExpenseViewController : UIViewController <EditOptionsTableViewController, UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate>
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
 @property (strong, nonatomic) IBOutlet UITextField *nameTextField;

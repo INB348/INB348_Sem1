@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@protocol NewExpenseNavigationController
+@protocol NewExpenseNavigationController <UINavigationControllerDelegate>
 - (void)refresh;
 @end
 

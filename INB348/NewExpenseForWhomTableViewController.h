@@ -10,5 +10,5 @@
 #import "NewExpenseNavigationController.h"
 #import "SelectUsersCell.h"
 
-@interface NewExpenseForWhomTableViewController : UITableViewController
+@interface NewExpenseForWhomTableViewController : UITableViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
 @end

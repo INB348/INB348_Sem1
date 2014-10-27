@@ -7,6 +7,9 @@
 //
 
 #import "SelectUsersCell.h"
+@interface SelectUsersCell()
+
+@end
 
 @implementation SelectUsersCell
 

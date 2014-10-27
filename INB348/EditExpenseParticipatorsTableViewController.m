@@ -9,7 +9,7 @@
 #import "EditExpenseParticipatorsTableViewController.h"
 
 @interface EditExpenseParticipatorsTableViewController ()
-
+@property (nonatomic, assign) id currentResponder;
 @end
 
 @implementation EditExpenseParticipatorsTableViewController
@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setUpTap];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,6 +49,9 @@
     PFObject *groupUser = self.groupUsers[indexPath.row];
     NSString *userName = groupUser[@"user"][@"name"];
     
+    //Setup delegate for tap
+    cell.multiplier.delegate = self;
+    
     if([self isKeyInKeyAndMultiplierDictionary:indexPath.row]){
         [tableView selectRowAtIndexPath:indexPath
                                animated:NO
@@ -76,5 +80,39 @@
     }
     [self.delegate setExpenseParticipatorIndexes:indexesAndMultipliers];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Highlight and Tap
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.currentResponder = textField;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    self.currentResponder = nil;
+}
+
+- (void)resignOnTap:(id)iSender {
+    [self.currentResponder resignFirstResponder];
+}
+
+- (void)setUpTap
+{
+    //Setup tap
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    singleTap.delegate = self;
+    [self.view addGestureRecognizer:singleTap];
+    
+}
+
+#pragma mark UIGestureRecognizerDelegate methods
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if (self.currentResponder == nil) {
+        return NO;
+    }
+    
+    return YES;
 }
 @end

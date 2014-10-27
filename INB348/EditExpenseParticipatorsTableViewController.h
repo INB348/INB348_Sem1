@@ -14,7 +14,7 @@
 -(void)setExpenseParticipatorIndexes:(NSMutableDictionary *)indexesAndMultipliers;
 @end
 
-@interface EditExpenseParticipatorsTableViewController : UITableViewController
+@interface EditExpenseParticipatorsTableViewController : UITableViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
 @property (strong) NSArray *groupUsers;
 @property (strong) NSArray *selected;
 - (IBAction)cancel:(id)sender;
