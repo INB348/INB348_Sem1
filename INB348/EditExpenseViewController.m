@@ -185,18 +185,32 @@ NSMutableArray *usageMultipliers;
     }];
 }
 
+- (void)showOkAlertButton:(NSString *)message {
+    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    [errorAlertView show];
+}
+
 - (IBAction)save:(id)sender {
-    if([self isValuesChanged]){
-        [self.expense saveInBackground];
-    }
-    
-    [PFObject deleteAllInBackground:self.oldExpenseParticipators block:^(BOOL succeeded, NSError *error) {
-        if(succeeded){
-            [self addNewExpenseParticipators];
+    if(![self.nameTextField.text isEqualToString:@""]){
+        if(![self.amountTextField.text isEqualToString:@""]){
+            if([self isValuesChanged]){
+                [self.expense saveInBackground];
+            }
+            
+            [PFObject deleteAllInBackground:self.oldExpenseParticipators block:^(BOOL succeeded, NSError *error) {
+                if(succeeded){
+                    [self addNewExpenseParticipators];
+                }
+            }];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }else {
+            NSLog(@"Must set an Amount");
+            [self showOkAlertButton:@"Amount can't be blank.\nPlease try again."];
         }
-    }];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    }else {
+        NSLog(@"Must choose a Name");
+        [self showOkAlertButton:@"Name can't be blank.\nPlease try again."];
+    }
 }
 
 - (IBAction)cancel:(id)sender {

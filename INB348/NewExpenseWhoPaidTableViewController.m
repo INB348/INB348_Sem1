@@ -123,7 +123,12 @@ NewExpenseNavigationController *navigationController;
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)showOkAlertButton:(NSString *)message {
+    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    [errorAlertView show];
+}
+
+- (IBAction)next:(id)sender {
     if(self.tableView.indexPathsForSelectedRows.count != 0){
         for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
             SelectUsersCell *groupUserCell = (SelectUsersCell *)[self.tableView cellForRowAtIndexPath:selectedExpensePayerIndex];
@@ -134,15 +139,17 @@ NewExpenseNavigationController *navigationController;
                     NSNumber *multiplier = @([groupUserCell.multiplier.text intValue]);
                     if([multiplier intValue] >0){
                         [expenseParticipator setValue:multiplier forKey:@"paymentMultiplier"];
+                        [self performSegueWithIdentifier:@"showForWhom" sender:self];
                     } else {
                         NSLog(@"Multiplier must be at least 1");
+                        [self showOkAlertButton:@"Multiplier must be greater than 0.\nPlease try again."];
                     }
                 }
             }
         }
     } else{
         NSLog(@"You must select at least 1 Member");
+        [self showOkAlertButton:@"You must select at least 1 Member.\nPlease try again."];
     }
 }
-
 @end

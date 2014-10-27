@@ -72,14 +72,31 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)showOkAlertButton:(NSString *)message {
+    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    [errorAlertView show];
+}
+
 - (IBAction)done:(id)sender {
+    if(self.tableView.indexPathsForSelectedRows.count != 0){
     NSMutableDictionary *indexesAndMultipliers = [NSMutableDictionary dictionary];
     for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
         SelectUsersCell *groupUserCell = (SelectUsersCell *)[self.tableView cellForRowAtIndexPath:selectedExpensePayerIndex];
-        [indexesAndMultipliers setObject:@([groupUserCell.multiplier.text intValue]) forKey:[@(selectedExpensePayerIndex.row) stringValue]];
+        NSNumber *multiplier = @([groupUserCell.multiplier.text intValue]);
+        if([multiplier intValue] >0){
+        [indexesAndMultipliers setObject:multiplier forKey:[@(selectedExpensePayerIndex.row) stringValue]];
+        }else {
+            NSLog(@"Multiplier must be at least 1");
+            [self showOkAlertButton:@"Multiplier must be greater than 0.\nPlease try again."];
+            return;
+        }
     }
     [self.delegate setExpenseParticipatorIndexes:indexesAndMultipliers];
     [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        NSLog(@"You must select at least 1 Member");
+        [self showOkAlertButton:@"You must select at least 1 Member.\nPlease try again."];
+    }
 }
 
 #pragma mark - Highlight and Tap

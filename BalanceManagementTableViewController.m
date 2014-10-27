@@ -56,31 +56,17 @@ ColorSingleton *colorSingleton;
     // Fetch the devices from persistent data store
     [self.tableView reloadData];
     self.navigationItem.title = groupTabBarController.group[@"name"];
-    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     [groupTabBarController.groupUsers enumerateObjectsUsingBlock:^(PFObject *groupUser, NSUInteger idx, BOOL *stop) {
         if([groupUser[@"balance"] doubleValue] < lowestBalance){
             lowestBalance = [groupUser[@"balance"] doubleValue];
             indexOfLowestBalance = idx;
         };
     }];
-    if(lowestBalance != 0.0){
-    UITableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfLowestBalance inSection:0]];
-    [tableViewCell.contentView.layer setBorderColor:[UIColor colorWithRed:1 green:0.302 blue:0.302 alpha:1].CGColor];
-    [tableViewCell.contentView.layer setBorderWidth:2.0f];
-    lowestBalance = 0.0;
-    }
     
-}
-
-- (void)viewDidDisappear:(BOOL)animated{
-    UITableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfLowestBalance inSection:0]];
-    [tableViewCell.contentView.layer setBorderColor:[UIColor whiteColor].CGColor];
-    [tableViewCell.contentView.layer setBorderWidth:0.0f];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
     return groupTabBarController.groupUsers.count;
     
 }
@@ -106,6 +92,15 @@ ColorSingleton *colorSingleton;
     [fmt setPositiveFormat:@"0.##"];
     [groupUserCell.detailTextLabel setText:[fmt stringFromNumber:balance]];
     groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+
+    if(indexOfLowestBalance == indexPath.row){
+        [groupUserCell.contentView.layer setBorderColor:[colorSingleton getRedColor].CGColor];
+        [groupUserCell.contentView.layer setBorderWidth:2.0f];
+        lowestBalance = 0.0;
+    } else {
+        [groupUserCell.contentView.layer setBorderColor:[colorSingleton getWhiteColor].CGColor];
+        [groupUserCell.contentView.layer setBorderWidth:2.0f];
+    }
     
     return groupUserCell;
 }

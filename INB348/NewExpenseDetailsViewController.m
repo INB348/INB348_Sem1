@@ -101,16 +101,8 @@ NewExpenseNavigationController *navigationController;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showWhoPaid"]) {
-        if(![self.nameTextField.text isEqualToString:@""]){
-            navigationController.name = self.nameTextField.text;
-        }else {
-            NSLog(@"Must choose a Name");
-        }
-        if(![self.amountTextField.text isEqualToString:@""]){
-           navigationController.amount = @([self.amountTextField.text doubleValue]);
-        }else {
-            NSLog(@"Must set an Amount");
-        }
+        navigationController.name = self.nameTextField.text;
+        navigationController.amount = @([self.amountTextField.text doubleValue]);
         navigationController.comment = self.descriptionTextView.text;
         navigationController.date = self.datePicker.date;
     }
@@ -118,5 +110,24 @@ NewExpenseNavigationController *navigationController;
 
 - (IBAction)cancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)showOkAlertButton:(NSString *)message {
+    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    [errorAlertView show];
+}
+
+- (IBAction)next:(id)sender {
+    if(![self.nameTextField.text isEqualToString:@""]){
+        if(![self.amountTextField.text isEqualToString:@""]){
+            [self performSegueWithIdentifier:@"showWhoPaid" sender:self];
+        }else {
+            NSLog(@"Must set an Amount");
+            [self showOkAlertButton:@"Amount can't be blank.\nPlease try again."];
+        }
+    }else {
+        NSLog(@"Must choose a Name");
+        [self showOkAlertButton:@"Name can't be blank.\nPlease try again."];
+    }
 }
 @end

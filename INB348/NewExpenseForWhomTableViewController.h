@@ -11,4 +11,5 @@
 #import "SelectUsersCell.h"
 
 @interface NewExpenseForWhomTableViewController : UITableViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
+- (IBAction)next:(id)sender;
 @end
