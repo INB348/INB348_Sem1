@@ -47,6 +47,27 @@
         [newGroupUser setValue:[NSNumber numberWithBool:NO] forKey:@"accepted"];
         [newGroupUser setValue:@0 forKey:@"balance"];
         [newGroupUser saveEventually];
+        
+        
+        // Send invite message notification
+        PFQuery *query = [PFQuery queryWithClassName:@"Group"];
+        [query getObjectInBackgroundWithId:self.group.objectId block:^(PFObject *gName, NSError *error) {
+            
+            NSString *string1 = [[PFUser currentUser] objectForKey:@"name"];
+            NSString *string2 = gName[@"name"];
+            NSString *note = [NSString stringWithFormat: @"'%@' invited you to join '%@'", string1, string2];
+            
+            PFObject *addMemberNotification = [PFObject objectWithClassName:@"Notifications"];
+            [addMemberNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
+            [addMemberNotification setObject:user forKey:@"toUser"];
+            [addMemberNotification setObject:note forKey:@"note"];
+            [addMemberNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
+            [addMemberNotification setValue:[NSNumber numberWithBool:YES] forKey:@"invite"];
+            [addMemberNotification saveEventually];
+        }];
+        
+        
+        
         [self dismissViewControllerAnimated:YES completion:nil];
     } else{
         NSLog(@"User doesn't exist");

@@ -101,10 +101,10 @@
 -(IBAction)logInPressed:(id)sender
 {
     /** For testing */
-    self.txt_Email.text=@"kristianmatzen@icloud.com";
-    self.txt_Password.text=@"1234";
-//    self.txt_Email.text=@"tranminhphat1011@gmail.com";
-//    self.txt_Password.text=@"321";
+//    self.txt_Email.text=@"kristianmatzen@icloud.com";
+//    self.txt_Password.text=@"1234";
+//    self.txt_Email.text=@"test1@gmail.com";
+//    self.txt_Password.text=@"123";
     
 //    [self performSegueWithIdentifier:@"LogInSuccessful" sender:self];
     
