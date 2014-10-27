@@ -37,20 +37,29 @@
     return self.groupUsers.count;
 }
 
+-(BOOL)isKeyInKeyAndMultiplierDictionary:(int) key{
+    return [[self.keysAndMultipliers allKeys] containsObject:[@(key) stringValue]];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"editExpenseParticipatorsCell" forIndexPath:indexPath];
+    SelectUsersCell *cell = [tableView dequeueReusableCellWithIdentifier:@"editExpenseParticipatorsCell" forIndexPath:indexPath];
     
     // Configure the cell...
     PFObject *groupUser = self.groupUsers[indexPath.row];
     NSString *userName = groupUser[@"user"][@"name"];
     
-    if([self.indexes containsObject:[NSNumber numberWithInteger:indexPath.row]] ){
+    if([self isKeyInKeyAndMultiplierDictionary:indexPath.row]){
         [tableView selectRowAtIndexPath:indexPath
                                animated:NO
                          scrollPosition:UITableViewScrollPositionMiddle];
+        NSString *key =[@(indexPath.row) stringValue];
+        NSNumber *multiplier =[self.keysAndMultipliers objectForKey:key];
+        [cell.multiplier setText:[multiplier stringValue]];
+    } else{
+      [cell.multiplier setText:@"1"];
     }
-    [cell.textLabel setText:[NSString stringWithFormat:@"%@", userName]];
+    [cell.nameLabel setText:[NSString stringWithFormat:@"%@", userName]];
+    
     
     return cell;
 }
@@ -60,11 +69,12 @@
 }
 
 - (IBAction)done:(id)sender {
-    NSMutableArray *newIndexes = [NSMutableArray array];
+    NSMutableDictionary *indexesAndMultipliers = [NSMutableDictionary dictionary];
     for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
-        [newIndexes addObject:[NSNumber numberWithInteger:selectedExpensePayerIndex.row]];
+        SelectUsersCell *groupUserCell = (SelectUsersCell *)[self.tableView cellForRowAtIndexPath:selectedExpensePayerIndex];
+        [indexesAndMultipliers setObject:@([groupUserCell.multiplier.text intValue]) forKey:[@(selectedExpensePayerIndex.row) stringValue]];
     }
-    [self.delegate setExpenseParticipatorIndexes:newIndexes];
+    [self.delegate setExpenseParticipatorIndexes:indexesAndMultipliers];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

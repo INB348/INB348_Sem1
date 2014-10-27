@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "SelectUsersCell.h"
 
 @protocol EditExpenseParticipatorsTableViewController
--(void)setExpenseParticipatorIndexes:(NSMutableArray *)indexes;
+-(void)setExpenseParticipatorIndexes:(NSMutableDictionary *)indexesAndMultipliers;
 @end
 
 @interface EditExpenseParticipatorsTableViewController : UITableViewController
@@ -18,7 +19,8 @@
 @property (strong) NSArray *selected;
 - (IBAction)cancel:(id)sender;
 - (IBAction)done:(id)sender;
-@property (strong) NSMutableArray *indexes;
+//@property (strong) NSMutableArray *indexes;
+@property (strong) NSDictionary *keysAndMultipliers;
 
 @property (nonatomic, assign) id <EditExpenseParticipatorsTableViewController> delegate;
 @end

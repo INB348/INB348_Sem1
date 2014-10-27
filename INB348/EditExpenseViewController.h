@@ -28,8 +28,9 @@
 @property (strong) PFObject *group;
 @property (strong) NSArray *groupUsers;
 
-@property (strong) NSMutableArray *expensePayerIndexes;
-@property (strong) NSMutableArray *expenseUserIndexes;
+@property (strong) NSMutableDictionary *paymentKeysAndMultipliers;
+@property (strong) NSMutableDictionary *usageKeysAndMultipliers;
+
 - (IBAction)delete:(id)sender;
 
 @property (nonatomic, assign) id <EditExpenseViewController> delegate;

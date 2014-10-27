@@ -22,6 +22,7 @@
 @property (strong) PFObject *group;
 @property (strong) NSArray *groupUsers;
 @property (strong) NSString *comment;
+@property (strong) NSMutableArray *expenseParticipators;
 
 @property (nonatomic, assign) id <NewExpenseNavigationController> delegate;
 @end
