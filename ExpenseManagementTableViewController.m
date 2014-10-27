@@ -70,7 +70,9 @@ GroupTabBarController *groupTabBarController;
     NSNumber *expenseAmount = groupExpense[@"amount"];
     
     [expenseHistoryCell.textLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
-    [expenseHistoryCell.detailTextLabel setText:[expenseAmount stringValue]];
+    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+    [fmt setPositiveFormat:@"0.##"];
+    [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expenseAmount]];
     
     return expenseHistoryCell;
 }

@@ -89,24 +89,6 @@ NSMutableArray *expenseParticipators;
     return [NSNumber numberWithDouble:[navigationController.amount doubleValue]/numberOfUsers];
 }
 
-//-(BOOL)isUserAnExpensePayer:(PFObject *)user{
-//    for (PFObject *expensePayer in navigationController.expensePayers) {
-//        if([expensePayer.objectId isEqualToString:user.objectId]){
-//            return true;
-//        }
-//    }
-//    return false;
-//}
-//
-//-(BOOL)isUserAnExpenseUser:(PFObject *)user{
-//    for (PFObject *expenseUser in navigationController.expenseUsers) {
-//        if([expenseUser.objectId isEqualToString:user.objectId]){
-//            return true;
-//        }
-//    }
-//    return false;
-//}
-
 - (void)setColorByValue:(UILabel *)label value:(long) value
 {
     if(value > 0){
@@ -135,25 +117,29 @@ NSMutableArray *expenseParticipators;
     NSString *userName = expenseParticipator[@"user"][@"user"][@"name"];
     [summaryCell.nameLabel setText:[NSString stringWithFormat:@"%@", userName]];
     
+    //Set numberformatter
+    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+    [fmt setPositiveFormat:@"0.##"];
+    
     //Set old balance
     NSNumber *oldBalance = expenseParticipator[@"user"][@"balance"];
-    [summaryCell.oldBalance setText:[NSString stringWithFormat:@"%@", [oldBalance stringValue]]];
+    [summaryCell.oldBalance setText:[fmt stringFromNumber:oldBalance]];
     [self setColorByValue:summaryCell.oldBalance value:[expenseParticipator[@"user"][@"balance"] longValue]];
     
     //Set payment
-    NSNumber *paymentMultiplied = @([expenseParticipator[@"payment"] longValue]*[expenseParticipator[@"paymentMultiplier"] longValue]);
-    [summaryCell.payed setText:[NSString stringWithFormat:@"%@", [paymentMultiplied stringValue]]];
+    NSNumber *paymentMultiplied = @([expenseParticipator[@"payment"] doubleValue]*[expenseParticipator[@"paymentMultiplier"] doubleValue]);
+    [summaryCell.payed setText:[fmt stringFromNumber:paymentMultiplied]];
     [summaryCell.payed setTextColor:[UIColor greenColor]];
     
     //Set usage
-    NSNumber *usageMultiplied = @([expenseParticipator[@"usage"] longValue]*[expenseParticipator[@"usageMultiplier"] longValue]);
-    [summaryCell.used setText:[NSString stringWithFormat:@"%@", [usageMultiplied stringValue]]];
+    NSNumber *usageMultiplied = @([expenseParticipator[@"usage"] doubleValue]*[expenseParticipator[@"usageMultiplier"] doubleValue]);
+    [summaryCell.used setText:[fmt stringFromNumber:usageMultiplied]];
     [summaryCell.used setTextColor:[UIColor redColor]];
 
     
     //Set new balance
     NSNumber *newBalance = [self getNewBalance:expenseParticipator];
-    [summaryCell.updatedBalance setText:[NSString stringWithFormat:@"%@", [newBalance stringValue]]];
+    [summaryCell.updatedBalance setText:[fmt stringFromNumber:newBalance]];
     [self setColorByValue:summaryCell.updatedBalance value:[newBalance longValue]];
     
     return summaryCell;

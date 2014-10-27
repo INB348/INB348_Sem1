@@ -107,7 +107,7 @@ NewExpenseNavigationController *navigationController;
             NSLog(@"Must choose a Name");
         }
         if(![self.amountTextField.text isEqualToString:@""]){
-           navigationController.amount = @([self.amountTextField.text intValue]);
+           navigationController.amount = @([self.amountTextField.text doubleValue]);
         }else {
             NSLog(@"Must set an Amount");
         }

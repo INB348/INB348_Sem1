@@ -72,7 +72,9 @@
     }
     
     [userGroupCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
-    [userGroupCell.detailTextLabel setText:[balance stringValue]];
+    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+    [fmt setPositiveFormat:@"0.##"];
+    [userGroupCell.detailTextLabel setText:[fmt stringFromNumber:balance]];
     userGroupCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
     
     return userGroupCell;

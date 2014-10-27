@@ -28,7 +28,10 @@ bool readyForReload = false;
 
 - (void)setBalanceLabel {
     NSNumber *balance = self.groupUser[@"balance"];
-    self.balanceLabel.title = [balance stringValue];
+    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+    [fmt setPositiveFormat:@"0.##"];
+    self.balanceLabel.title = [fmt stringFromNumber:balance];
+    
     if([balance longValue] >= 0){
         [self.balanceLabel setTintColor:[UIColor greenColor]];
     } else {
@@ -132,15 +135,18 @@ bool readyForReload = false;
     UITableViewCell *expenseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"userExpenseCell" forIndexPath:indexPath];
     PFObject *expensePayer;
     
+    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+    [fmt setPositiveFormat:@"0.##"];
+    
     switch([indexPath section]){
         case 0:
             expensePayer = self.payedExpenseParticipator[indexPath.row];
-            [expenseHistoryCell.detailTextLabel setText:[expensePayer[@"payment"] stringValue]];
+            [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expensePayer[@"payment"]]];
             [expenseHistoryCell.detailTextLabel setTextColor:[UIColor greenColor]];
             break;
         case 1:
             expensePayer = self.usedExpenseParticipator[indexPath.row];
-            [expenseHistoryCell.detailTextLabel setText:[expensePayer[@"usage"] stringValue]];
+            [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expensePayer[@"usage"]]];
             [expenseHistoryCell.detailTextLabel setTextColor:[UIColor redColor]];
             break;
     }

@@ -98,8 +98,10 @@ double lowestBalance = 0.0;
         [groupUserCell.detailTextLabel setTextColor:[UIColor redColor]];
     }
     
-    [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", userName]];
-    [groupUserCell.detailTextLabel setText:[balance stringValue]];
+    [groupUserCell.textLabel setText:userName];
+    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+    [fmt setPositiveFormat:@"0.##"];
+    [groupUserCell.detailTextLabel setText:[fmt stringFromNumber:balance]];
     groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
     
     return groupUserCell;
