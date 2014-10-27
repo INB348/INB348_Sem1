@@ -25,10 +25,14 @@ NSMutableArray *usageMultipliers;
     self.nameTextField.text=self.expense[@"name"];
     self.amountTextField.text=[self.expense[@"amount"] stringValue];
     self.datePicker.date=self.expense[@"date"];
-    self.descriptionTextField.text=self.expense[@"description"];
+    self.descriptionTextView.text=self.expense[@"description"];
     
     self.title = @"Edit Expense";
     [self setUpTap];
+    
+    self.descriptionTextView.layer.borderWidth = 5.0f;
+    self.descriptionTextView.layer.borderColor = [[UIColor grayColor] CGColor];
+    self.descriptionTextView.layer.cornerRadius = 8;
     
     [self.scrollView setScrollEnabled:YES];
     [self.scrollView setContentSize:CGSizeMake(320, 700)];
@@ -92,9 +96,9 @@ NSMutableArray *usageMultipliers;
         [self.expense setValue:self.datePicker.date forKey:@"date"];
         isValuesChanged = true;
     }
-    if(![self.expense[@"description"] isEqualToString:self.descriptionTextField.text]){
+    if(![self.expense[@"description"] isEqualToString:self.descriptionTextView.text]){
         NSLog(@"Description changed");
-        [self.expense setValue:[self returnStringIfNotNull:self.descriptionTextField.text] forKey:@"description"];
+        [self.expense setValue:[self returnStringIfNotNull:self.descriptionTextView.text] forKey:@"description"];
         isValuesChanged = true;
     }
     
@@ -269,7 +273,7 @@ NSMutableArray *usageMultipliers;
     //Set Textfield delegates
     self.amountTextField.delegate = self;
     self.nameTextField.delegate = self;
-    self.descriptionTextField.delegate = self;
+    self.descriptionTextView.delegate = self;
     
     //Setup tap
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];

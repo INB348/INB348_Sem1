@@ -17,10 +17,11 @@
 @interface EditExpenseViewController : UIViewController <EditOptionsTableViewController, UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate>
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)delete:(id)sender;
 @property (strong, nonatomic) IBOutlet UITextField *nameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *amountTextField;
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (strong, nonatomic) IBOutlet UITextView *descriptionTextField;
+@property (strong, nonatomic) IBOutlet UITextView *descriptionTextView;
 
 @property (strong) PFObject *expense;
 @property (strong) NSArray *oldExpenseParticipators;

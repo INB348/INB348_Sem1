@@ -84,6 +84,7 @@
 		D8E7070919FE6F920066F70F /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7070519FE6F920066F70F /* TPKeyboardAvoidingTableView.m */; };
 		D8E7070A19FE6F920066F70F /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7070719FE6F920066F70F /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		D8E7070E19FE7B680066F70F /* ColorSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7070D19FE7B680066F70F /* ColorSingleton.m */; };
+		D8E7106B19FE99770066F70F /* addUser.png in Resources */ = {isa = PBXBuildFile; fileRef = D8E70B0219FE99750066F70F /* addUser.png */; };
 		D8EF367019F8786500B6B4DC /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF366F19F8786500B6B4DC /* GroupsViewController.m */; };
 		D8EF367419F87ED600B6B4DC /* GroupRequestsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF367319F87ED600B6B4DC /* GroupRequestsTableViewController.m */; };
 		D8EF367719F8808600B6B4DC /* GroupsRequestListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF367619F8808600B6B4DC /* GroupsRequestListTableViewController.m */; };
@@ -221,6 +222,7 @@
 		D8E7070719FE6F920066F70F /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
 		D8E7070C19FE7B680066F70F /* ColorSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSingleton.h; sourceTree = "<group>"; };
 		D8E7070D19FE7B680066F70F /* ColorSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorSingleton.m; sourceTree = "<group>"; };
+		D8E70B0219FE99750066F70F /* addUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addUser.png; path = "Batch-master/PNG/64x64/addUser.png"; sourceTree = "<group>"; };
 		D8EF366E19F8786500B6B4DC /* GroupsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsViewController.h; sourceTree = "<group>"; };
 		D8EF366F19F8786500B6B4DC /* GroupsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
 		D8EF367219F87ED600B6B4DC /* GroupRequestsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupRequestsTableViewController.h; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				0C56510019EF6A9C008E667C /* logout-128.png */,
+				D8E70B0219FE99750066F70F /* addUser.png */,
 				0C5650F819EF6966008E667C /* Address_Book-128.png */,
 				0C5650F919EF6966008E667C /* Group_of_People-128.png */,
 				0C5650FA19EF6966008E667C /* RSS_Feed-128.png */,
@@ -655,6 +658,7 @@
 				0C5650FC19EF6966008E667C /* Address_Book-128.png in Resources */,
 				0C192DBE19B797C8008A0CA9 /* exit-50.png in Resources */,
 				0C6E5F7E19B72750000594BF /* Main.storyboard in Resources */,
+				D8E7106B19FE99770066F70F /* addUser.png in Resources */,
 				0C6E5FB819B731A5000594BF /* login.jpg in Resources */,
 				0C268E4619EEB434005D46BB /* camera.png in Resources */,
 			);
