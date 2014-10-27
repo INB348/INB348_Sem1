@@ -71,6 +71,8 @@
     if(indexPath.row == 0) {
         UILabel *nameLabel = (UILabel*) [cell viewWithTag:100];
         nameLabel.text = [[PFUser currentUser] objectForKey:@"name"];
+        nameLabel.numberOfLines = 2;
+        [nameLabel setLineBreakMode:NSLineBreakByWordWrapping];
         
         // Configure the cell
         PFFile *thumbnail = [[PFUser currentUser] objectForKey:@"profilePic"];

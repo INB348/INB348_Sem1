@@ -44,7 +44,7 @@ bool readyForReload = false;
     [expensesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
-            NSLog(@"Successfully retrieved %d Expenses.", objects.count);
+            NSLog(@"Successfully retrieved %lu Expenses.", (unsigned long)objects.count);
             
             // Do something with the found objects
             self.payedExpenseParticipator = objects;
@@ -62,7 +62,7 @@ bool readyForReload = false;
     [expensesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
-            NSLog(@"Successfully retrieved %d Expenses.", objects.count);
+            NSLog(@"Successfully retrieved %lu Expenses.", (unsigned long)objects.count);
             
             // Do something with the found objects
             self.usedExpenseParticipator = objects;

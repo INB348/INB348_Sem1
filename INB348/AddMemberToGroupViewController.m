@@ -62,7 +62,6 @@
             [addMemberNotification setObject:user forKey:@"toUser"];
             [addMemberNotification setObject:note forKey:@"note"];
             [addMemberNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
-            [addMemberNotification setValue:[NSNumber numberWithBool:YES] forKey:@"invite"];
             [addMemberNotification saveEventually];
         }];
         

@@ -173,7 +173,7 @@ NSMutableArray *expenseParticipators;
         PFQuery *query = [PFQuery queryWithClassName:@"ExpenseParticipator"];
         [query whereKey:@"user" equalTo:user];
         NSArray *objects = [query findObjects];
-        NSLog(@"Found %d ExpenseParticipations for User %@",objects.count, user[@"user"][@"name"]);
+        NSLog(@"Found %lu ExpenseParticipations for User %@",(unsigned long)objects.count, user[@"user"][@"name"]);
         double balance = 0;
         for (PFObject *expenseParticipator in objects) {
             double payment = (double)[expenseParticipator[@"payment"] doubleValue]*[expenseParticipator[@"paymentMultiplier"] doubleValue];

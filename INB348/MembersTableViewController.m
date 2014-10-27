@@ -54,7 +54,7 @@
     [groupUsersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
-            NSLog(@"Successfully retrieved %d UserGroups.", objects.count);
+            NSLog(@"Successfully retrieved %lu UserGroups.", (unsigned long)objects.count);
             
             // Do something with the found objects
             self.groupUsers = [objects mutableCopy];
@@ -85,7 +85,7 @@
             NSLog(@"%@ needs to have a balance of 0 before deletion",groupUser[@"user"][@"name"]);
         }
     } else {
-        NSLog(@"Unhandled editing style! %d", editingStyle);
+        NSLog(@"Unhandled editing style! %ld", editingStyle);
     }
 }
 
