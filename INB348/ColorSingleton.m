@@ -42,6 +42,10 @@ static ColorSingleton *sharedMyColorSingleton = nil;
     return [UIColor whiteColor];
 }
 
+- (UIColor *)getBlueColor{
+    return [UIColor colorWithRed:0.2 green:0.4 blue:0.8 alpha:1] ;
+}
+
 - (void)dealloc {
     // Should never be called, but just here for clarity really.
 }

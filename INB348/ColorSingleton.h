@@ -15,5 +15,7 @@
 + (id)sharedColorSingleton;
 - (UIColor *)getRedColor;
 - (UIColor *)getGreenColor;
+- (UIColor *)getWhiteColor;
+- (UIColor *)getBlueColor;
 
 @end

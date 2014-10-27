@@ -8,6 +8,7 @@
 
 #import "ExpenseManagementTableViewController.h"
 #import "SWRevealViewController.h"
+#import "ColorSingleton.h"
 
 @interface ExpenseManagementTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
@@ -15,6 +16,7 @@
 
 @implementation ExpenseManagementTableViewController
 GroupTabBarController *groupTabBarController;
+ColorSingleton *colorSingleton;
 
 - (void)viewDidLoad
 {
@@ -23,6 +25,7 @@ GroupTabBarController *groupTabBarController;
     groupTabBarController = (GroupTabBarController *)[(HistoryNavigationViewController *)[self navigationController] parentViewController];
 
     [self refresh];
+    colorSingleton = [ColorSingleton sharedColorSingleton];
 
 }
 
@@ -73,6 +76,7 @@ GroupTabBarController *groupTabBarController;
     NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
     [fmt setPositiveFormat:@"0.##"];
     [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expenseAmount]];
+    [expenseHistoryCell.detailTextLabel setTextColor:[colorSingleton getBlueColor]];
     
     return expenseHistoryCell;
 }
