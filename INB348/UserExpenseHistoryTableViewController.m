@@ -7,6 +7,7 @@
 //
 
 #import "UserExpenseHistoryTableViewController.h"
+#import "ColorSingleton.h"
 
 @interface UserExpenseHistoryTableViewController ()
 @property (strong) NSArray *expenses;
@@ -16,6 +17,7 @@
 
 @implementation UserExpenseHistoryTableViewController
 bool readyForReload = false;
+ColorSingleton *colorSingleton;
 
 - (void)reloadIfReady{
     if(readyForReload){
@@ -33,9 +35,9 @@ bool readyForReload = false;
     self.balanceLabel.title = [fmt stringFromNumber:balance];
     
     if([balance longValue] >= 0){
-        [self.balanceLabel setTintColor:[UIColor greenColor]];
+        [self.balanceLabel setTintColor:[colorSingleton getGreenColor]];
     } else {
-        [self.balanceLabel setTintColor:[UIColor redColor]];
+        [self.balanceLabel setTintColor:[colorSingleton getRedColor]];
     }
 }
 
@@ -84,6 +86,7 @@ bool readyForReload = false;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self refresh];
+    colorSingleton = [ColorSingleton sharedColorSingleton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -142,12 +145,12 @@ bool readyForReload = false;
         case 0:
             expensePayer = self.payedExpenseParticipator[indexPath.row];
             [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expensePayer[@"payment"]]];
-            [expenseHistoryCell.detailTextLabel setTextColor:[UIColor greenColor]];
+            [expenseHistoryCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
             break;
         case 1:
             expensePayer = self.usedExpenseParticipator[indexPath.row];
             [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expensePayer[@"usage"]]];
-            [expenseHistoryCell.detailTextLabel setTextColor:[UIColor redColor]];
+            [expenseHistoryCell.detailTextLabel setTextColor:[colorSingleton getRedColor]];
             break;
     }
     NSString *expenseName = expensePayer[@"expense"][@"name"];

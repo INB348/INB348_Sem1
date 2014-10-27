@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SummaryCell.h"
 #import "NewExpenseNavigationController.h"
+#import "ColorSingleton.h"
 
 @interface NewExpenseSummaryTableViewController : UITableViewController
 - (IBAction)save:(id)sender;

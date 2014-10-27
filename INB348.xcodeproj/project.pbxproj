@@ -83,6 +83,7 @@
 		D8E7070819FE6F920066F70F /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7070319FE6F920066F70F /* TPKeyboardAvoidingCollectionView.m */; };
 		D8E7070919FE6F920066F70F /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7070519FE6F920066F70F /* TPKeyboardAvoidingTableView.m */; };
 		D8E7070A19FE6F920066F70F /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7070719FE6F920066F70F /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
+		D8E7070E19FE7B680066F70F /* ColorSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7070D19FE7B680066F70F /* ColorSingleton.m */; };
 		D8EF367019F8786500B6B4DC /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF366F19F8786500B6B4DC /* GroupsViewController.m */; };
 		D8EF367419F87ED600B6B4DC /* GroupRequestsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF367319F87ED600B6B4DC /* GroupRequestsTableViewController.m */; };
 		D8EF367719F8808600B6B4DC /* GroupsRequestListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF367619F8808600B6B4DC /* GroupsRequestListTableViewController.m */; };
@@ -218,6 +219,8 @@
 		D8E7070519FE6F920066F70F /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		D8E7070619FE6F920066F70F /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
 		D8E7070719FE6F920066F70F /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
+		D8E7070C19FE7B680066F70F /* ColorSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSingleton.h; sourceTree = "<group>"; };
+		D8E7070D19FE7B680066F70F /* ColorSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorSingleton.m; sourceTree = "<group>"; };
 		D8EF366E19F8786500B6B4DC /* GroupsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsViewController.h; sourceTree = "<group>"; };
 		D8EF366F19F8786500B6B4DC /* GroupsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
 		D8EF367219F87ED600B6B4DC /* GroupRequestsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupRequestsTableViewController.h; sourceTree = "<group>"; };
@@ -327,6 +330,8 @@
 				0C6E5F8019B72750000594BF /* ViewController.m */,
 				0C6E5F8219B72750000594BF /* Images.xcassets */,
 				0C6E5F7119B72750000594BF /* Supporting Files */,
+				D8E7070C19FE7B680066F70F /* ColorSingleton.h */,
+				D8E7070D19FE7B680066F70F /* ColorSingleton.m */,
 			);
 			path = INB348;
 			sourceTree = "<group>";
@@ -696,6 +701,7 @@
 				0C8FD7F019B7E150002D3D7F /* NewBalanceTableViewController.m in Sources */,
 				0CE717ED19C033D800D9F56D /* LogInViewController.m in Sources */,
 				0C1B96CC19B78617006AA177 /* AccountSettingsTableViewController.m in Sources */,
+				D8E7070E19FE7B680066F70F /* ColorSingleton.m in Sources */,
 				D8EF367019F8786500B6B4DC /* GroupsViewController.m in Sources */,
 				D869F5CE19E90AC1000C31FC /* EditExpenseNavigationController.m in Sources */,
 				D8171E4B19D151FD001DF24E /* HistoryNavigationViewController.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "BalanceManagementTableViewController.h"
 #import "SWRevealViewController.h"
+#import "ColorSingleton.h"
 
 @interface BalanceManagementTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
@@ -17,6 +18,7 @@
 GroupTabBarController *groupTabBarController;
 NSUInteger indexOfLowestBalance;
 double lowestBalance = 0.0;
+ColorSingleton *colorSingleton;
 
 - (void)refresh{
     //Retrieving GroupUser list
@@ -38,6 +40,7 @@ double lowestBalance = 0.0;
         }
     }];
     self.navigationItem.title = groupTabBarController.group[@"name"];
+    colorSingleton = [ColorSingleton sharedColorSingleton];
 }
 
 - (void)viewDidLoad
@@ -62,7 +65,7 @@ double lowestBalance = 0.0;
     }];
     if(lowestBalance != 0.0){
     UITableViewCell *tableViewCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfLowestBalance inSection:0]];
-    [tableViewCell.contentView.layer setBorderColor:[UIColor redColor].CGColor];
+    [tableViewCell.contentView.layer setBorderColor:[UIColor colorWithRed:1 green:0.302 blue:0.302 alpha:1].CGColor];
     [tableViewCell.contentView.layer setBorderWidth:2.0f];
     lowestBalance = 0.0;
     }
@@ -93,9 +96,9 @@ double lowestBalance = 0.0;
     NSNumber *balance = groupUser[@"balance"];
     
     if([balance longValue] >= 0){
-        [groupUserCell.detailTextLabel setTextColor:[UIColor greenColor]];
+        [groupUserCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
     } else {
-        [groupUserCell.detailTextLabel setTextColor:[UIColor redColor]];
+        [groupUserCell.detailTextLabel setTextColor:[colorSingleton getRedColor]];
     }
     
     [groupUserCell.textLabel setText:userName];

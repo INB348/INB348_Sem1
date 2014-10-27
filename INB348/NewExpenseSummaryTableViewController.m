@@ -18,6 +18,7 @@ NSNumber *expenseUserAmount;
 NSNumber *expensePayerAmount;
 NewExpenseNavigationController *navigationController;
 NSMutableArray *expenseParticipators;
+ColorSingleton *colorSingleton;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,6 +47,7 @@ NSMutableArray *expenseParticipators;
             [expenseParticipators removeObjectAtIndex:i];
         }
     }
+    colorSingleton = [ColorSingleton sharedColorSingleton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,9 +94,9 @@ NSMutableArray *expenseParticipators;
 - (void)setColorByValue:(UILabel *)label value:(long) value
 {
     if(value > 0){
-        [label setTextColor:[UIColor greenColor]];
+        [label setTextColor:[colorSingleton getGreenColor]];
     } else if(value < 0){
-        [label setTextColor:[UIColor redColor]];
+        [label setTextColor:[colorSingleton getRedColor]];
     }
 
 }
@@ -129,12 +131,13 @@ NSMutableArray *expenseParticipators;
     //Set payment
     NSNumber *paymentMultiplied = @([expenseParticipator[@"payment"] doubleValue]*[expenseParticipator[@"paymentMultiplier"] doubleValue]);
     [summaryCell.payed setText:[fmt stringFromNumber:paymentMultiplied]];
-    [summaryCell.payed setTextColor:[UIColor greenColor]];
+    [summaryCell.payed setTextColor:[colorSingleton getGreenColor]];
     
     //Set usage
     NSNumber *usageMultiplied = @([expenseParticipator[@"usage"] doubleValue]*[expenseParticipator[@"usageMultiplier"] doubleValue]);
     [summaryCell.used setText:[fmt stringFromNumber:usageMultiplied]];
-    [summaryCell.used setTextColor:[UIColor redColor]];
+    
+    [summaryCell.used setTextColor:[colorSingleton getRedColor]];
 
     
     //Set new balance

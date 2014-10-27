@@ -7,12 +7,14 @@
 //
 
 #import "GroupsTableViewController.h"
+#import "ColorSingleton.h"
 
 @interface GroupsTableViewController ()
 @property (strong) NSArray *userGroups;
 @end
 
 @implementation GroupsTableViewController
+ColorSingleton *colorSingleton;
 
 - (void)refresh{
     PFQuery *query = [PFQuery queryWithClassName:@"UserGroup"];
@@ -35,6 +37,7 @@
             }
         }];
     }
+    colorSingleton = [ColorSingleton sharedColorSingleton];
 }
 
 - (void)viewDidLoad
@@ -66,9 +69,9 @@
     NSNumber *balance = userGroup[@"balance"];
     
     if([balance longValue] >= 0){
-        [userGroupCell.detailTextLabel setTextColor:[UIColor greenColor]];
+        [userGroupCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
     } else {
-        [userGroupCell.detailTextLabel setTextColor:[UIColor redColor]];
+        [userGroupCell.detailTextLabel setTextColor:[colorSingleton getRedColor]];
     }
     
     [userGroupCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
