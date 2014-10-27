@@ -17,6 +17,7 @@
 @synthesize group;
 @synthesize delegate;
 
+#pragma mark - Setup
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -26,9 +27,8 @@
     return self;
 }
 
-- (void)viewDidLoad
+- (void)setUpExpenseParticipators
 {
-    [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.expenseParticipators = [NSMutableArray array];
     for (PFObject *groupUser in self.groupUsers) {
@@ -38,6 +38,12 @@
         [expenseParticipator setValue:@0 forKey:@"usage"];
         [self.expenseParticipators addObject:expenseParticipator];
     }
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self setUpExpenseParticipators];
 }
 
 - (void)didReceiveMemoryWarning

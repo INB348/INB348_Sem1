@@ -18,10 +18,11 @@
 GroupTabBarController *groupTabBarController;
 ColorSingleton *colorSingleton;
 
+#pragma mark - Setup
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self customSetup];
+    [self setUpRevealViewController];
     groupTabBarController = (GroupTabBarController *)[(HistoryNavigationViewController *)[self navigationController] parentViewController];
 
     [self refresh];
@@ -29,6 +30,25 @@ ColorSingleton *colorSingleton;
 
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
+    self.navigationItem.title = groupTabBarController.group[@"name"];
+}
+
+- (void)setUpRevealViewController
+{
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        [self.revealButtonItem setTarget: revealViewController];
+        [self.revealButtonItem setAction: @selector( revealToggle: )];
+        [self.navigationController.navigationBar addGestureRecognizer:revealViewController.panGestureRecognizer];
+    }
+}
+
+#pragma mark - Reload Table
 - (void)refresh{
     PFQuery *expensesQuery = [PFQuery queryWithClassName:@"Expense"];
     [expensesQuery whereKey:@"group" equalTo:groupTabBarController.group];
@@ -48,13 +68,7 @@ ColorSingleton *colorSingleton;
     self.navigationItem.title = groupTabBarController.group[@"name"];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self.tableView reloadData];
-    self.navigationItem.title = groupTabBarController.group[@"name"];
-}
-
+#pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -79,17 +93,6 @@ ColorSingleton *colorSingleton;
     [expenseHistoryCell.detailTextLabel setTextColor:[colorSingleton getBlueColor]];
     
     return expenseHistoryCell;
-}
-
-- (void)customSetup
-{
-    SWRevealViewController *revealViewController = self.revealViewController;
-    if ( revealViewController )
-    {
-        [self.revealButtonItem setTarget: revealViewController];
-        [self.revealButtonItem setAction: @selector( revealToggle: )];
-        [self.navigationController.navigationBar addGestureRecognizer:revealViewController.panGestureRecognizer];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,6 +130,7 @@ ColorSingleton *colorSingleton;
     }
 }
 
+#pragma mark - Buttons
 - (IBAction)back:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

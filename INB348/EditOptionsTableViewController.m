@@ -16,6 +16,7 @@
 @synthesize delegate;
 NSString *viewControllerTitle;
 
+#pragma mark - Setup
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -23,7 +24,6 @@ NSString *viewControllerTitle;
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)setExpenseParticipatorIndexes:(NSMutableDictionary *)indexAndMultipliers{
@@ -35,6 +35,7 @@ NSString *viewControllerTitle;
     
 }
 
+#pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     EditExpenseParticipatorsTableViewController *destViewController = (EditExpenseParticipatorsTableViewController *) [(UINavigationController *)segue.destinationViewController topViewController];
     destViewController.groupUsers = self.groupUsers;
@@ -44,24 +45,11 @@ NSString *viewControllerTitle;
         destViewController.title = @"Who Paid";
         viewControllerTitle = @"WhoPaid";
         destViewController.keysAndMultipliers = [self.delegate paymentKeysAndMultipliers];
-//        NSArray *keys = [[self.delegate paymentKeysAndMultipliers] allKeys];
-//        NSMutableArray *keysNumbers = [NSMutableArray array];
-//        for (NSString *key in keys) {
-//            [keysNumbers addObject:[NSNumber numberWithInteger:[key integerValue]]];
-//        }
-//        destViewController.indexes = keysNumbers;
-        
     }
     if ([segue.identifier isEqualToString:@"editForWhom"]) {
         destViewController.title = @"For Whom";
         viewControllerTitle = @"ForWhom";
         destViewController.keysAndMultipliers = [self.delegate usageKeysAndMultipliers];
-//        NSArray *keys = [[self.delegate usageKeysAndMultipliers] allKeys];
-//        NSMutableArray *keysNumbers = [NSMutableArray array];
-//        for (NSString *key in keys) {
-//            [keysNumbers addObject:[NSNumber numberWithInteger:[key integerValue]]];
-//        }
-//        destViewController.indexes = keysNumbers;
     }
 }
 

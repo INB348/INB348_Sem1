@@ -19,15 +19,7 @@
 bool readyForReload = false;
 ColorSingleton *colorSingleton;
 
-- (void)reloadIfReady{
-    if(readyForReload){
-        [self.tableView reloadData];
-        readyForReload = @false;
-    } else {
-        readyForReload = @true;
-    }
-}
-
+#pragma mark - Setup
 - (void)setBalanceLabel {
     NSNumber *balance = self.groupUser[@"balance"];
     NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
@@ -38,6 +30,26 @@ ColorSingleton *colorSingleton;
         [self.balanceLabel setTintColor:[colorSingleton getGreenColor]];
     } else {
         [self.balanceLabel setTintColor:[colorSingleton getRedColor]];
+    }
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self refresh];
+    colorSingleton = [ColorSingleton sharedColorSingleton];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Reload Table
+- (void)reloadIfReady{
+    if(readyForReload){
+        [self.tableView reloadData];
+        readyForReload = @false;
+    } else {
+        readyForReload = @true;
     }
 }
 
@@ -81,17 +93,6 @@ ColorSingleton *colorSingleton;
     self.navigationItem.title = self.groupUser[@"user"][@"name"];
     [self setBalanceLabel];
     
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self refresh];
-    colorSingleton = [ColorSingleton sharedColorSingleton];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -162,8 +163,6 @@ ColorSingleton *colorSingleton;
 
 
 #pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"editExpenseSegue"]) {
         EditExpenseNavigationController *destNavigationController = segue.destinationViewController;
@@ -195,7 +194,7 @@ ColorSingleton *colorSingleton;
     }
 }
 
-
+#pragma mark - Buttons
 - (IBAction)back:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

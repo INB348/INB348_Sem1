@@ -16,16 +16,12 @@
 @implementation GroupSettingsTableViewController
 GroupTabBarController *groupTabBarController;
 
+#pragma mark - Setup
 - (void)viewDidLoad
 {
     groupTabBarController =(GroupTabBarController*)[(GroupSettingsNavigationViewController *)[self navigationController] parentViewController];
     [super viewDidLoad];
-    [self customSetup];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self setUpRevealViewController];
 }
 - (void)viewDidAppear:(BOOL)animated{
     self.navigationItem.title = groupTabBarController.group[@"name"];
@@ -37,7 +33,7 @@ GroupTabBarController *groupTabBarController;
     [groupTabBarController.group saveInBackground];
 }
 
-- (void)customSetup
+- (void)setUpRevealViewController
 {
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
@@ -63,8 +59,32 @@ GroupTabBarController *groupTabBarController;
     return true;
 }
 
-- (IBAction)deleteGroup:(id)sender {
+- (IBAction)nameChanged:(id)sender {
+    self.navigationItem.title = self.nameLabel.text;
+}
 
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showMembers"]) {
+        MembersTableViewController *membersViewController = segue.destinationViewController;
+        membersViewController.groupUsers = groupTabBarController.groupUsers;
+        membersViewController.group = groupTabBarController.group;
+    }
+    if ([segue.identifier isEqualToString:@"addMember"]) {
+        AddMemberNavigationController *addMemberNavigationController = segue.destinationViewController;
+        AddMemberToGroupViewController *addMemberViewController = (AddMemberToGroupViewController *)addMemberNavigationController.topViewController;
+        addMemberViewController.groupUsers = groupTabBarController.groupUsers;
+        addMemberViewController.group = groupTabBarController.group;
+    }
+    
+}
+
+#pragma mark - Buttons
+- (IBAction)back:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)deleteGroup:(id)sender {
     if([self isBalanceZero]){
         [groupTabBarController.group deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if(succeeded){
@@ -84,28 +104,5 @@ GroupTabBarController *groupTabBarController;
     } else{
         NSLog(@"Users balance is not 0");
     }
-}
-
-- (IBAction)nameChanged:(id)sender {
-    self.navigationItem.title = self.nameLabel.text;
-}
-
-- (IBAction)back:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"showMembers"]) {
-        MembersTableViewController *membersViewController = segue.destinationViewController;
-        membersViewController.groupUsers = groupTabBarController.groupUsers;
-        membersViewController.group = groupTabBarController.group;
-    }
-    if ([segue.identifier isEqualToString:@"addMember"]) {
-        AddMemberNavigationController *addMemberNavigationController = segue.destinationViewController;
-        AddMemberToGroupViewController *addMemberViewController = (AddMemberToGroupViewController *)addMemberNavigationController.topViewController;
-        addMemberViewController.groupUsers = groupTabBarController.groupUsers;
-        addMemberViewController.group = groupTabBarController.group;
-    }
-    
 }
 @end

@@ -15,6 +15,7 @@
 @implementation NewExpenseForWhomTableViewController
 NewExpenseNavigationController *navigationController;
 
+#pragma mark - Setup
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -124,7 +125,7 @@ NewExpenseNavigationController *navigationController;
     return YES;
 }
 
-#pragma mark - Navigation
+#pragma mark - Buttons
 
 - (void)showOkAlertButton:(NSString *)message {
     UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];

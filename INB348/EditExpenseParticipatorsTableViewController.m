@@ -15,6 +15,7 @@
 @implementation EditExpenseParticipatorsTableViewController
 @synthesize delegate;
 
+#pragma mark - Setup
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpTap];
@@ -22,12 +23,10 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
@@ -68,13 +67,14 @@
     return cell;
 }
 
-- (IBAction)cancel:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
+#pragma mark - Buttons
 - (void)showOkAlertButton:(NSString *)message {
     UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [errorAlertView show];
+}
+
+- (IBAction)cancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)done:(id)sender {
@@ -122,7 +122,7 @@
     
 }
 
-#pragma mark UIGestureRecognizerDelegate methods
+#pragma mark - UIGestureRecognizerDelegate methods
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {

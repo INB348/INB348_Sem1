@@ -15,6 +15,7 @@
 @implementation NewExpenseDetailsViewController
 NewExpenseNavigationController *navigationController;
 
+#pragma mark - Setup
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -24,17 +25,27 @@ NewExpenseNavigationController *navigationController;
     return self;
 }
 
-- (void)viewDidLoad
+- (void)setScrollView
 {
-    [super viewDidLoad];
+    [self.scrollView setScrollEnabled:YES];
+    [self.scrollView setContentSize:CGSizeMake(320, 700)];
+}
+
+- (void)setDescriptionTextViewBorders
+{
     self.descriptionTextView.layer.borderWidth = 5.0f;
     self.descriptionTextView.layer.borderColor = [[UIColor grayColor] CGColor];
     self.descriptionTextView.layer.cornerRadius = 8;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self setDescriptionTextViewBorders];
     navigationController = (NewExpenseNavigationController *)[self navigationController];
     
     [self setUpTap];
-    [self.scrollView setScrollEnabled:YES];
-    [self.scrollView setContentSize:CGSizeMake(320, 700)];
+    [self setScrollView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,9 +105,6 @@ NewExpenseNavigationController *navigationController;
     return YES;
 }
 
-#pragma mark - Keyboard pushes TextField Up
-
-
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -108,6 +116,7 @@ NewExpenseNavigationController *navigationController;
     }
 }
 
+#pragma mark - Buttons
 - (IBAction)cancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

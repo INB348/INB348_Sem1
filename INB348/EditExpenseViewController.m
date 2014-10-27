@@ -17,25 +17,35 @@
 NSMutableArray *paymentMultipliers;
 NSMutableArray *usageMultipliers;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+#pragma mark - Setup
+- (void)setOldExpenseValues {
     self.paymentKeysAndMultipliers = [self getIndexesAndMultipliersOfObjects:@"payment" multiplierType:@"paymentMultiplier"];
     self.usageKeysAndMultipliers = [self getIndexesAndMultipliersOfObjects:@"usage" multiplierType:@"usageMultiplier"];
     self.nameTextField.text=self.expense[@"name"];
     self.amountTextField.text=[self.expense[@"amount"] stringValue];
     self.datePicker.date=self.expense[@"date"];
     self.descriptionTextView.text=self.expense[@"description"];
-    
-    self.title = @"Edit Expense";
-    [self setUpTap];
-    
+}
+
+- (void)setDescriptionTextViewBorders {
     self.descriptionTextView.layer.borderWidth = 5.0f;
     self.descriptionTextView.layer.borderColor = [[UIColor grayColor] CGColor];
     self.descriptionTextView.layer.cornerRadius = 8;
-    
+}
+
+- (void)setScrollView {
     [self.scrollView setScrollEnabled:YES];
     [self.scrollView setContentSize:CGSizeMake(320, 700)];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"Edit Expense";
+    
+    [self setOldExpenseValues];
+    [self setUpTap];
+    [self setDescriptionTextViewBorders];
+    [self setScrollView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,6 +53,7 @@ NSMutableArray *usageMultipliers;
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Payment and Usage Handling
 -(void)expensePayerIndexes:(NSMutableDictionary *)indexesAndMultipliers{
     NSLog(@"Setting new Payers");
     self.paymentKeysAndMultipliers = indexesAndMultipliers;
@@ -79,6 +90,7 @@ NSMutableArray *usageMultipliers;
     }
 }
 
+#pragma mark - Update
 - (BOOL)isValuesChanged{
     BOOL isValuesChanged = false;
     if(![self.expense[@"name"] isEqualToString:self.nameTextField.text]){
@@ -194,6 +206,17 @@ NSMutableArray *usageMultipliers;
     [errorAlertView show];
 }
 
+#pragma mark - Navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"editOptions"]) {
+        EditOptionsTableViewController *destinationViewController = (EditOptionsTableViewController *)segue.destinationViewController;
+        destinationViewController.groupUsers = self.groupUsers;
+        [destinationViewController setDelegate:self];
+    }
+}
+
+#pragma mark - Buttons
+
 - (IBAction)save:(id)sender {
     if(![self.nameTextField.text isEqualToString:@""]){
         if(![self.amountTextField.text isEqualToString:@""]){
@@ -219,14 +242,6 @@ NSMutableArray *usageMultipliers;
 
 - (IBAction)cancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"editOptions"]) {
-        EditOptionsTableViewController *destinationViewController = (EditOptionsTableViewController *)segue.destinationViewController;
-        destinationViewController.groupUsers = self.groupUsers;
-        [destinationViewController setDelegate:self];
-    }
 }
 
 - (IBAction)deleteButton:(id)sender {
@@ -299,7 +314,7 @@ NSMutableArray *usageMultipliers;
     return YES;
 }
 
-#pragma mark UIGestureRecognizerDelegate methods
+#pragma mark - UIGestureRecognizerDelegate methods
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {

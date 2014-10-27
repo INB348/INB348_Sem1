@@ -20,6 +20,29 @@ NSUInteger indexOfLowestBalance;
 double lowestBalance = 0.0;
 ColorSingleton *colorSingleton;
 
+#pragma mark - Setup
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    groupTabBarController =(GroupTabBarController*)[(BalanceNavigationController *)[self navigationController] parentViewController];
+    [self refresh];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // Fetch the devices from persistent data store
+    [self.tableView reloadData];
+    self.navigationItem.title = groupTabBarController.group[@"name"];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Reload Page
 - (void)refresh{
     //Retrieving GroupUser list
     PFQuery *groupUsersQuery = [PFQuery queryWithClassName:@"UserGroup"];
@@ -43,22 +66,8 @@ ColorSingleton *colorSingleton;
     colorSingleton = [ColorSingleton sharedColorSingleton];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    groupTabBarController =(GroupTabBarController*)[(BalanceNavigationController *)[self navigationController] parentViewController];
-    [self refresh];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    // Fetch the devices from persistent data store
-    [self.tableView reloadData];
-    self.navigationItem.title = groupTabBarController.group[@"name"];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+#pragma mark - Table view data source
+- (void)setIndexOfLowestBalance
 {
     [groupTabBarController.groupUsers enumerateObjectsUsingBlock:^(PFObject *groupUser, NSUInteger idx, BOOL *stop) {
         if([groupUser[@"balance"] doubleValue] < lowestBalance){
@@ -66,33 +75,34 @@ ColorSingleton *colorSingleton;
             indexOfLowestBalance = idx;
         };
     }];
-    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    [self setIndexOfLowestBalance];
     return groupTabBarController.groupUsers.count;
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)setBalance:(PFObject *)groupUser fmt:(NSNumberFormatter *)fmt groupUserCell:(UITableViewCell *)groupUserCell
 {
-    static NSString *CellIdentifier = @"groupUserCell";
-    UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    PFObject *groupUser = groupTabBarController.groupUsers[indexPath.row];
-    NSString *userName = groupUser[@"user"][@"name"];
     NSNumber *balance = groupUser[@"balance"];
-    
+    [groupUserCell.detailTextLabel setText:[fmt stringFromNumber:balance]];
     if([balance longValue] >= 0){
         [groupUserCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
     } else {
         [groupUserCell.detailTextLabel setTextColor:[colorSingleton getRedColor]];
     }
-    
-    [groupUserCell.textLabel setText:userName];
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
-    [groupUserCell.detailTextLabel setText:[fmt stringFromNumber:balance]];
-    groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+}
 
+- (void)setUserName:(PFObject *)groupUser groupUserCell:(UITableViewCell *)groupUserCell
+{
+    NSString *userName = groupUser[@"user"][@"name"];
+    [groupUserCell.textLabel setText:userName];
+}
+
+- (void)setBorderColor:(UITableViewCell *)groupUserCell indexPath:(NSIndexPath *)indexPath
+{
     if(indexOfLowestBalance == indexPath.row){
         [groupUserCell.contentView.layer setBorderColor:[colorSingleton getRedColor].CGColor];
         [groupUserCell.contentView.layer setBorderWidth:2.0f];
@@ -101,16 +111,27 @@ ColorSingleton *colorSingleton;
         [groupUserCell.contentView.layer setBorderColor:[colorSingleton getWhiteColor].CGColor];
         [groupUserCell.contentView.layer setBorderWidth:2.0f];
     }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"groupUserCell";
+    UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+    [fmt setPositiveFormat:@"0.##"];
+    PFObject *groupUser = groupTabBarController.groupUsers[indexPath.row];
+    
+    [self setUserName:groupUser groupUserCell:groupUserCell];
+    [self setBalance:groupUser fmt:fmt groupUserCell:groupUserCell];
+    groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+
+    [self setBorderColor:groupUserCell indexPath:indexPath];
     
     return groupUserCell;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
+#pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"addNewExpenseSegue"]) {
         NewExpenseNavigationController *destNavigationController = segue.destinationViewController;
@@ -128,6 +149,7 @@ ColorSingleton *colorSingleton;
     }
 }
 
+#pragma mark - Buttons
 - (IBAction)back:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
