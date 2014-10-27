@@ -113,14 +113,8 @@
         [errorAlertView show];
     }
 
-    
 }
 
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//    if (buttonIndex == [alertView cancelButtonIndex]){
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-//    }
-//}
 
 -(BOOL) NSStringIsValidEmail:(NSString *)checkEmail
 {
