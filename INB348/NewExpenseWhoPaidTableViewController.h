@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NewExpenseNavigationController.h"
+#import "SelectUsersCell.h"
 
 @interface NewExpenseWhoPaidTableViewController : UITableViewController
 @end

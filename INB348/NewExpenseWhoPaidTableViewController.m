@@ -30,6 +30,12 @@ NewExpenseNavigationController *navigationController;
     self.tableView.allowsMultipleSelection = YES;
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    for (PFObject *expenseParticipator in navigationController.expenseParticipators) {
+        [expenseParticipator setValue:@(0) forKey:@"paymentMultiplier"];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -68,14 +74,15 @@ NewExpenseNavigationController *navigationController;
 - (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"whoPaidCell";
-    UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    SelectUsersCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     PFObject *groupUser = navigationController.groupUsers[indexPath.row];
     NSString *userName = groupUser[@"user"][@"name"];
     
-    [groupUserCell.textLabel setText:[NSString stringWithFormat:@"%@", userName]];
-    groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+    [groupUserCell.nameLabel setText:[NSString stringWithFormat:@"%@", userName]];
+    [groupUserCell.multiplier setText:[NSString stringWithFormat:@"1"]];
+    //groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
     
     return groupUserCell;
 }
@@ -84,14 +91,22 @@ NewExpenseNavigationController *navigationController;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     //Adding selected users to array
-    NSMutableArray *selectedExpensePayers = [[NSMutableArray alloc] init];
+    //NSMutableArray *selectedExpensePayers = [[NSMutableArray alloc] init];
+   
     for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
-        [selectedExpensePayers addObject:[navigationController.groupUsers objectAtIndex:selectedExpensePayerIndex.row]];
+        SelectUsersCell *groupUserCell = (SelectUsersCell *)[self.tableView cellForRowAtIndexPath:selectedExpensePayerIndex];
+        
+        PFObject *selectedUser = [navigationController.groupUsers objectAtIndex:selectedExpensePayerIndex.row];
+        for (PFObject *expenseParticipator in navigationController.expenseParticipators) {
+            if([expenseParticipator[@"user"] isEqual:selectedUser]){
+                [expenseParticipator setValue:@([groupUserCell.multiplier.text intValue]) forKey:@"paymentMultiplier"];
+            }
+        }
     }
     
-    if ([segue.identifier isEqualToString:@"showForWhom"]) {
-        navigationController.expensePayers=selectedExpensePayers;
-    }
+//    if ([segue.identifier isEqualToString:@"showForWhom"]) {
+//        navigationController.expensePayers=selectedExpensePayers;
+//    }
 }
 
 @end

@@ -30,6 +30,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.expenseParticipators = [NSMutableArray array];
+    for (PFObject *groupUser in self.groupUsers) {
+        PFObject *expenseParticipator = [PFObject objectWithClassName:@"ExpenseParticipator"];
+        [expenseParticipator setObject:groupUser forKey:@"user"];
+        [expenseParticipator setValue:@0 forKey:@"payment"];
+        [expenseParticipator setValue:@0 forKey:@"usage"];
+        [self.expenseParticipators addObject:expenseParticipator];
+    }
 }
 
 - (void)didReceiveMemoryWarning

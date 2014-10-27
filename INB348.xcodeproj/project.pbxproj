@@ -78,6 +78,7 @@
 		D8BB982119D1532100D47F5C /* GroupSettingsNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8BB982019D1532100D47F5C /* GroupSettingsNavigationViewController.m */; };
 		D8D8B02E19E7828700C9DB03 /* AddMemberToGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D8B02D19E7828700C9DB03 /* AddMemberToGroupViewController.m */; };
 		D8D8B03119E78D8500C9DB03 /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D8B03019E78D8500C9DB03 /* MembersTableViewController.m */; };
+		D8E32A4819FD213F00BDB3DA /* SelectUsersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E32A4719FD213F00BDB3DA /* SelectUsersCell.m */; };
 		D8EF367019F8786500B6B4DC /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF366F19F8786500B6B4DC /* GroupsViewController.m */; };
 		D8EF367419F87ED600B6B4DC /* GroupRequestsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF367319F87ED600B6B4DC /* GroupRequestsTableViewController.m */; };
 		D8EF367719F8808600B6B4DC /* GroupsRequestListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8EF367619F8808600B6B4DC /* GroupsRequestListTableViewController.m */; };
@@ -203,6 +204,8 @@
 		D8D8B02D19E7828700C9DB03 /* AddMemberToGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMemberToGroupViewController.m; sourceTree = "<group>"; };
 		D8D8B02F19E78D8500C9DB03 /* MembersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MembersTableViewController.h; sourceTree = "<group>"; };
 		D8D8B03019E78D8500C9DB03 /* MembersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersTableViewController.m; sourceTree = "<group>"; };
+		D8E32A4619FD213F00BDB3DA /* SelectUsersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectUsersCell.h; sourceTree = "<group>"; };
+		D8E32A4719FD213F00BDB3DA /* SelectUsersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectUsersCell.m; sourceTree = "<group>"; };
 		D8EF366E19F8786500B6B4DC /* GroupsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsViewController.h; sourceTree = "<group>"; };
 		D8EF366F19F8786500B6B4DC /* GroupsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
 		D8EF367219F87ED600B6B4DC /* GroupRequestsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupRequestsTableViewController.h; sourceTree = "<group>"; };
@@ -408,6 +411,8 @@
 				6F5CE5D819CA726900489DDC /* NewExpenseSummaryTableViewController.m */,
 				D8FA019119E5001D005C6BC7 /* SummaryCell.h */,
 				D8FA019219E5001D005C6BC7 /* SummaryCell.m */,
+				D8E32A4619FD213F00BDB3DA /* SelectUsersCell.h */,
+				D8E32A4719FD213F00BDB3DA /* SelectUsersCell.m */,
 			);
 			name = NewExpense;
 			sourceTree = "<group>";
@@ -667,6 +672,7 @@
 				0C1B96C919B773AE006AA177 /* BalanceManagementTableViewController.m in Sources */,
 				0C6E5F7719B72750000594BF /* main.m in Sources */,
 				D88FB28619E7A463005A5CEE /* AddMemberNavigationController.m in Sources */,
+				D8E32A4819FD213F00BDB3DA /* SelectUsersCell.m in Sources */,
 				0C56510719EF7798008E667C /* MBProgressHUD.m in Sources */,
 				D800A3BE19D01F8400201202 /* NewGroupViewController.m in Sources */,
 				0C1B96C619B76CB6006AA177 /* ExpenseManagementTableViewController.m in Sources */,

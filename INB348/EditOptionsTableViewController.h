@@ -11,11 +11,11 @@
 #import "EditExpenseParticipatorsTableViewController.h"
 
 @protocol EditOptionsTableViewController
--(void)expensePayerIndexes:(NSMutableArray *)indexes;
--(void)expenseUserIndexes:(NSMutableArray *)indexes;
+-(void)expensePayerIndexes:(NSMutableDictionary *)indexesAndMultipliers;
+-(void)expenseUserIndexes:(NSMutableDictionary *)indexesAndMultipliers;
 
-@property (strong) NSMutableArray *expensePayerIndexes;
-@property (strong) NSMutableArray *expenseUserIndexes;
+@property (strong) NSMutableDictionary *paymentKeysAndMultipliers;
+@property (strong) NSMutableDictionary *usageKeysAndMultipliers;
 @end
 
 @interface EditOptionsTableViewController : UITableViewController <EditExpenseParticipatorsTableViewController>

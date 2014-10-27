@@ -26,11 +26,11 @@ NSString *viewControllerTitle;
     // Dispose of any resources that can be recreated.
 }
 
--(void)setExpenseParticipatorIndexes:(NSMutableArray *)indexes{
+-(void)setExpenseParticipatorIndexes:(NSMutableDictionary *)indexAndMultipliers{
     if([viewControllerTitle isEqualToString:@"WhoPaid"]){
-        [self.delegate expensePayerIndexes:indexes];
+        [self.delegate expensePayerIndexes:indexAndMultipliers];
     } else {
-       [self.delegate expenseUserIndexes:indexes];
+        [self.delegate expenseUserIndexes:indexAndMultipliers];
     }
     
 }
@@ -43,13 +43,25 @@ NSString *viewControllerTitle;
     if ([segue.identifier isEqualToString:@"editWhoPaid"]) {
         destViewController.title = @"Who Paid";
         viewControllerTitle = @"WhoPaid";
-        destViewController.indexes=[self.delegate expensePayerIndexes];
+        destViewController.keysAndMultipliers = [self.delegate paymentKeysAndMultipliers];
+//        NSArray *keys = [[self.delegate paymentKeysAndMultipliers] allKeys];
+//        NSMutableArray *keysNumbers = [NSMutableArray array];
+//        for (NSString *key in keys) {
+//            [keysNumbers addObject:[NSNumber numberWithInteger:[key integerValue]]];
+//        }
+//        destViewController.indexes = keysNumbers;
         
     }
     if ([segue.identifier isEqualToString:@"editForWhom"]) {
         destViewController.title = @"For Whom";
         viewControllerTitle = @"ForWhom";
-        destViewController.indexes=[self.delegate expenseUserIndexes];
+        destViewController.keysAndMultipliers = [self.delegate usageKeysAndMultipliers];
+//        NSArray *keys = [[self.delegate usageKeysAndMultipliers] allKeys];
+//        NSMutableArray *keysNumbers = [NSMutableArray array];
+//        for (NSString *key in keys) {
+//            [keysNumbers addObject:[NSNumber numberWithInteger:[key integerValue]]];
+//        }
+//        destViewController.indexes = keysNumbers;
     }
 }
 

@@ -9,17 +9,18 @@
 #import "EditExpenseViewController.h"
 
 @interface EditExpenseViewController ()
-
 @end
 
 @implementation EditExpenseViewController
 @synthesize delegate;
+NSMutableArray *paymentMultipliers;
+NSMutableArray *usageMultipliers;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.expensePayerIndexes = [self getIndexesOfObjects:@"payment"];
-    self.expenseUserIndexes = [self getIndexesOfObjects:@"usage"];
+    self.paymentKeysAndMultipliers = [self getIndexesAndMultipliersOfObjects:@"payment" multiplierType:@"paymentMultiplier"];
+    self.usageKeysAndMultipliers = [self getIndexesAndMultipliersOfObjects:@"usage" multiplierType:@"usageMultiplier"];
     self.nameTextField.text=self.expense[@"name"];
     self.amountTextField.text=[self.expense[@"amount"] stringValue];
     self.datePicker.date=self.expense[@"date"];
@@ -33,22 +34,32 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)expensePayerIndexes:(NSMutableArray *)indexes{
+-(void)expensePayerIndexes:(NSMutableDictionary *)indexesAndMultipliers{
     NSLog(@"Setting new Payers");
-    self.expensePayerIndexes = indexes;
+    self.paymentKeysAndMultipliers = indexesAndMultipliers;
 }
 
--(void)expenseUserIndexes:(NSMutableArray *)indexes{
+-(void)expenseUserIndexes:(NSMutableDictionary *)indexesAndMultipliers{
     NSLog(@"Setting new Users");
-    self.expenseUserIndexes = indexes;
+    self.usageKeysAndMultipliers = indexesAndMultipliers;
 }
 
 -(NSNumber*)getPartOfPayment{
-    return [NSNumber numberWithDouble:[self.amountTextField.text doubleValue]/self.expensePayerIndexes.count];
+    double numberOfPayers=0;
+    NSArray *multipliers = [self.paymentKeysAndMultipliers allValues];
+    for (NSNumber *multiplier in multipliers) {
+        numberOfPayers += [multiplier doubleValue];
+    }
+    return [NSNumber numberWithDouble:[self.amountTextField.text doubleValue]/numberOfPayers];
 }
 
 -(NSNumber*)getPartOfUsage{
-    return [NSNumber numberWithDouble:[self.amountTextField.text doubleValue]/self.expenseUserIndexes.count];
+    double numberOfUsers=0;
+    NSArray *multipliers = [self.usageKeysAndMultipliers allValues];
+    for (NSNumber *multiplier in multipliers) {
+        numberOfUsers += [multiplier doubleValue];
+    }
+    return [NSNumber numberWithDouble:[self.amountTextField.text doubleValue]/numberOfUsers];
 }
 
 -(NSString *)returnStringIfNotNull:(NSString*)string{
@@ -85,19 +96,19 @@
     return isValuesChanged;
 }
 
-- (NSMutableArray *)getIndexesOfObjects:(NSString *) type{
-    NSMutableArray *indexes = [NSMutableArray array];
+- (NSMutableDictionary *)getIndexesAndMultipliersOfObjects:(NSString *) type multiplierType:(NSString *) multiplierType {
+    NSMutableDictionary *indexesAndMultipliers = [NSMutableDictionary dictionary];
     
     for (PFObject *expenseParticipator in self.oldExpenseParticipators) {
         if(![expenseParticipator[type] isEqual:@0] ){
             for (PFObject *groupUser in self.groupUsers) {
                 if([[(PFObject *)expenseParticipator[@"user"] objectId] isEqualToString:groupUser.objectId]){
-                    [indexes addObject:[NSNumber numberWithInteger:[self.groupUsers indexOfObject:groupUser]]];
+                    [indexesAndMultipliers setObject:expenseParticipator[multiplierType] forKey:[@([self.groupUsers indexOfObject:groupUser]) stringValue]];
                 }
             }
         }
     }
-    return indexes;
+    return indexesAndMultipliers;
 }
 
 -(void)calculateNewUserBalance{
@@ -105,21 +116,16 @@
     for (PFObject *user in self.groupUsers) {
         PFQuery *query = [PFQuery queryWithClassName:@"ExpenseParticipator"];
         [query whereKey:@"user" equalTo:user];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if(!error){
-                NSLog(@"Found %d ExpenseParticipations for User %@",objects.count, user[@"user"][@"name"]);
-                double balance = 0;
-                for (PFObject *expenseParticipator in objects) {
-                    double payment = (double)[expenseParticipator[@"payment"] doubleValue];
-                    double usage = (double)[expenseParticipator[@"usage"] doubleValue];
-                    balance = balance+payment-usage;
-                }
-                [user setValue:[NSNumber numberWithDouble:balance] forKey:@"balance"];
-                [updatedUsers addObject:user];
-            } else{
-                NSLog(@"Erro: %@",error);
-            }
-        }];
+        NSArray *objects = [query findObjects];
+        NSLog(@"Found %d ExpenseParticipations for User %@",objects.count, user[@"user"][@"name"]);
+        double balance = 0;
+        for (PFObject *expenseParticipator in objects) {
+            double payment = (double)[expenseParticipator[@"payment"] doubleValue]*[expenseParticipator[@"paymentMultiplier"] doubleValue];
+            double usage = (double)[expenseParticipator[@"usage"] doubleValue]*[expenseParticipator[@"usageMultiplier"] doubleValue];
+            balance = balance+payment-usage;
+        }
+        [user setValue:[NSNumber numberWithDouble:balance] forKey:@"balance"];
+        [updatedUsers addObject:user];
     }
     [PFObject saveAllInBackground:updatedUsers block:^(BOOL succeeded, NSError *error) {
         if(succeeded){
@@ -127,25 +133,40 @@
         }
     }];
 }
+-(BOOL)isKeyInPaymentDictionary:(int) key{
+    return [[self.paymentKeysAndMultipliers allKeys] containsObject:[@(key) stringValue]];
+}
+-(BOOL)isKeyInUsageDictionary:(int) key{
+    return [[self.usageKeysAndMultipliers allKeys] containsObject:[@(key) stringValue]];
+}
+-(BOOL)isKeyInPaymentOrUsageDictionary:(int) key{
+    return [self isKeyInPaymentDictionary:key] || [self isKeyInUsageDictionary:key];
+}
 
 -(void)addNewExpenseParticipators{
     NSMutableArray *newExpenseParticipators = [NSMutableArray array];
     for (int i = 0; i<self.groupUsers.count; i++) {
-        if([self.expensePayerIndexes containsObject:[NSNumber numberWithInteger:i]] || [self.expenseUserIndexes containsObject:[NSNumber numberWithInteger:i]]){
+        if([self isKeyInPaymentOrUsageDictionary:i]){
             PFObject *expenseParticipator = [PFObject objectWithClassName:@"ExpenseParticipator"];
             PFObject *groupUser = [self.groupUsers objectAtIndex:i];
             [expenseParticipator setObject:groupUser forKey:@"user"];
             [expenseParticipator setObject:self.expense forKey:@"expense"];
             
-            if([self.expensePayerIndexes containsObject:[NSNumber numberWithInteger:i]]){
+            if([self isKeyInPaymentDictionary:i]){
                 [expenseParticipator setValue:[self getPartOfPayment] forKey:@"payment"];
+                NSNumber *multiplier = [self.paymentKeysAndMultipliers valueForKey:[@(i) stringValue]];
+                [expenseParticipator setValue:multiplier forKey:@"paymentMultiplier"];
             } else{
                 [expenseParticipator setValue:@0 forKey:@"payment"];
+                [expenseParticipator setValue:@0 forKey:@"paymentMultiplier"];
             }
-            if([self.expenseUserIndexes containsObject:[NSNumber numberWithInteger:i]]){
+            if([self isKeyInUsageDictionary:i]){
                 [expenseParticipator setValue:[self getPartOfUsage] forKey:@"usage"];
+                NSNumber *multiplier = [self.usageKeysAndMultipliers valueForKey:[@(i) stringValue]];
+                [expenseParticipator setValue:multiplier forKey:@"usageMultiplier"];
             }else{
                [expenseParticipator setValue:@0 forKey:@"usage"];
+                [expenseParticipator setValue:@0 forKey:@"usageMultiplier"];
             }
             [newExpenseParticipators addObject:expenseParticipator];
         }
@@ -181,11 +202,10 @@
     if ([segue.identifier isEqualToString:@"editOptions"]) {
         EditOptionsTableViewController *destinationViewController = (EditOptionsTableViewController *)segue.destinationViewController;
         destinationViewController.groupUsers = self.groupUsers;
-//        destinationViewController.expensePayerIndexes = self.expensePayerIndexes;
-//        destinationViewController.expenseUserIndexes = self.expenseUserIndexes;
         [destinationViewController setDelegate:self];
     }
 }
+
 - (IBAction)delete:(id)sender {
     [self.expense deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(succeeded){
@@ -198,7 +218,7 @@
                     NSLog(@"%@", error);
                 }
             }];
-
+            
         }else{
             NSLog(@"%@", error);
         }
