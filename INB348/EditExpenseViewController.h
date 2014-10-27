@@ -17,7 +17,7 @@
 @interface EditExpenseViewController : UIViewController <EditOptionsTableViewController, UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate>
 - (IBAction)save:(id)sender;
 - (IBAction)cancel:(id)sender;
-- (IBAction)delete:(id)sender;
+- (IBAction)deleteButton:(id)sender;
 @property (strong, nonatomic) IBOutlet UITextField *nameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *amountTextField;
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
@@ -32,7 +32,6 @@
 @property (strong) NSMutableDictionary *paymentKeysAndMultipliers;
 @property (strong) NSMutableDictionary *usageKeysAndMultipliers;
 
-- (IBAction)delete:(id)sender;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (nonatomic, assign) id <EditExpenseViewController> delegate;

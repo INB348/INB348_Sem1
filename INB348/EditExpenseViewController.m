@@ -229,7 +229,7 @@ NSMutableArray *usageMultipliers;
     }
 }
 
-- (IBAction)delete:(id)sender {
+- (IBAction)deleteButton:(id)sender {
     [self.expense deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(succeeded){
             [PFObject deleteAllInBackground:self.oldExpenseParticipators block:^(BOOL succeeded, NSError *error) {
