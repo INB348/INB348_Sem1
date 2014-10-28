@@ -14,6 +14,8 @@
 @end
 
 @implementation GroupSettingsTableViewController
+@synthesize img_Profile = _img_Profile;
+
 GroupTabBarController *groupTabBarController;
 
 - (void)viewDidLoad
@@ -26,7 +28,114 @@ GroupTabBarController *groupTabBarController;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    /* Profile Image Format */
+    PFFile *thumbnail = [groupTabBarController.group objectForKey:@"profilePic"];
+    self.img_Profile.image = [UIImage imageNamed:@"pill.png"];
+    
+    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        // Now that the data is fetched, update the cell's image property.
+        if(!error) {
+            self.img_Profile.image = [UIImage imageWithData:data];
+        } else {
+            self.img_Profile.image = [UIImage imageNamed:@"pill.png"];
+        }
+    }];
+    self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
+    self.img_Profile.clipsToBounds = YES;
+    self.img_Profile.layer.borderWidth = 3.0f;
+    self.img_Profile.layer.borderColor = [UIColor whiteColor].CGColor;
+    /* */
 }
+
+/** Choose a photo in Photo Library */
+- (IBAction)selectPhoto:(UIButton *)sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:picker animated:YES completion:NULL];
+    
+}
+
+// Handle library navigation bar
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    navigationController.navigationBar.translucent = NO;
+    navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    
+}
+
+/** Dismiss keyboard */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.nameLabel resignFirstResponder];
+    [self.usernameLabel resignFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    if (textField) {
+        [textField resignFirstResponder];
+    }
+    
+    return NO;
+}
+/* end */
+
+
+#pragma mark - Image Picker Controller delegate methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    
+    // Resize image
+    UIGraphicsBeginImageContext(CGSizeMake(256, 256));
+    [chosenImage drawInRect: CGRectMake(0, 0, 256, 256)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // Set maximun compression in order to decrease file size and enable faster uploads & downloads
+    NSData *imageData = UIImageJPEGRepresentation(newImage, 0.0f);
+    UIImage *processedImage = [UIImage imageWithData:imageData];
+    
+    self.img_Profile.image = processedImage;
+    
+    /* Profile Image Format */
+    self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
+    self.img_Profile.clipsToBounds = YES;
+    self.img_Profile.layer.borderWidth = 3.0f;
+    self.img_Profile.layer.borderColor = [UIColor whiteColor].CGColor;
+    /* */
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+    //Profile Picture
+    NSData *updatedImage = UIImagePNGRepresentation(self.img_Profile.image);
+    NSString *imageName = [NSString stringWithFormat:@"%@_GroupPhoto", self.nameLabel.text];
+    PFFile *imageFile = [PFFile fileWithName:imageName data:updatedImage];
+    [groupTabBarController.group setObject:imageFile forKey:@"groupPic"];
+    [groupTabBarController.group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if(succeeded){
+            //
+        } else{
+            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"The Internet connection appears to be offline. Please try it again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [errorAlertView show];
+        }
+    }];
+
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+/* end */
+
 - (void)viewDidAppear:(BOOL)animated{
     self.navigationItem.title = groupTabBarController.group[@"name"];
     self.nameLabel.text = groupTabBarController.group[@"name"];
@@ -34,7 +143,6 @@ GroupTabBarController *groupTabBarController;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [groupTabBarController.group setValue:self.nameLabel.text forKey:@"name"];
-    [groupTabBarController.group saveInBackground];
 }
 
 - (void)customSetup
@@ -108,20 +216,13 @@ GroupTabBarController *groupTabBarController;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([segue.identifier isEqualToString:@"showMembers"]) {
-//        MembersTableViewController *membersViewController = segue.destinationViewController;
-//        membersViewController.groupUsers = groupTabBarController.groupUsers;
-//        membersViewController.group = groupTabBarController.group;
-//    }
-//    if ([segue.identifier isEqualToString:@"addMember"]) {
-//        AddMemberNavigationController *addMemberNavigationController = segue.destinationViewController;
-//        AddMemberToGroupViewController *addMemberViewController = (AddMemberToGroupViewController *)addMemberNavigationController.topViewController;
-//        addMemberViewController.groupUsers = groupTabBarController.groupUsers;
-//        addMemberViewController.group = groupTabBarController.group;
-//    }
-//    
-//}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showMembers"]) {
+        MembersTableViewController *membersViewController = segue.destinationViewController;
+        membersViewController.groupUsers = groupTabBarController.groupUsers;
+        membersViewController.group = groupTabBarController.group;
+    }
+}
 
 -(IBAction)add:(id)sender {
     BOOL isValidEmail = [self NSStringIsValidEmail: self.usernameLabel.text];

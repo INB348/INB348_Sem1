@@ -37,7 +37,6 @@
     self.txt_NewName.text = [[PFUser currentUser] objectForKey:@"name"];
     
     /* Profile Image Format */
-    // Configure the cell
     PFFile *thumbnail = [[PFUser currentUser] objectForKey:@"profilePic"];
     self.img_Profile.image = [UIImage imageNamed:@"pill.png"];
     

@@ -76,7 +76,21 @@
     
     [userGroupCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
     [userGroupCell.detailTextLabel setText:[balance stringValue]];
-    userGroupCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+    
+    PFFile *thumbnail = userGroup[@"group"][@"groupPic"];
+    userGroupCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+    
+    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        // Now that the data is fetched, update the cell's image property.
+        if(!error) {
+            userGroupCell.imageView.image = [UIImage imageWithData:data];
+        } else {
+            userGroupCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+        }
+        
+        userGroupCell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }];
+    
     
     return userGroupCell;
 }

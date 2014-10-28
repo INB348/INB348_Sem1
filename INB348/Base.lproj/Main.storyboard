@@ -791,16 +791,6 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" restorationIdentifier="img_Profile" image="pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ky7-Yn-4mA">
                                                     <rect key="frame" x="117" y="15" width="87" height="88"/>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="btn_ChoosePhoto" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gXY-bt-u5c">
-                                                    <rect key="frame" x="145" y="46" width="30" height="25"/>
-                                                    <state key="normal" image="camera.png">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="selectPhoto:" destination="IV2-S0-2Cw" eventType="touchUpInside" id="8fB-31-pD3"/>
-                                                    </connections>
-                                                </button>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input your group name.." textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vhb-sn-oab">
                                                     <rect key="frame" x="56" y="121" width="208" height="30"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -811,6 +801,16 @@
                                                         <action selector="nameChanged:" destination="i8l-yJ-aea" eventType="editingChanged" id="WKb-Ic-ykc"/>
                                                     </connections>
                                                 </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="btn_ChoosePhoto" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gXY-bt-u5c">
+                                                    <rect key="frame" x="145" y="46" width="30" height="25"/>
+                                                    <state key="normal" image="camera.png">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="selectPhoto:" destination="i8l-yJ-aea" eventType="touchUpInside" id="JaS-Kj-vz5"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.1843137255" green="0.25490196079999999" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
@@ -846,7 +846,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="yE6-aU-EKY" style="IBUITableViewCellStyleDefault" id="RaO-HN-0NM">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="yE6-aU-EKY" style="IBUITableViewCellStyleDefault" id="RaO-HN-0NM">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RaO-HN-0NM" id="ACP-z2-u2R">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -859,6 +859,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Gb6-Wn-VNd" kind="push" id="i6x-2C-30L"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -893,6 +896,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="ppC-EF-uwy">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="C7P-a7-19a"/>
                         <barButtonItem key="leftBarButtonItem" title="&lt; Groups" id="KNh-89-GEy">
                             <connections>
                                 <action selector="back:" destination="i8l-yJ-aea" id="uwK-T0-NFl"/>
@@ -900,6 +904,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="img_Profile" destination="Ky7-Yn-4mA" id="QCQ-A4-HKe"/>
                         <outlet property="nameLabel" destination="vhb-sn-oab" id="hyF-lN-RM1"/>
                         <outlet property="usernameLabel" destination="z2a-ee-eqL" id="Gxb-G5-DIS"/>
                     </connections>
@@ -907,6 +912,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W4u-br-ILr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4163" y="-853"/>
+        </scene>
+        <!--Group Members-->
+        <scene sceneID="aWZ-Mm-uod">
+            <objects>
+                <tableViewController id="Gb6-Wn-VNd" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="YIv-Bb-v3C">
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="wXJ-Ia-Fjl">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wXJ-Ia-Fjl" id="qvb-Sv-r07">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Gb6-Wn-VNd" id="3FI-TS-Isv"/>
+                            <outlet property="delegate" destination="Gb6-Wn-VNd" id="xvB-5V-QcR"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Group Members" id="lqL-Eq-gdr"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rZE-ps-azh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4670" y="-853"/>
         </scene>
         <!--Balance-->
         <scene sceneID="mL2-64-xO2">
