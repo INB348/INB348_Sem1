@@ -103,7 +103,7 @@ ColorSingleton *colorSingleton;
 
 - (void)setBorderColor:(UITableViewCell *)groupUserCell indexPath:(NSIndexPath *)indexPath
 {
-    if(indexOfLowestBalance == indexPath.row){
+    if(indexOfLowestBalance == indexPath.row && lowestBalance != 0.0){
         [groupUserCell.contentView.layer setBorderColor:[colorSingleton getRedColor].CGColor];
         [groupUserCell.contentView.layer setBorderWidth:2.0f];
         lowestBalance = 0.0;

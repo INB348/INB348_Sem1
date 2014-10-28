@@ -7,12 +7,14 @@
 //
 
 #import "GroupsTableViewController.h"
+#import "ColorSingleton.h"
 
 @interface GroupsTableViewController ()
 @property (strong) NSArray *userGroups;
 @end
 
 @implementation GroupsTableViewController
+ColorSingleton *colorSingleton;
 
 - (void)refresh{
     [[PFUser currentUser] fetchInBackground];
@@ -43,6 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    colorSingleton = [ColorSingleton sharedColorSingleton];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -58,6 +61,23 @@
     return self.userGroups.count;
 }
 
+- (void)setUserName:(PFObject *)groupUser groupUserCell:(UITableViewCell *)groupUserCell
+{
+    NSString *groupName = groupUser[@"group"][@"name"];
+    [groupUserCell.textLabel setText:groupName];
+}
+
+- (void)setBalance:(PFObject *)userGroup fmt:(NSNumberFormatter *)fmt userGroupCell:(UITableViewCell *)userGroupCell
+{
+    NSNumber *balance = userGroup[@"balance"];
+    [userGroupCell.detailTextLabel setText:[fmt stringFromNumber:balance]];
+    if([balance longValue] >= 0){
+        [userGroupCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
+    } else {
+        [userGroupCell.detailTextLabel setTextColor:[colorSingleton getRedColor]];
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"userGroupCell";
@@ -65,17 +85,11 @@
     
     // Configure the cell...
     PFObject *userGroup = self.userGroups[indexPath.row];
-    NSString *groupName = userGroup[@"group"][@"name"];
-    NSNumber *balance = userGroup[@"balance"];
+    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+    [fmt setPositiveFormat:@"0.##"];
     
-    if([balance longValue] >= 0){
-        [userGroupCell.detailTextLabel setTextColor:[UIColor greenColor]];
-    } else {
-        [userGroupCell.detailTextLabel setTextColor:[UIColor redColor]];
-    }
-    
-    [userGroupCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
-    [userGroupCell.detailTextLabel setText:[balance stringValue]];
+    [self setUserName:userGroup groupUserCell:userGroupCell];
+    [self setBalance:userGroup fmt:fmt userGroupCell:userGroupCell];
     
     PFFile *thumbnail = userGroup[@"group"][@"groupPic"];
     userGroupCell.imageView.image = [UIImage imageNamed:@"pill.png"];
