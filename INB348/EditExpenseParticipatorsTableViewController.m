@@ -51,7 +51,7 @@
     //Setup delegate for tap
     cell.multiplier.delegate = self;
     
-    if([self isKeyInKeyAndMultiplierDictionary:indexPath.row]){
+    if([self isKeyInKeyAndMultiplierDictionary:(int)indexPath.row]){
         [tableView selectRowAtIndexPath:indexPath
                                animated:NO
                          scrollPosition:UITableViewScrollPositionMiddle];
