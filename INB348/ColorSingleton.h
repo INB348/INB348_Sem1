@@ -10,11 +10,10 @@
 
 @interface ColorSingleton : NSObject
 
-@property (nonatomic, retain) NSString *someProperty;
-
 + (id)sharedColorSingleton;
 - (UIColor *)getRedColor;
 - (UIColor *)getRedBackgroundColor;
+- (UIColor *)getLightGreyColor;
 - (UIColor *)getGreenColor;
 - (UIColor *)getWhiteColor;
 - (UIColor *)getBlueColor;

@@ -11,9 +11,6 @@ static ColorSingleton *sharedMyColorSingleton = nil;
 
 @implementation ColorSingleton
 
-
-@synthesize someProperty;
-
 #pragma mark Singleton Methods
 
 + (id)sharedColorSingleton {
@@ -36,6 +33,9 @@ static ColorSingleton *sharedMyColorSingleton = nil;
 
 - (UIColor *)getRedBackgroundColor{
     return [UIColor colorWithRed:1 green:0.302 blue:0.302 alpha:0.5];
+}
+- (UIColor *)getLightGreyColor{
+    return [UIColor colorWithRed:0.878 green:0.878 blue:0.878 alpha:1];
 }
 
 - (UIColor *)getGreenColor{

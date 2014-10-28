@@ -9,6 +9,7 @@
 #import "ExpenseManagementTableViewController.h"
 #import "SWRevealViewController.h"
 #import "ColorSingleton.h"
+#import "NumberFormatterSingleton.h"
 
 @interface ExpenseManagementTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
@@ -17,6 +18,7 @@
 @implementation ExpenseManagementTableViewController
 GroupTabBarController *groupTabBarController;
 ColorSingleton *colorSingleton;
+NumberFormatterSingleton *numberFormatterSingleton;
 
 #pragma mark - Setup
 - (void)viewDidLoad
@@ -27,6 +29,7 @@ ColorSingleton *colorSingleton;
 
     [self refresh];
     colorSingleton = [ColorSingleton sharedColorSingleton];
+    numberFormatterSingleton = [NumberFormatterSingleton sharedMyNumberFormatterSingleton];
 
 }
 
@@ -93,8 +96,7 @@ ColorSingleton *colorSingleton;
 - (void)setAmountLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell
 {
     NSNumber *expenseAmount = groupExpense[@"amount"];
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
+    NSNumberFormatter *fmt = [numberFormatterSingleton getNumberFormatter];
     [expenseHistoryCell.amountLabel setText:[fmt stringFromNumber:expenseAmount]];
     [expenseHistoryCell.amountLabel setTextColor:[colorSingleton getBlueColor]];
 }

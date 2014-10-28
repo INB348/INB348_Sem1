@@ -8,6 +8,7 @@
 
 #import "UserExpenseHistoryTableViewController.h"
 #import "ColorSingleton.h"
+#import "NumberFormatterSingleton.h"
 
 @interface UserExpenseHistoryTableViewController ()
 @property (strong) NSArray *expenses;
@@ -18,17 +19,13 @@
 @implementation UserExpenseHistoryTableViewController
 bool readyForReload = false;
 ColorSingleton *colorSingleton;
+NumberFormatterSingleton *numberFormatterSingleton;
 
 #pragma mark - Setup
-- (NSNumberFormatter *)getNumberFormatter {
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
-    return fmt;
-}
 
 - (void)setBalanceLabel {
     NSNumber *balance = self.groupUser[@"balance"];
-    NSNumberFormatter *fmt = [self getNumberFormatter];
+    NSNumberFormatter *fmt = [numberFormatterSingleton getNumberFormatter];
     self.balanceLabel.title = [fmt stringFromNumber:balance];
     
     if([balance longValue] >= 0){
@@ -42,6 +39,7 @@ ColorSingleton *colorSingleton;
     [super viewDidLoad];
     [self refresh];
     colorSingleton = [ColorSingleton sharedColorSingleton];
+    numberFormatterSingleton = [NumberFormatterSingleton sharedMyNumberFormatterSingleton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,23 +118,36 @@ ColorSingleton *colorSingleton;
     return 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    NSString *sectionName;
+    return 30.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] init];
+
+    UILabel *myLabel = [[UILabel alloc] init];
+    myLabel.font = [UIFont systemFontOfSize:20];
+    myLabel.frame = CGRectMake(8, 0, 320, 30);
+
+    headerView.backgroundColor = [colorSingleton getLightGreyColor];
+    
     switch (section)
     {
         case 0:
-            sectionName = NSLocalizedString(@"Paid For", @"Paid For");
+            myLabel.text = NSLocalizedString(@"Paid", @"Paid");
             break;
         case 1:
-            sectionName = NSLocalizedString(@"Used", @"Used");
+            myLabel.text = NSLocalizedString(@"Used", @"Used");
             break;
-            // ...
         default:
-            sectionName = @"";
+            myLabel.text = @"";
             break;
     }
-    return sectionName;
+    
+    [headerView addSubview:myLabel];
+    
+    return headerView;
 }
 
 - (void)setCreatedAtLabel:(PFObject *)expenseParticipator expenseHistoryCell:(HistoryCell *)expenseHistoryCell
@@ -164,7 +175,7 @@ ColorSingleton *colorSingleton;
     HistoryCell *expenseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"userExpenseCell" forIndexPath:indexPath];
     PFObject *expenseParticipator;
     
-    NSNumberFormatter *fmt = [self getNumberFormatter];
+    NSNumberFormatter *fmt = [numberFormatterSingleton getNumberFormatter];
     
     switch([indexPath section]){
         case 0:
