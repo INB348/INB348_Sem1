@@ -7,6 +7,7 @@
 //
 
 #import "EditExpenseViewController.h"
+#import "ColorSingleton.h"
 
 @interface EditExpenseViewController ()
 @property (nonatomic, assign) id currentResponder;
@@ -16,6 +17,7 @@
 @synthesize delegate;
 NSMutableArray *paymentMultipliers;
 NSMutableArray *usageMultipliers;
+ColorSingleton *colorSingleton;
 
 #pragma mark - Setup
 - (void)setOldExpenseValues {
@@ -46,6 +48,12 @@ NSMutableArray *usageMultipliers;
     [self setUpTap];
     [self setDescriptionTextViewBorders];
     [self setScrollView];
+    
+    colorSingleton = [ColorSingleton sharedColorSingleton];
+    
+    [self.nameTextField setTintColor:[colorSingleton getBlueColor]];
+    [self.amountTextField setTintColor:[colorSingleton getBlueColor]];
+    [self.descriptionTextView setTintColor:[colorSingleton getBlueColor]];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -73,7 +73,7 @@ NumberFormatterSingleton *numberFormatterSingleton;
 - (void)setBalance:(PFObject *)userGroup userGroupCell:(UITableViewCell *)userGroupCell
 {
     NSNumber *balance = userGroup[@"balance"];
-    [userGroupCell.detailTextLabel setText:[[numberFormatterSingleton getNumberFormatter] stringFromNumber:balance]];
+    [userGroupCell.detailTextLabel setText:[[numberFormatterSingleton getCurrencyNumberFormatter] stringFromNumber:balance]];
     if([balance longValue] >= 0){
         [userGroupCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
     } else {

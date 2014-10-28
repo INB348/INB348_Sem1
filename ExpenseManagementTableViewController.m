@@ -96,7 +96,7 @@ NumberFormatterSingleton *numberFormatterSingleton;
 - (void)setAmountLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell
 {
     NSNumber *expenseAmount = groupExpense[@"amount"];
-    NSNumberFormatter *fmt = [numberFormatterSingleton getNumberFormatter];
+    NSNumberFormatter *fmt = [numberFormatterSingleton getCurrencyNumberFormatter];
     [expenseHistoryCell.amountLabel setText:[fmt stringFromNumber:expenseAmount]];
     [expenseHistoryCell.amountLabel setTextColor:[colorSingleton getBlueColor]];
 }

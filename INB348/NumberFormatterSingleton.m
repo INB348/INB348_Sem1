@@ -24,12 +24,19 @@ static NumberFormatterSingleton *sharedMyNumberFormatterSingleton = nil;
     return self;
 }
 
-- (NSNumberFormatter *)getNumberFormatter
+- (NSNumberFormatter *)getCurrencyNumberFormatter
 {
     NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
     [fmt setFormatterBehavior: NSNumberFormatterBehavior10_4 ];
     [fmt setCurrencySymbol:@"$"];
-    [ fmt setNumberStyle: NSNumberFormatterCurrencyStyle ];
+    [fmt setNumberStyle: NSNumberFormatterCurrencyStyle ];
+    return fmt;
+}
+
+- (NSNumberFormatter *)getNumberFormatter
+{
+    NSNumberFormatter* fmt = [[NSNumberFormatter alloc] init];
+    fmt.positiveFormat = @"0.##";
     return fmt;
 }
 

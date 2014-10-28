@@ -7,6 +7,7 @@
 //
 
 #import "NewExpenseDetailsViewController.h"
+#import "ColorSingleton.h"
 
 @interface NewExpenseDetailsViewController ()
 @property (nonatomic, assign) id currentResponder;
@@ -14,6 +15,7 @@
 
 @implementation NewExpenseDetailsViewController
 NewExpenseNavigationController *navigationController;
+ColorSingleton *colorSingleton;
 
 #pragma mark - Setup
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,8 +35,8 @@ NewExpenseNavigationController *navigationController;
 
 - (void)setDescriptionTextViewBorders
 {
-    self.descriptionTextView.layer.borderWidth = 5.0f;
-    self.descriptionTextView.layer.borderColor = [[UIColor grayColor] CGColor];
+    self.descriptionTextView.layer.borderWidth = 2.0f;
+    self.descriptionTextView.layer.borderColor = [[colorSingleton getLightGreyColor] CGColor];
     self.descriptionTextView.layer.cornerRadius = 8;
 }
 
@@ -43,9 +45,14 @@ NewExpenseNavigationController *navigationController;
     [super viewDidLoad];
     [self setDescriptionTextViewBorders];
     navigationController = (NewExpenseNavigationController *)[self navigationController];
+    colorSingleton = [ColorSingleton sharedColorSingleton];
     
     [self setUpTap];
     [self setScrollView];
+    self.datePicker.datePickerMode = UIDatePickerModeDate;
+    [self.nameTextField setTintColor:[colorSingleton getBlueColor]];
+    [self.amountTextField setTintColor:[colorSingleton getBlueColor]];
+    [self.descriptionTextView setTintColor:[colorSingleton getBlueColor]];
 }
 
 - (void)didReceiveMemoryWarning

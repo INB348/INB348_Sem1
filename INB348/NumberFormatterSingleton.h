@@ -10,5 +10,6 @@
 
 @interface NumberFormatterSingleton : NSObject
 + (id)sharedMyNumberFormatterSingleton;
+- (NSNumberFormatter *)getCurrencyNumberFormatter;
 - (NSNumberFormatter *)getNumberFormatter;
 @end

@@ -91,7 +91,7 @@ NumberFormatterSingleton *numberFormatterSingleton;
 - (void)setBalance:(PFObject *)groupUser groupUserCell:(UITableViewCell *)groupUserCell
 {
     NSNumber *balance = groupUser[@"balance"];
-    [groupUserCell.detailTextLabel setText:[[numberFormatterSingleton getNumberFormatter] stringFromNumber:balance]];
+    [groupUserCell.detailTextLabel setText:[[numberFormatterSingleton getCurrencyNumberFormatter] stringFromNumber:balance]];
     if([balance longValue] >= 0){
         [groupUserCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
     } else {
@@ -108,12 +108,11 @@ NumberFormatterSingleton *numberFormatterSingleton;
 - (void)setBorderColor:(UITableViewCell *)groupUserCell indexPath:(NSIndexPath *)indexPath
 {
     if(indexOfLowestBalance == indexPath.row && lowestBalance != 0.0){
-        [groupUserCell.contentView.layer setBorderColor:[colorSingleton getRedColor].CGColor];
-        [groupUserCell.contentView.layer setBorderWidth:2.0f];
+        [groupUserCell.viewForBaselineLayout.layer setBorderColor:[colorSingleton getRedColor].CGColor];
+        [groupUserCell.viewForBaselineLayout.layer setBorderWidth:2.0f];
         lowestBalance = 0.0;
     } else {
-        [groupUserCell.contentView.layer setBorderColor:[colorSingleton getWhiteColor].CGColor];
-        [groupUserCell.contentView.layer setBorderWidth:2.0f];
+        [groupUserCell.viewForBaselineLayout.layer setBorderColor:[UIColor clearColor].CGColor];
     }
 }
 

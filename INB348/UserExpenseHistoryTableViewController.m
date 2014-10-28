@@ -25,7 +25,7 @@ NumberFormatterSingleton *numberFormatterSingleton;
 
 - (void)setBalanceLabel {
     NSNumber *balance = self.groupUser[@"balance"];
-    NSNumberFormatter *fmt = [numberFormatterSingleton getNumberFormatter];
+    NSNumberFormatter *fmt = [numberFormatterSingleton getCurrencyNumberFormatter];
     self.balanceLabel.title = [fmt stringFromNumber:balance];
     
     if([balance longValue] >= 0){
@@ -40,6 +40,8 @@ NumberFormatterSingleton *numberFormatterSingleton;
     [self refresh];
     colorSingleton = [ColorSingleton sharedColorSingleton];
     numberFormatterSingleton = [NumberFormatterSingleton sharedMyNumberFormatterSingleton];
+    self.balanceLabel.enabled = NO;
+    [self.balanceLabel setTintColor:[UIColor blackColor]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -175,7 +177,7 @@ NumberFormatterSingleton *numberFormatterSingleton;
     HistoryCell *expenseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"userExpenseCell" forIndexPath:indexPath];
     PFObject *expenseParticipator;
     
-    NSNumberFormatter *fmt = [numberFormatterSingleton getNumberFormatter];
+    NSNumberFormatter *fmt = [numberFormatterSingleton getCurrencyNumberFormatter];
     
     switch([indexPath section]){
         case 0:
