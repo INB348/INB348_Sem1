@@ -187,23 +187,25 @@ GroupTabBarController *groupTabBarController;
     if (buttonIndex == [alertView cancelButtonIndex]){
         //cancel clicked ...do your action
     } else {
-        [groupTabBarController.group deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if(succeeded){
-                for(PFObject *groupUser in groupTabBarController.groupUsers){
-                    [groupUser deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        if(succeeded){
-                            [self dismissViewControllerAnimated:YES completion:nil];
-                        } else{
-                            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error!" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                            [errorAlertView show];
-                        }
-                    }];
-                }
-            } else {
-                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error!" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [errorAlertView show];
-            }
-        }];
+        [PFObject deleteAllInBackground:groupTabBarController.groupUsers];
+//        [groupTabBarController.group deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//            if(succeeded){
+//                
+//                for(PFObject *groupUser in groupTabBarController.groupUsers){
+//                    [groupUser deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//                        if(succeeded){
+//                            [self dismissViewControllerAnimated:YES completion:nil];
+//                        } else{
+//                            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error!" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                            [errorAlertView show];
+//                        }
+//                    }];
+//                }
+//            } else {
+//                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error!" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                [errorAlertView show];
+//            }
+//        }];
         
     }
 }
