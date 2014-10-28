@@ -93,14 +93,14 @@ NumberFormatterSingleton *numberFormatterSingleton;
     [self setBalance:userGroup userGroupCell:userGroupCell];
     
     PFFile *thumbnail = userGroup[@"group"][@"groupPic"];
-    userGroupCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+    userGroupCell.imageView.image = [UIImage imageNamed:@"people_grey.jpg"];
     
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         // Now that the data is fetched, update the cell's image property.
         if(!error) {
             userGroupCell.imageView.image = [UIImage imageWithData:data];
         } else {
-            userGroupCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+            userGroupCell.imageView.image = [UIImage imageNamed:@"people_grey.jpg"];
         }
         
         /* Profile Image Format */
