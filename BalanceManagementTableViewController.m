@@ -126,7 +126,28 @@ NumberFormatterSingleton *numberFormatterSingleton;
     
     [self setUserName:groupUser groupUserCell:groupUserCell];
     [self setBalance:groupUser groupUserCell:groupUserCell];
-    groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+    
+    PFFile *thumbnail = groupUser[@"user"][@"profilePic"];
+    groupUserCell.imageView.image = [UIImage imageNamed:@"person_grey.jpg"];
+    
+    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        // Now that the data is fetched, update the cell's image property.
+        if(!error) {
+            groupUserCell.imageView.image = [UIImage imageWithData:data];
+        } else {
+            groupUserCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+        }
+        
+        /* Profile Image Format */
+        groupUserCell.imageView.layer.cornerRadius = groupUserCell.imageView.frame.size.width / 2;
+        groupUserCell.imageView.clipsToBounds = YES;
+        groupUserCell.imageView.layer.borderWidth = 3.0f;
+        groupUserCell.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+        /* */
+        groupUserCell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }];
+
+    
 
     [self setBorderColor:groupUserCell indexPath:indexPath];
     

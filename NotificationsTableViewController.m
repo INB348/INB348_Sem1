@@ -115,7 +115,7 @@
     
     
     PFFile *thumbnail = notification[@"fromUser"][@"profilePic"];
-    cell.imageView.image = [UIImage imageNamed:@"pill.png"];
+    cell.imageView.image = [UIImage imageNamed:@"person_grey.jpg"];
     
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         // Now that the data is fetched, update the cell's image property.
@@ -124,6 +124,13 @@
         } else {
             cell.imageView.image = [UIImage imageNamed:@"pill.png"];
         }
+        
+        /* Profile Image Format */
+        cell.imageView.layer.cornerRadius = cell.imageView.frame.size.width / 2;
+        cell.imageView.clipsToBounds = YES;
+        cell.imageView.layer.borderWidth = 3.0f;
+        cell.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+        /* */
         
         cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     }];

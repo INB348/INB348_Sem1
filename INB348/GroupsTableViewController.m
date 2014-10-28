@@ -103,6 +103,13 @@ NumberFormatterSingleton *numberFormatterSingleton;
             userGroupCell.imageView.image = [UIImage imageNamed:@"pill.png"];
         }
         
+        /* Profile Image Format */
+        userGroupCell.imageView.layer.cornerRadius = userGroupCell.imageView.frame.size.width / 2;
+        userGroupCell.imageView.clipsToBounds = YES;
+        userGroupCell.imageView.layer.borderWidth = 3.0f;
+        userGroupCell.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+        /* */
+        
         userGroupCell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     }];
     
