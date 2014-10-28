@@ -15,5 +15,5 @@
 @end
 
 @interface MenuViewController : UITableViewController
-- (IBAction)logOut:(id)sender;
+
 @end

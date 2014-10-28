@@ -105,7 +105,6 @@
     self.txt_Password.text=@"1234";
 //    self.txt_Email.text=@"test1@gmail.com";
 //    self.txt_Password.text=@"123";
-    
 //    [self performSegueWithIdentifier:@"LogInSuccessful" sender:self];
     
     [PFUser logInWithUsernameInBackground:self.txt_Email.text password:self.txt_Password.text block:^(PFUser *user, NSError *error) {

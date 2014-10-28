@@ -107,6 +107,13 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 5) {
+        UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Warning!" message:@"Are you sure you want to logout this account?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        [errorAlertView show];
+    }
+}
+
 #pragma mark state preservation / restoration
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -130,10 +137,14 @@
     // TODO call whatever function you need to visually restore
 }
 
--(IBAction)logOut:(id)sender {
-    [PFUser logOut];
-    PFUser *currentUser = [PFUser currentUser];
-    [self performSegueWithIdentifier:@"logOut" sender:self];
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == [alertView cancelButtonIndex]){
+        //cancel clicked ...do your action
+    } else {
+        [PFUser logOut];
+        [self performSegueWithIdentifier:@"logOut" sender:self];
+    }
 }
 
 @end
