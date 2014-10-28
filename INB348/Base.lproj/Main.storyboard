@@ -1022,7 +1022,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupUserCell" textLabel="xET-2B-wPM" detailTextLabel="Mfh-1c-Nv6" style="IBUITableViewCellStyleValue1" id="aFu-i4-Uvb">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="groupUserCell" textLabel="xET-2B-wPM" detailTextLabel="Mfh-1c-Nv6" style="IBUITableViewCellStyleValue1" id="aFu-i4-Uvb">
                                 <rect key="frame" x="0.0" y="55" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aFu-i4-Uvb" id="y82-F3-3xG">
@@ -1368,7 +1368,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Balance" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yoK-e8-uj1" userLabel="Balance">
-                                            <rect key="frame" x="237" y="14" width="50" height="21"/>
+                                            <rect key="frame" x="227" y="14" width="60" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2401,8 +2401,8 @@ It is very important to our development team to get your feedback in a timely wa
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="5Hs-c3-pvd"/>
         <segue reference="i8y-dR-bd7"/>
+        <segue reference="5Hs-c3-pvd"/>
         <segue reference="jTv-Yn-TmP"/>
         <segue reference="3Cj-as-CbW"/>
     </inferredMetricsTieBreakers>
