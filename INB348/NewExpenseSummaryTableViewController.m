@@ -7,6 +7,7 @@
 //
 
 #import "NewExpenseSummaryTableViewController.h"
+#import "NumberFormatterSingleton.h"
 
 
 @interface NewExpenseSummaryTableViewController ()
@@ -19,6 +20,7 @@ NSNumber *expensePayerAmount;
 NewExpenseNavigationController *navigationController;
 NSMutableArray *expenseParticipators;
 ColorSingleton *colorSingleton;
+NumberFormatterSingleton *numberFormatterSingleton;
 
 #pragma mark - Setup
 - (id)initWithStyle:(UITableViewStyle)style
@@ -54,6 +56,7 @@ ColorSingleton *colorSingleton;
     navigationController = (NewExpenseNavigationController *)[self navigationController];
     [self setExpenseParticipators];
     colorSingleton = [ColorSingleton sharedColorSingleton];
+    numberFormatterSingleton = [NumberFormatterSingleton sharedMyNumberFormatterSingleton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,9 +107,9 @@ ColorSingleton *colorSingleton;
     return summaryCell;
 }
 
-- (void)setLabel:(NSNumber *)labelValue fmt:(NSNumberFormatter *)fmt summaryCell:(UILabel *)labelName
+- (void)setLabel:(NSNumber *)labelValue summaryCell:(UILabel *)labelName
 {
-    [labelName setText:[fmt stringFromNumber:labelValue]];
+    [labelName setText:[[numberFormatterSingleton getNumberFormatter] stringFromNumber:labelValue]];
     [self setColorByValue:labelName value:[labelValue longValue]];
 }
 
@@ -115,19 +118,16 @@ ColorSingleton *colorSingleton;
     NSString *userName = expenseParticipator[@"user"][@"user"][@"name"];
     [summaryCell.nameLabel setText:[NSString stringWithFormat:@"%@", userName]];
     
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
-    
-    [self setLabel:expenseParticipator[@"user"][@"balance"] fmt:fmt summaryCell:summaryCell.oldBalance];
+    [self setLabel:expenseParticipator[@"user"][@"balance"] summaryCell:summaryCell.oldBalance];
     
     NSNumber *paymentMultiplied = @([expenseParticipator[@"payment"] doubleValue]*[expenseParticipator[@"paymentMultiplier"] doubleValue]);
-    [self setLabel:paymentMultiplied fmt:fmt summaryCell:summaryCell.payed];
+    [self setLabel:paymentMultiplied summaryCell:summaryCell.payed];
     
     NSNumber *usageMultiplied = @([expenseParticipator[@"usage"] doubleValue]*[expenseParticipator[@"usageMultiplier"] doubleValue]);
-    [self setLabel:usageMultiplied fmt:fmt summaryCell:summaryCell.used];
+    [self setLabel:usageMultiplied summaryCell:summaryCell.used];
     
     NSNumber *newBalance = [self getNewBalance:expenseParticipator];
-    [self setLabel:newBalance fmt:fmt summaryCell:summaryCell.updatedBalance];
+    [self setLabel:newBalance summaryCell:summaryCell.updatedBalance];
 }
 
 -(NSString *)returnStringIfNotNull:(NSString*)string{

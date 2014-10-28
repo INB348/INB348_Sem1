@@ -13,8 +13,8 @@
 #import "NewExpenseNavigationController.h"
 #import "EditExpenseNavigationController.h"
 #import "EditExpenseViewController.h"
+#import "HistoryCell.h"
 
 @interface ExpenseManagementTableViewController : UITableViewController <EditExpenseViewController, NewExpenseNavigationController>
 - (IBAction)back:(id)sender;
-
 @end

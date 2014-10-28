@@ -9,6 +9,7 @@
 #import "BalanceManagementTableViewController.h"
 #import "SWRevealViewController.h"
 #import "ColorSingleton.h"
+#import "NumberFormatterSingleton.h"
 
 @interface BalanceManagementTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
@@ -19,12 +20,15 @@ GroupTabBarController *groupTabBarController;
 NSUInteger indexOfLowestBalance;
 double lowestBalance = 0.0;
 ColorSingleton *colorSingleton;
+NumberFormatterSingleton *numberFormatterSingleton;
 
 #pragma mark - Setup
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     groupTabBarController =(GroupTabBarController*)[(BalanceNavigationController *)[self navigationController] parentViewController];
+    colorSingleton = [ColorSingleton sharedColorSingleton];
+    numberFormatterSingleton = [NumberFormatterSingleton sharedMyNumberFormatterSingleton];
     [self refresh];
 }
 
@@ -84,10 +88,10 @@ ColorSingleton *colorSingleton;
     
 }
 
-- (void)setBalance:(PFObject *)groupUser fmt:(NSNumberFormatter *)fmt groupUserCell:(UITableViewCell *)groupUserCell
+- (void)setBalance:(PFObject *)groupUser groupUserCell:(UITableViewCell *)groupUserCell
 {
     NSNumber *balance = groupUser[@"balance"];
-    [groupUserCell.detailTextLabel setText:[fmt stringFromNumber:balance]];
+    [groupUserCell.detailTextLabel setText:[[numberFormatterSingleton getNumberFormatter] stringFromNumber:balance]];
     if([balance longValue] >= 0){
         [groupUserCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
     } else {
@@ -118,12 +122,10 @@ ColorSingleton *colorSingleton;
     static NSString *CellIdentifier = @"groupUserCell";
     UITableViewCell *groupUserCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
     PFObject *groupUser = groupTabBarController.groupUsers[indexPath.row];
     
     [self setUserName:groupUser groupUserCell:groupUserCell];
-    [self setBalance:groupUser fmt:fmt groupUserCell:groupUserCell];
+    [self setBalance:groupUser groupUserCell:groupUserCell];
     groupUserCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
 
     [self setBorderColor:groupUserCell indexPath:indexPath];

@@ -9,6 +9,7 @@
 #import "ExpenseManagementTableViewController.h"
 #import "SWRevealViewController.h"
 #import "ColorSingleton.h"
+#import "NumberFormatterSingleton.h"
 
 @interface ExpenseManagementTableViewController ()
 @property (nonatomic) IBOutlet UIBarButtonItem* revealButtonItem;
@@ -17,6 +18,7 @@
 @implementation ExpenseManagementTableViewController
 GroupTabBarController *groupTabBarController;
 ColorSingleton *colorSingleton;
+NumberFormatterSingleton *numberFormatterSingleton;
 
 #pragma mark - Setup
 - (void)viewDidLoad
@@ -27,6 +29,7 @@ ColorSingleton *colorSingleton;
 
     [self refresh];
     colorSingleton = [ColorSingleton sharedColorSingleton];
+    numberFormatterSingleton = [NumberFormatterSingleton sharedMyNumberFormatterSingleton];
 
 }
 
@@ -76,21 +79,39 @@ ColorSingleton *colorSingleton;
     
 }
 
+- (void)setCreatedAtLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm dd-MM-yyyy"];
+    NSDate *expenseCreatedAt = groupExpense.createdAt;
+    [expenseHistoryCell.createdAtLabel setText:[dateFormatter stringFromDate:expenseCreatedAt]];
+}
+
+- (void)setNameLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell
+{
+    NSString *expenseName = groupExpense[@"name"];
+    [expenseHistoryCell.nameLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
+}
+
+- (void)setAmountLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell
+{
+    NSNumber *expenseAmount = groupExpense[@"amount"];
+    NSNumberFormatter *fmt = [numberFormatterSingleton getNumberFormatter];
+    [expenseHistoryCell.amountLabel setText:[fmt stringFromNumber:expenseAmount]];
+    [expenseHistoryCell.amountLabel setTextColor:[colorSingleton getBlueColor]];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"expenseHistoryCell";
-    UITableViewCell *expenseHistoryCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    HistoryCell *expenseHistoryCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     PFObject *groupExpense = groupTabBarController.expenses[indexPath.row];
-    NSString *expenseName = groupExpense[@"name"];
-    NSNumber *expenseAmount = groupExpense[@"amount"];
+    [self setNameLabel:groupExpense expenseHistoryCell:expenseHistoryCell];
+    [self setAmountLabel:groupExpense expenseHistoryCell:expenseHistoryCell];
     
-    [expenseHistoryCell.textLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
-    [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expenseAmount]];
-    [expenseHistoryCell.detailTextLabel setTextColor:[colorSingleton getBlueColor]];
+    [self setCreatedAtLabel:groupExpense expenseHistoryCell:expenseHistoryCell];
     
     return expenseHistoryCell;
 }

@@ -8,6 +8,7 @@
 
 #import "GroupsTableViewController.h"
 #import "ColorSingleton.h"
+#import "NumberFormatterSingleton.h"
 
 @interface GroupsTableViewController ()
 @property (strong) NSArray *userGroups;
@@ -15,6 +16,7 @@
 
 @implementation GroupsTableViewController
 ColorSingleton *colorSingleton;
+NumberFormatterSingleton *numberFormatterSingleton;
 
 - (void)refresh{
     [[PFUser currentUser] fetchInBackground];
@@ -46,6 +48,7 @@ ColorSingleton *colorSingleton;
 {
     [super viewDidLoad];
     colorSingleton = [ColorSingleton sharedColorSingleton];
+    numberFormatterSingleton = [NumberFormatterSingleton sharedMyNumberFormatterSingleton];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -67,10 +70,10 @@ ColorSingleton *colorSingleton;
     [groupUserCell.textLabel setText:groupName];
 }
 
-- (void)setBalance:(PFObject *)userGroup fmt:(NSNumberFormatter *)fmt userGroupCell:(UITableViewCell *)userGroupCell
+- (void)setBalance:(PFObject *)userGroup userGroupCell:(UITableViewCell *)userGroupCell
 {
     NSNumber *balance = userGroup[@"balance"];
-    [userGroupCell.detailTextLabel setText:[fmt stringFromNumber:balance]];
+    [userGroupCell.detailTextLabel setText:[[numberFormatterSingleton getNumberFormatter] stringFromNumber:balance]];
     if([balance longValue] >= 0){
         [userGroupCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
     } else {
@@ -85,11 +88,9 @@ ColorSingleton *colorSingleton;
     
     // Configure the cell...
     PFObject *userGroup = self.userGroups[indexPath.row];
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
     
     [self setUserName:userGroup groupUserCell:userGroupCell];
-    [self setBalance:userGroup fmt:fmt userGroupCell:userGroupCell];
+    [self setBalance:userGroup userGroupCell:userGroupCell];
     
     PFFile *thumbnail = userGroup[@"group"][@"groupPic"];
     userGroupCell.imageView.image = [UIImage imageNamed:@"pill.png"];

@@ -80,6 +80,8 @@
 		D8E2065D19FF621B002F8E5E /* people_grey.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8E2065C19FF621B002F8E5E /* people_grey.jpg */; };
 		D8E2065F19FF6590002F8E5E /* person_grey.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8E2065E19FF6590002F8E5E /* person_grey.jpg */; };
 		D8E2066119FF6595002F8E5E /* person_black.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8E2066019FF6595002F8E5E /* person_black.jpg */; };
+		D8E2066419FF68AA002F8E5E /* HistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E2066319FF68AA002F8E5E /* HistoryCell.m */; };
+		D8E2066719FF7BF5002F8E5E /* NumberFormatterSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E2066619FF7BF5002F8E5E /* NumberFormatterSingleton.m */; };
 		D8E32A4819FD213F00BDB3DA /* SelectUsersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E32A4719FD213F00BDB3DA /* SelectUsersCell.m */; };
 		D8E7070119FE6F690066F70F /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7070019FE6F690066F70F /* TPKeyboardAvoidingScrollView.m */; };
 		D8E7070819FE6F920066F70F /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E7070319FE6F920066F70F /* TPKeyboardAvoidingCollectionView.m */; };
@@ -212,6 +214,10 @@
 		D8E2065C19FF621B002F8E5E /* people_grey.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = people_grey.jpg; sourceTree = "<group>"; };
 		D8E2065E19FF6590002F8E5E /* person_grey.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = person_grey.jpg; sourceTree = "<group>"; };
 		D8E2066019FF6595002F8E5E /* person_black.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = person_black.jpg; sourceTree = "<group>"; };
+		D8E2066219FF68AA002F8E5E /* HistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCell.h; sourceTree = "<group>"; };
+		D8E2066319FF68AA002F8E5E /* HistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCell.m; sourceTree = "<group>"; };
+		D8E2066519FF7BF5002F8E5E /* NumberFormatterSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberFormatterSingleton.h; sourceTree = "<group>"; };
+		D8E2066619FF7BF5002F8E5E /* NumberFormatterSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberFormatterSingleton.m; sourceTree = "<group>"; };
 		D8E32A4619FD213F00BDB3DA /* SelectUsersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectUsersCell.h; sourceTree = "<group>"; };
 		D8E32A4719FD213F00BDB3DA /* SelectUsersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectUsersCell.m; sourceTree = "<group>"; };
 		D8E706FF19FE6F690066F70F /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
@@ -334,6 +340,8 @@
 				0C6E5F7119B72750000594BF /* Supporting Files */,
 				D8E7070C19FE7B680066F70F /* ColorSingleton.h */,
 				D8E7070D19FE7B680066F70F /* ColorSingleton.m */,
+				D8E2066519FF7BF5002F8E5E /* NumberFormatterSingleton.h */,
+				D8E2066619FF7BF5002F8E5E /* NumberFormatterSingleton.m */,
 			);
 			path = INB348;
 			sourceTree = "<group>";
@@ -480,6 +488,8 @@
 				D8171E4A19D151FD001DF24E /* HistoryNavigationViewController.m */,
 				D81C553219FAA08F00896D8E /* UserExpenseHistoryTableViewController.h */,
 				D81C553319FAA08F00896D8E /* UserExpenseHistoryTableViewController.m */,
+				D8E2066219FF68AA002F8E5E /* HistoryCell.h */,
+				D8E2066319FF68AA002F8E5E /* HistoryCell.m */,
 			);
 			name = History;
 			sourceTree = "<group>";
@@ -679,6 +689,7 @@
 			files = (
 				6F5CE5D319CA724F00489DDC /* NewExpenseWhoPaidTableViewController.m in Sources */,
 				D8EF368019F88EFD00B6B4DC /* GroupRequestCell.m in Sources */,
+				D8E2066719FF7BF5002F8E5E /* NumberFormatterSingleton.m in Sources */,
 				D869F5CA19E90A04000C31FC /* EditExpenseViewController.m in Sources */,
 				D869F5D419E9145A000C31FC /* EditExpenseParticipatorsTableViewController.m in Sources */,
 				0C1B96C319B76887006AA177 /* NotificationsTableViewController.m in Sources */,
@@ -715,6 +726,7 @@
 				D8E7070819FE6F920066F70F /* TPKeyboardAvoidingCollectionView.m in Sources */,
 				0C1B96C619B76CB6006AA177 /* ExpenseManagementTableViewController.m in Sources */,
 				D8EF367719F8808600B6B4DC /* GroupsRequestListTableViewController.m in Sources */,
+				D8E2066419FF68AA002F8E5E /* HistoryCell.m in Sources */,
 				6F5CE5D919CA726900489DDC /* NewExpenseSummaryTableViewController.m in Sources */,
 				D8FA019319E5001D005C6BC7 /* SummaryCell.m in Sources */,
 				0C6E5FA219B727D3000594BF /* SWRevealViewController.m in Sources */,

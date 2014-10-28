@@ -8,6 +8,7 @@
 
 #import "UserExpenseHistoryTableViewController.h"
 #import "ColorSingleton.h"
+#import "NumberFormatterSingleton.h"
 
 @interface UserExpenseHistoryTableViewController ()
 @property (strong) NSArray *expenses;
@@ -18,12 +19,13 @@
 @implementation UserExpenseHistoryTableViewController
 bool readyForReload = false;
 ColorSingleton *colorSingleton;
+NumberFormatterSingleton *numberFormatterSingleton;
 
 #pragma mark - Setup
+
 - (void)setBalanceLabel {
     NSNumber *balance = self.groupUser[@"balance"];
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
+    NSNumberFormatter *fmt = [numberFormatterSingleton getNumberFormatter];
     self.balanceLabel.title = [fmt stringFromNumber:balance];
     
     if([balance longValue] >= 0){
@@ -37,6 +39,7 @@ ColorSingleton *colorSingleton;
     [super viewDidLoad];
     [self refresh];
     colorSingleton = [ColorSingleton sharedColorSingleton];
+    numberFormatterSingleton = [NumberFormatterSingleton sharedMyNumberFormatterSingleton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -115,48 +118,81 @@ ColorSingleton *colorSingleton;
     return 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    NSString *sectionName;
+    return 30.0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] init];
+
+    UILabel *myLabel = [[UILabel alloc] init];
+    myLabel.font = [UIFont systemFontOfSize:20];
+    myLabel.frame = CGRectMake(8, 0, 320, 30);
+
+    headerView.backgroundColor = [colorSingleton getLightGreyColor];
+    
     switch (section)
     {
         case 0:
-            sectionName = NSLocalizedString(@"Paid For", @"Paid For");
+            myLabel.text = NSLocalizedString(@"Paid", @"Paid");
             break;
         case 1:
-            sectionName = NSLocalizedString(@"Used", @"Used");
+            myLabel.text = NSLocalizedString(@"Used", @"Used");
             break;
-            // ...
         default:
-            sectionName = @"";
+            myLabel.text = @"";
             break;
     }
-    return sectionName;
+    
+    [headerView addSubview:myLabel];
+    
+    return headerView;
+}
+
+- (void)setCreatedAtLabel:(PFObject *)expenseParticipator expenseHistoryCell:(HistoryCell *)expenseHistoryCell
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm dd-MM-yyyy"];
+    PFObject *expense = expenseParticipator[@"expense"];
+    NSDate *expenseCreatedAt = expense.createdAt;
+    [expenseHistoryCell.createdAtLabel setText:[dateFormatter stringFromDate:expenseCreatedAt]];
 }
 
 
+- (void)setNameLabel:(PFObject *)expenseParticipator expenseHistoryCell:(HistoryCell *)expenseHistoryCell {
+    NSString *expenseName = expenseParticipator[@"expense"][@"name"];
+    [expenseHistoryCell.nameLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
+}
+
+- (void)setTotalExpenseAmount:(PFObject *)expenseParticipator fmt:(NSNumberFormatter *)fmt expenseHistoryCell:(HistoryCell *)expenseHistoryCell {
+    PFObject *expense = expenseParticipator[@"expense"];
+    [expenseHistoryCell.amountLabel setText:[fmt stringFromNumber:expense[@"amount"]]];
+    [expenseHistoryCell.amountLabel setTextColor:[colorSingleton getBlueColor]];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *expenseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"userExpenseCell" forIndexPath:indexPath];
-    PFObject *expensePayer;
+    HistoryCell *expenseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"userExpenseCell" forIndexPath:indexPath];
+    PFObject *expenseParticipator;
     
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
+    NSNumberFormatter *fmt = [numberFormatterSingleton getNumberFormatter];
     
     switch([indexPath section]){
         case 0:
-            expensePayer = self.payedExpenseParticipator[indexPath.row];
-            [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expensePayer[@"payment"]]];
-            [expenseHistoryCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
+            expenseParticipator = self.payedExpenseParticipator[indexPath.row];
+            [expenseHistoryCell.userAmountLabel setText:[fmt stringFromNumber:expenseParticipator[@"payment"]]];
+            [expenseHistoryCell.userAmountLabel setTextColor:[colorSingleton getGreenColor]];
             break;
         case 1:
-            expensePayer = self.usedExpenseParticipator[indexPath.row];
-            [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expensePayer[@"usage"]]];
-            [expenseHistoryCell.detailTextLabel setTextColor:[colorSingleton getRedColor]];
+            expenseParticipator = self.usedExpenseParticipator[indexPath.row];
+            [expenseHistoryCell.userAmountLabel setText:[fmt stringFromNumber:expenseParticipator[@"usage"]]];
+            [expenseHistoryCell.userAmountLabel setTextColor:[colorSingleton getRedColor]];
             break;
     }
-    NSString *expenseName = expensePayer[@"expense"][@"name"];
-
-    [expenseHistoryCell.textLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
+    
+    [self setTotalExpenseAmount:expenseParticipator fmt:fmt expenseHistoryCell:expenseHistoryCell];
+    [self setNameLabel:expenseParticipator expenseHistoryCell:expenseHistoryCell];
+    [self setCreatedAtLabel:expenseParticipator expenseHistoryCell:expenseHistoryCell];
     
     return expenseHistoryCell;
 }
