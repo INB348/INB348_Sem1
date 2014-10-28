@@ -105,19 +105,26 @@
     self.txt_Password.text=@"1234";
     //    self.txt_Email.text=@"test1@gmail.com";
     //    self.txt_Password.text=@"123";
-    //    [self performSegueWithIdentifier:@"LogInSuccessful" sender:self];
     
-    [PFUser logInWithUsernameInBackground:self.txt_Email.text password:self.txt_Password.text block:^(PFUser *user, NSError *error) {
-        if (user)
-        {
-            // go to the Group Page if log in successful
-            [self performSegueWithIdentifier:@"LogInSuccessful" sender:self];
-        } else {
-            //Something bad has ocurred
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Invalid email or password.\nPlease try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [errorAlertView show];
-        }
-    }];
+    PFUser *currentUser = [PFUser currentUser];
+    
+    if (!currentUser) {
+        [PFUser logInWithUsernameInBackground:self.txt_Email.text password:self.txt_Password.text block:^(PFUser *user, NSError *error) {
+            if (user)
+            {
+                // go to the Group Page if log in successful
+                [self performSegueWithIdentifier:@"LogInSuccessful" sender:self];
+            } else {
+                //Something bad has ocurred
+                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Invalid email or password.\nPlease try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [errorAlertView show];
+            }
+        }];
+    } else {
+        [self performSegueWithIdentifier:@"LogInSuccessful" sender:self];
+    }
+    
+    
 }
 
 @end

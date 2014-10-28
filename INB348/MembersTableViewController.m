@@ -89,14 +89,33 @@
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"memberCell";
-    UITableViewCell *memberCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+//    UITableViewCell *memberCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    
+    UITableViewCell *memberCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier ];
+    if (memberCell == nil) {
+        memberCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
     
     NSString *name =[NSString stringWithFormat:@"%@", self.groupUsers[indexPath.row][@"user"][@"name"]];
     [memberCell.textLabel setText:name];
     
+    PFFile *thumbnail = self.groupUsers[indexPath.row][@"user"][@"profilePic"];
+    memberCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+    
+    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        // Now that the data is fetched, update the cell's image property.
+        if(!error) {
+            memberCell.imageView.image = [UIImage imageWithData:data];
+        } else {
+            memberCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+        }
+        
+        memberCell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }];
     return memberCell;
 }
 
