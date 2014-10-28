@@ -168,6 +168,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="tlf-Qb-Wa5" kind="modal" identifier="logOut" id="3w8-kc-ioB"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -670,7 +673,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yKJ-iP-HQt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1940" y="-2603"/>
+            <point key="canvasLocation" x="-1936" y="-2595"/>
         </scene>
         <!--New Group-->
         <scene sceneID="d3E-lw-Ymf">
@@ -2402,6 +2405,7 @@ It is very important to our development team to get your feedback in a timely wa
     <inferredMetricsTieBreakers>
         <segue reference="LD3-rs-MzU"/>
         <segue reference="5Hs-c3-pvd"/>
+        <segue reference="3w8-kc-ioB"/>
         <segue reference="jTv-Yn-TmP"/>
         <segue reference="esc-66-sNP"/>
         <segue reference="JcQ-zq-4Er"/>

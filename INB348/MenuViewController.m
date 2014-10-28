@@ -131,15 +131,9 @@
 }
 
 -(IBAction)logOut:(id)sender {
-//    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main"
-//                                                         bundle:nil];
-//    LogInViewController *add =
-//    [storyboard instantiateViewControllerWithIdentifier:@"LogIn"];
-//    
-//    [self presentViewController:add
-//                       animated:YES
-//                     completion:nil];
-//    [self performSegueWithIdentifier:@"BackToGroupView" sender:self];
+    [PFUser logOut];
+    PFUser *currentUser = [PFUser currentUser];
+    [self performSegueWithIdentifier:@"logOut" sender:self];
 }
 
 @end
