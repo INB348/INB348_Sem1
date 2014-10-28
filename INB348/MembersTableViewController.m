@@ -85,7 +85,7 @@
             NSLog(@"%@ needs to have a balance of 0 before deletion",groupUser[@"user"][@"name"]);
         }
     } else {
-        NSLog(@"Unhandled editing style! %ld", editingStyle);
+        NSLog(@"Unhandled editing style! %d", editingStyle);
     }
 }
 

@@ -11,7 +11,7 @@
 #import "GroupTabBarController.h"
 #import "GroupSettingsNavigationViewController.h"
 #import "MembersTableViewController.h"
-@interface GroupSettingsTableViewController : UITableViewController
+@interface GroupSettingsTableViewController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *nameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *img_Profile;
