@@ -39,6 +39,29 @@ NewExpenseNavigationController *navigationController;
     }
 }
 
+-(void) viewWillDisappear:(BOOL)animated {
+    [self saveHighlightedMembers];
+    [super viewWillDisappear:animated];
+}
+
+- (void)saveHighlightedMembers {
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+        for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
+            SelectUsersCell *groupUserCell = (SelectUsersCell *)[self.tableView cellForRowAtIndexPath:selectedExpensePayerIndex];
+            
+            PFObject *selectedUser = [navigationController.groupUsers objectAtIndex:selectedExpensePayerIndex.row];
+            for (PFObject *expenseParticipator in navigationController.expenseParticipators) {
+                if([expenseParticipator[@"user"] isEqual:selectedUser]){
+                    NSNumber *multiplier = @([groupUserCell.multiplier.text intValue]);
+                    if([multiplier intValue] >0){
+                        [expenseParticipator setValue:multiplier forKey:@"usageMultiplier"];
+                    }
+                }
+            }
+        }
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -86,6 +109,15 @@ NewExpenseNavigationController *navigationController;
     
     [groupUserCell.nameLabel setText:[NSString stringWithFormat:@"%@", groupName]];
     [groupUserCell.multiplier setText:[NSString stringWithFormat:@"1"]];
+    
+    //Highlight already selected members
+    int multiplier = [navigationController.expenseParticipators[indexPath.row][@"usageMultiplier"] intValue];
+    if(multiplier > 0){
+        [groupUserTableView selectRowAtIndexPath:indexPath
+                                        animated:NO
+                                  scrollPosition:UITableViewScrollPositionMiddle];
+        [groupUserCell.multiplier setText:[NSString stringWithFormat:@"%d",multiplier]];
+    }
     
     return groupUserCell;
 }
