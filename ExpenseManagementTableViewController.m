@@ -79,18 +79,24 @@ ColorSingleton *colorSingleton;
 - (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"expenseHistoryCell";
-    UITableViewCell *expenseHistoryCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    HistoryCell *expenseHistoryCell = [groupUserTableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     PFObject *groupExpense = groupTabBarController.expenses[indexPath.row];
     NSString *expenseName = groupExpense[@"name"];
     NSNumber *expenseAmount = groupExpense[@"amount"];
     
-    [expenseHistoryCell.textLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
+    [expenseHistoryCell.nameLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
     NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
     [fmt setPositiveFormat:@"0.##"];
-    [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expenseAmount]];
-    [expenseHistoryCell.detailTextLabel setTextColor:[colorSingleton getBlueColor]];
+    [expenseHistoryCell.balanceLabel setText:[fmt stringFromNumber:expenseAmount]];
+    [expenseHistoryCell.balanceLabel setTextColor:[colorSingleton getBlueColor]];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm dd-MM-yyyy"];
+    
+    NSDate *expenseCreatedAt = groupExpense.createdAt;
+    [expenseHistoryCell.createdAtLabel setText:[dateFormatter stringFromDate:expenseCreatedAt]];
     
     return expenseHistoryCell;
 }
