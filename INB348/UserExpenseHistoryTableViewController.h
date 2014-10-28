@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "EditExpenseNavigationController.h"
 #import "EditExpenseViewController.h"
+#import "HistoryCell.h"
 
 @interface UserExpenseHistoryTableViewController : UITableViewController <EditExpenseViewController>
 @property (strong) NSArray *groupUsers;

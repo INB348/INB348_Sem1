@@ -76,6 +76,29 @@ ColorSingleton *colorSingleton;
     
 }
 
+- (void)setCreatedAtLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm dd-MM-yyyy"];
+    NSDate *expenseCreatedAt = groupExpense.createdAt;
+    [expenseHistoryCell.createdAtLabel setText:[dateFormatter stringFromDate:expenseCreatedAt]];
+}
+
+- (void)setNameLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell
+{
+    NSString *expenseName = groupExpense[@"name"];
+    [expenseHistoryCell.nameLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
+}
+
+- (void)setAmountLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell
+{
+    NSNumber *expenseAmount = groupExpense[@"amount"];
+    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
+    [fmt setPositiveFormat:@"0.##"];
+    [expenseHistoryCell.amountLabel setText:[fmt stringFromNumber:expenseAmount]];
+    [expenseHistoryCell.amountLabel setTextColor:[colorSingleton getBlueColor]];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)groupUserTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"expenseHistoryCell";
@@ -83,20 +106,10 @@ ColorSingleton *colorSingleton;
     
     // Configure the cell...
     PFObject *groupExpense = groupTabBarController.expenses[indexPath.row];
-    NSString *expenseName = groupExpense[@"name"];
-    NSNumber *expenseAmount = groupExpense[@"amount"];
+    [self setNameLabel:groupExpense expenseHistoryCell:expenseHistoryCell];
+    [self setAmountLabel:groupExpense expenseHistoryCell:expenseHistoryCell];
     
-    [expenseHistoryCell.nameLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
-    [expenseHistoryCell.balanceLabel setText:[fmt stringFromNumber:expenseAmount]];
-    [expenseHistoryCell.balanceLabel setTextColor:[colorSingleton getBlueColor]];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"HH:mm dd-MM-yyyy"];
-    
-    NSDate *expenseCreatedAt = groupExpense.createdAt;
-    [expenseHistoryCell.createdAtLabel setText:[dateFormatter stringFromDate:expenseCreatedAt]];
+    [self setCreatedAtLabel:groupExpense expenseHistoryCell:expenseHistoryCell];
     
     return expenseHistoryCell;
 }

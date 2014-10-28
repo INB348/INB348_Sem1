@@ -20,10 +20,15 @@ bool readyForReload = false;
 ColorSingleton *colorSingleton;
 
 #pragma mark - Setup
-- (void)setBalanceLabel {
-    NSNumber *balance = self.groupUser[@"balance"];
+- (NSNumberFormatter *)getNumberFormatter {
     NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
     [fmt setPositiveFormat:@"0.##"];
+    return fmt;
+}
+
+- (void)setBalanceLabel {
+    NSNumber *balance = self.groupUser[@"balance"];
+    NSNumberFormatter *fmt = [self getNumberFormatter];
     self.balanceLabel.title = [fmt stringFromNumber:balance];
     
     if([balance longValue] >= 0){
@@ -134,29 +139,49 @@ ColorSingleton *colorSingleton;
     return sectionName;
 }
 
+- (void)setCreatedAtLabel:(PFObject *)expenseParticipator expenseHistoryCell:(HistoryCell *)expenseHistoryCell
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm dd-MM-yyyy"];
+    PFObject *expense = expenseParticipator[@"expense"];
+    NSDate *expenseCreatedAt = expense.createdAt;
+    [expenseHistoryCell.createdAtLabel setText:[dateFormatter stringFromDate:expenseCreatedAt]];
+}
+
+
+- (void)setNameLabel:(PFObject *)expenseParticipator expenseHistoryCell:(HistoryCell *)expenseHistoryCell {
+    NSString *expenseName = expenseParticipator[@"expense"][@"name"];
+    [expenseHistoryCell.nameLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
+}
+
+- (void)setTotalExpenseAmount:(PFObject *)expenseParticipator fmt:(NSNumberFormatter *)fmt expenseHistoryCell:(HistoryCell *)expenseHistoryCell {
+    PFObject *expense = expenseParticipator[@"expense"];
+    [expenseHistoryCell.amountLabel setText:[fmt stringFromNumber:expense[@"amount"]]];
+    [expenseHistoryCell.amountLabel setTextColor:[colorSingleton getBlueColor]];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *expenseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"userExpenseCell" forIndexPath:indexPath];
-    PFObject *expensePayer;
+    HistoryCell *expenseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"userExpenseCell" forIndexPath:indexPath];
+    PFObject *expenseParticipator;
     
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
+    NSNumberFormatter *fmt = [self getNumberFormatter];
     
     switch([indexPath section]){
         case 0:
-            expensePayer = self.payedExpenseParticipator[indexPath.row];
-            [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expensePayer[@"payment"]]];
-            [expenseHistoryCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
+            expenseParticipator = self.payedExpenseParticipator[indexPath.row];
+            [expenseHistoryCell.userAmountLabel setText:[fmt stringFromNumber:expenseParticipator[@"payment"]]];
+            [expenseHistoryCell.userAmountLabel setTextColor:[colorSingleton getGreenColor]];
             break;
         case 1:
-            expensePayer = self.usedExpenseParticipator[indexPath.row];
-            [expenseHistoryCell.detailTextLabel setText:[fmt stringFromNumber:expensePayer[@"usage"]]];
-            [expenseHistoryCell.detailTextLabel setTextColor:[colorSingleton getRedColor]];
+            expenseParticipator = self.usedExpenseParticipator[indexPath.row];
+            [expenseHistoryCell.userAmountLabel setText:[fmt stringFromNumber:expenseParticipator[@"usage"]]];
+            [expenseHistoryCell.userAmountLabel setTextColor:[colorSingleton getRedColor]];
             break;
     }
-    NSString *expenseName = expensePayer[@"expense"][@"name"];
-
-    [expenseHistoryCell.textLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
+    
+    [self setTotalExpenseAmount:expenseParticipator fmt:fmt expenseHistoryCell:expenseHistoryCell];
+    [self setNameLabel:expenseParticipator expenseHistoryCell:expenseHistoryCell];
+    [self setCreatedAtLabel:expenseParticipator expenseHistoryCell:expenseHistoryCell];
     
     return expenseHistoryCell;
 }

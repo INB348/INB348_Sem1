@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bMu-hi-1AC">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
@@ -946,27 +945,48 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="userExpenseCell" textLabel="iBU-cM-gzD" detailTextLabel="doa-ta-RVE" style="IBUITableViewCellStyleValue1" id="flj-7N-cfT">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="flj-7N-cfT" id="uYS-mq-J6w">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="userExpenseCell" id="d6D-Ab-n7E" customClass="HistoryCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d6D-Ab-n7E" id="X6j-Rv-ETY">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iBU-cM-gzD">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qFL-fY-upv" userLabel="Name">
+                                            <rect key="frame" x="8" y="8" width="221" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="doa-ta-RVE">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CreatedAt" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Eex-L1-EDg">
+                                            <rect key="frame" x="8" y="28" width="237" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserAmount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zmQ-mW-owB" userLabel="userAmount">
+                                            <rect key="frame" x="191" y="11" width="96" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ss0-ay-Xd1" userLabel="Amount">
+                                            <rect key="frame" x="237" y="28" width="50" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="foj-ie-Mo4" kind="modal" identifier="editExpenseSegue" id="esc-66-sNP"/>
+                                    <outlet property="amountLabel" destination="Ss0-ay-Xd1" id="HqC-eV-Jlz"/>
+                                    <outlet property="createdAtLabel" destination="Eex-L1-EDg" id="wrT-Lt-efu"/>
+                                    <outlet property="nameLabel" destination="qFL-fY-upv" id="iWV-aw-TVQ"/>
+                                    <outlet property="userAmountLabel" destination="zmQ-mW-owB" id="kXV-An-VaD"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1356,7 +1376,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="balanceLabel" destination="yoK-e8-uj1" id="BDc-YA-SC8"/>
+                                    <outlet property="amountLabel" destination="yoK-e8-uj1" id="U5M-De-3Cm"/>
                                     <outlet property="createdAtLabel" destination="U1o-Go-Jf4" id="456-f2-MLr"/>
                                     <outlet property="nameLabel" destination="5Ui-6O-VVg" id="KbX-K9-zdI"/>
                                     <segue destination="foj-ie-Mo4" kind="modal" identifier="editExpenseSegue" id="P92-RH-zFd"/>
@@ -2382,7 +2402,6 @@ It is very important to our development team to get your feedback in a timely wa
     <inferredMetricsTieBreakers>
         <segue reference="5Hs-c3-pvd"/>
         <segue reference="i8y-dR-bd7"/>
-        <segue reference="P92-RH-zFd"/>
         <segue reference="r84-v2-Taf"/>
         <segue reference="3Cj-as-CbW"/>
     </inferredMetricsTieBreakers>

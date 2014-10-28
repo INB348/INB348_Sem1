@@ -10,6 +10,7 @@
 
 @interface HistoryCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *balanceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *amountLabel;
 @property (strong, nonatomic) IBOutlet UILabel *createdAtLabel;
+@property (strong, nonatomic) IBOutlet UILabel *userAmountLabel;
 @end
