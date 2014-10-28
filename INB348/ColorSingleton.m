@@ -34,6 +34,10 @@ static ColorSingleton *sharedMyColorSingleton = nil;
     return [UIColor colorWithRed:1 green:0.302 blue:0.302 alpha:1];
 }
 
+- (UIColor *)getRedBackgroundColor{
+    return [UIColor colorWithRed:1 green:0.302 blue:0.302 alpha:0.5];
+}
+
 - (UIColor *)getGreenColor{
     return [UIColor colorWithRed:0.2 green:0.678 blue:0.361 alpha:1];
 }
