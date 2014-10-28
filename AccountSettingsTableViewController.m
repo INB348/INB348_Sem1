@@ -168,11 +168,12 @@
         [updateCurrentUserInfo getFirstObjectInBackgroundWithBlock:^(PFObject *currentUserInfo, NSError *error) {
             
             if(!error) {
+                
                 currentUserInfo[@"name"] = self.txt_NewName.text;
                 [PFUser currentUser].password = self.txt_NewPassword.text;
                 [[PFUser currentUser] saveInBackground];
-                currentUserInfo[@"profilePic"] = imageFile;
                 
+                currentUserInfo[@"profilePic"] = imageFile;
                 [currentUserInfo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     
                     if (!error) {
