@@ -14,7 +14,7 @@
 - (void)refresh;
 @end
 
-@interface NewGroupViewController : UITableViewController <MBProgressHUDDelegate> {
+@interface NewGroupViewController : UITableViewController <MBProgressHUDDelegate, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
     MBProgressHUD *hud;
 }
 
