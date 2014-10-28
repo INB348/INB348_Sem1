@@ -77,14 +77,14 @@
         // Configure the cell
         PFFile *thumbnail = [[PFUser currentUser] objectForKey:@"profilePic"];
         UIImageView *chosenImage = (UIImageView*) [cell viewWithTag:99];
-        chosenImage.image = [UIImage imageNamed:@"pill.png"];
+        chosenImage.image = [UIImage imageNamed:@"person_grey.jpg"];
         
         [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             // Now that the data is fetched, update the cell's image property.
             if(!error) {
                 chosenImage.image = [UIImage imageWithData:data];
             } else {
-                chosenImage.image = [UIImage imageNamed:@"pill.png"];
+                chosenImage.image = [UIImage imageNamed:@"person_grey.jpg"];
             }
         }];
         

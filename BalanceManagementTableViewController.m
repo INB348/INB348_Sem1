@@ -134,7 +134,7 @@ NumberFormatterSingleton *numberFormatterSingleton;
         if(!error) {
             groupUserCell.imageView.image = [UIImage imageWithData:data];
         } else {
-            groupUserCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+            groupUserCell.imageView.image = [UIImage imageNamed:@"person_grey.jpg"];
         }
         
         /* Profile Image Format */

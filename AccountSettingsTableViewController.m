@@ -38,14 +38,14 @@ txt_ReTypePassword = _txt_ReTypePassword;
     
     /* Profile Image Format */
     PFFile *thumbnail = [[PFUser currentUser] objectForKey:@"profilePic"];
-    self.img_Profile.image = [UIImage imageNamed:@"pill.png"];
+    self.img_Profile.image = [UIImage imageNamed:@"person_grey.jpg"];
     
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         // Now that the data is fetched, update the cell's image property.
         if(!error) {
             self.img_Profile.image = [UIImage imageWithData:data];
         } else {
-            self.img_Profile.image = [UIImage imageNamed:@"pill.png"];
+            self.img_Profile.image = [UIImage imageNamed:@"person_grey.jpg"];
         }
     }];
     

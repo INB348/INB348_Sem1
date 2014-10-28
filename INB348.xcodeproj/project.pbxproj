@@ -638,6 +638,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = nOrJ;
 				TargetAttributes = {
+					0C6E5F6619B72750000594BF = {
+						DevelopmentTeam = P46NLU4B7Z;
+					};
 					0C6E5F8719B72750000594BF = {
 						TestTargetID = 0C6E5F6619B72750000594BF;
 					};
@@ -882,6 +885,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -900,6 +904,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

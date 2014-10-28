@@ -104,14 +104,14 @@
     [memberCell.textLabel setText:name];
     
     PFFile *thumbnail = self.groupUsers[indexPath.row][@"user"][@"profilePic"];
-    memberCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+    memberCell.imageView.image = [UIImage imageNamed:@"person_grey.jpg"];
     
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         // Now that the data is fetched, update the cell's image property.
         if(!error) {
             memberCell.imageView.image = [UIImage imageWithData:data];
         } else {
-            memberCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+            memberCell.imageView.image = [UIImage imageNamed:@"person_grey.jpg"];
         }
         
         memberCell.imageView.contentMode = UIViewContentModeScaleAspectFit;

@@ -122,7 +122,7 @@
         if(!error) {
             cell.imageView.image = [UIImage imageWithData:data];
         } else {
-            cell.imageView.image = [UIImage imageNamed:@"pill.png"];
+            cell.imageView.image = [UIImage imageNamed:@"person_grey.jpg"];
         }
         
         /* Profile Image Format */

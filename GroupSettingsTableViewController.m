@@ -31,14 +31,14 @@ GroupTabBarController *groupTabBarController;
     
     /* Profile Image Format */
     PFFile *thumbnail = [groupTabBarController.group objectForKey:@"groupPic"];
-    self.img_Profile.image = [UIImage imageNamed:@"pill.png"];
+    self.img_Profile.image = [UIImage imageNamed:@"people_grey.jpg"];
     
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         // Now that the data is fetched, update the cell's image property.
         if(!error) {
             self.img_Profile.image = [UIImage imageWithData:data];
         } else {
-            self.img_Profile.image = [UIImage imageNamed:@"pill.png"];
+            self.img_Profile.image = [UIImage imageNamed:@"people_grey.jpg"];
         }
     }];
     self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
