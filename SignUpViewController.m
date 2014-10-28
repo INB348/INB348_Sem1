@@ -138,57 +138,70 @@ txt_Name = _txt_Name;
     BOOL isValidEmail = [self NSStringIsValidEmail: _txt_NewEmail.text];
     
     if (isValidEmail) {
-        if (![self.txt_ReTypePassword.text isEqualToString:self.txt_NewPassword.text]) {
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your passwords do not match. Please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [errorAlertView show];
-            
-        } else {
-            PFUser *user = [PFUser user];
-            user.username = self.txt_NewEmail.text;
-            user.password = self.txt_NewPassword.text;
-            
-            // Show progress
-            hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-            [self.navigationController.view addSubview:hud];
-            hud.mode = MBProgressHUDModeAnnularDeterminate;
-            hud.labelText = @"Uploading";
-            [hud show:YES];
-            
-            // myProgressTask uses the HUD instance to update progress
-            [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
-            
-            [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
+        
+        if ([self.txt_NewPassword.text length] != 0 ) {
+            if (![self.txt_ReTypePassword.text isEqualToString:self.txt_NewPassword.text]) {
+                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your passwords do not match. Please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [errorAlertView show];
+                
+            } else {
+                if ([self.txt_Name.text length] != 0) {
+                    PFUser *user = [PFUser user];
+                    user.username = self.txt_NewEmail.text;
+                    user.password = self.txt_NewPassword.text;
                     
-                    //The registration was succesful, go to the wall
-                    NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
+                    // Show progress
+                    hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+                    [self.navigationController.view addSubview:hud];
+                    hud.mode = MBProgressHUDModeAnnularDeterminate;
+                    hud.labelText = @"Uploading";
+                    [hud show:YES];
                     
-                    NSString *imageName = [NSString stringWithFormat:@"%@_ProfilePhoto", self.txt_Name.text];
-                    PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
-                    [imageFile saveInBackground];
+                    // myProgressTask uses the HUD instance to update progress
+                    [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
                     
-                    PFUser *user = [PFUser currentUser];
-                    [user setObject:self.txt_Name.text forKey:@"name"];
-                    [user setObject:imageFile forKey:@"profilePic"];
-                    
-                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        [hud hide:YES];
-                        if (succeeded) {
-                            [self performSegueWithIdentifier:@"SignUpSuccessful" sender:self];
+                    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (!error) {
                             
-                            UIAlertView *welcomeView = [[UIAlertView alloc] initWithTitle:@"Welcome" message:@"You've successfully signed up to WhoPaysNext :)" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                            [welcomeView show];
+                            //The registration was succesful, go to the wall
+                            NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
+                            
+                            NSString *imageName = [NSString stringWithFormat:@"%@_ProfilePhoto", self.txt_Name.text];
+                            PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
+                            [imageFile saveInBackground];
+                            
+                            PFUser *user = [PFUser currentUser];
+                            [user setObject:self.txt_Name.text forKey:@"name"];
+                            [user setObject:imageFile forKey:@"profilePic"];
+                            
+                            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                [hud hide:YES];
+                                if (succeeded) {
+                                    [self performSegueWithIdentifier:@"SignUpSuccessful" sender:self];
+                                    
+                                    UIAlertView *welcomeView = [[UIAlertView alloc] initWithTitle:@"Welcome" message:@"You've successfully signed up to WhoPaysNext :)" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                                    [welcomeView show];
+                                }
+                            }];
+                            
+                        } else {
+                            //Something bad has ocurred
+                            [hud hide:YES];
+                            NSString *errorText = [NSString stringWithFormat: @"Sorry, it looks like '%@' belongs to an existing account.\nWould you like to reset password?", self.txt_NewEmail.text];
+                            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorText delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+                            [errorAlertView show];
                         }
                     }];
-                    
                 } else {
-                    //Something bad has ocurred
-                    NSString *errorText = [NSString stringWithFormat: @"Sorry, it looks like '%@' belongs to an existing account.\nWould you like to reset password?", self.txt_NewEmail.text];
-                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorText delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please input your name." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [errorAlertView show];
                 }
-            }];
+            }
+        } else {
+            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please input your password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [errorAlertView show];
         }
+        
     } else {
         UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You enter email address in wrong format. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [errorAlertView show];

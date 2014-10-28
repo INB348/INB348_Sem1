@@ -183,6 +183,9 @@
                             <outlet property="delegate" destination="Xaz-Jl-Pki" id="78K-FC-TiU"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="bMu-hi-1AC" kind="modal" identifier="logOut" id="Znt-nK-Byu"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5TU-Xd-o7d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
