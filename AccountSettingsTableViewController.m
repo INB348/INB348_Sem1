@@ -15,9 +15,9 @@
 
 @implementation AccountSettingsTableViewController
 @synthesize img_Profile = _img_Profile,
-            txt_NewName = _txt_NewName,
-            txt_NewPassword = _txt_NewPassword,
-            txt_ReTypePassword = _txt_ReTypePassword;
+txt_NewName = _txt_NewName,
+txt_NewPassword = _txt_NewPassword,
+txt_ReTypePassword = _txt_ReTypePassword;
 
 - (void)viewDidLoad
 {
@@ -33,10 +33,10 @@
     self.txt_NewPassword.delegate = self;
     self.txt_ReTypePassword.delegate = self;
     
+    // Fetch the devices from persistent data store
     self.txt_NewName.text = [[PFUser currentUser] objectForKey:@"name"];
     
     /* Profile Image Format */
-    // Configure the cell
     PFFile *thumbnail = [[PFUser currentUser] objectForKey:@"profilePic"];
     self.img_Profile.image = [UIImage imageNamed:@"pill.png"];
     
@@ -55,7 +55,6 @@
     self.img_Profile.layer.borderColor = [UIColor whiteColor].CGColor;
     /* */
 }
-
 
 /** Choose a photo in Photo Library */
 - (IBAction)selectPhoto:(UIButton *)sender {
@@ -99,7 +98,18 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.img_Profile.image = chosenImage;
+    
+    // Resize image
+    UIGraphicsBeginImageContext(CGSizeMake(256, 256));
+    [chosenImage drawInRect: CGRectMake(0, 0, 256, 256)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // Set maximun compression in order to decrease file size and enable faster uploads & downloads
+    NSData *imageData = UIImageJPEGRepresentation(newImage, 0.0f);
+    UIImage *processedImage = [UIImage imageWithData:imageData];
+    
+    self.img_Profile.image = processedImage;
     
     /* Profile Image Format */
     self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
@@ -131,26 +141,76 @@
 }
 
 -(IBAction)save:(id)sender {
-//    // Create a pointer to an object of class Point with id dlkj83d
-//    PFObject *point = [PFObject objectWithoutDataWithClassName:@"User" objectId:@"8y5nycYFuk"];
-//    
-//    // Set a new value on quantity
-//    [point setObject:self.txt_NewName.text forKey:@"name"];
-//    
-//    // Save
-//    [point save];
-
-    PFQuery *query = [PFQuery queryWithClassName:@"User"];
+    //Profile Picture
+    NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
+    NSString *imageName = [NSString stringWithFormat:@"%@_ProfilePhoto", self.txt_NewName.text];
+    PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
     
-    // Retrieve the object by id
-    [query getObjectInBackgroundWithId:[PFUser currentUser].objectId block:^(PFObject *gameScore, NSError *error) {
+    PFQuery *updateCurrentUserInfo = [PFUser query];
+    [updateCurrentUserInfo whereKey:@"objectId" equalTo:[PFUser currentUser].objectId];
+    
+    if (![self.txt_ReTypePassword.text isEqualToString:self.txt_NewPassword.text]) {
+        UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your passwords do not match. Please try again." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [errorAlertView show];
         
-        // Now let's update it with some new data. In this case, only cheatMode and score
-        // will get sent to the cloud. playerName hasn't changed.
-        gameScore[@"name"] = self.txt_NewName.text;
-        [gameScore saveInBackground];
+    } else {
         
-    }];
+        // Show progress
+        hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [self.navigationController.view addSubview:hud];
+        hud.mode = MBProgressHUDModeAnnularDeterminate;
+        hud.labelText = @"Uploading";
+        [hud show:YES];
+        
+        // myProgressTask uses the HUD instance to update progress
+        [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+        
+        [updateCurrentUserInfo getFirstObjectInBackgroundWithBlock:^(PFObject *currentUserInfo, NSError *error) {
+            
+            if(!error) {
+                
+                currentUserInfo[@"name"] = self.txt_NewName.text;
+                [PFUser currentUser].password = self.txt_NewPassword.text;
+                [[PFUser currentUser] saveInBackground];
+                
+                currentUserInfo[@"profilePic"] = imageFile;
+                [currentUserInfo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    
+                    if (!error) {
+                        [hud hide:YES];
+                        
+                        // Show success message
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Complete" message:@"Successfully updated your account information" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alert show];
+                        
+                        // Dismiss the controller
+                        [self performSegueWithIdentifier:@"BackToGroupView" sender:self];
+                        
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Failure" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alert show];
+                        
+                    }
+                    
+                }];
+                
+            } else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Failure" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+                
+            }
+        }];
+    }
+}
+
+- (void)myProgressTask {
+    // This just increases the progress indicator in a loop
+    float progress = 0.0f;
+    while (progress < 1.0f) {
+        progress += 0.01f;
+        hud.progress = progress;
+        usleep(50000);
+    }
 }
 
 - (void)didReceiveMemoryWarning

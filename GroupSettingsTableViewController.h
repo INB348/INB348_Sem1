@@ -11,13 +11,17 @@
 #import "GroupTabBarController.h"
 #import "GroupSettingsNavigationViewController.h"
 #import "MembersTableViewController.h"
-#import "AddMemberNavigationController.h"
-#import "AddMemberToGroupViewController.h"
+@interface GroupSettingsTableViewController : UITableViewController
 
-@interface GroupSettingsTableViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UITextField *nameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *img_Profile;
+@property (strong, nonatomic) IBOutlet UITextField *usernameLabel;
+
 - (IBAction)deleteGroup:(id)sender;
 - (IBAction)nameChanged:(id)sender;
 - (IBAction)back:(id)sender;
+- (IBAction)add:(id)sender;
+- (IBAction)selectPhoto:(UIButton *)sender;
+
 
 @end

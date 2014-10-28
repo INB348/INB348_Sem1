@@ -16,7 +16,7 @@
 @implementation NewGroupViewController
 
 @synthesize img_Profile = _img_Profile,
-            nameTextField = _nameTextField;
+nameTextField = _nameTextField;
 
 
 //- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -83,7 +83,18 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.img_Profile.image = chosenImage;
+    
+    // Resize image
+    UIGraphicsBeginImageContext(CGSizeMake(256, 256));
+    [chosenImage drawInRect: CGRectMake(0, 0, 256, 256)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // Set maximun compression in order to decrease file size and enable faster uploads & downloads
+    NSData *imageData = UIImageJPEGRepresentation(newImage, 0.0f);
+    UIImage *processedImage = [UIImage imageWithData:imageData];
+    
+    self.img_Profile.image = processedImage;
     
     /* Profile Image Format */
     self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
@@ -110,68 +121,70 @@
 }
 
 - (IBAction)save:(id)sender {
-    // Create a new Group and set name
-    PFObject *group= [PFObject objectWithClassName:@"Group"];
-    [group setObject:self.nameTextField.text forKey:@"name"];
-    
-    
-    //Profile Picture
-    NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
-    NSString *imageName = [NSString stringWithFormat:@"%@_GroupPhoto", self.nameTextField.text];
-    PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
-    [group setObject:imageFile forKey:@"groupPic"];
-    
-    // Show progress
-    hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:hud];
-    hud.mode = MBProgressHUDModeAnnularDeterminate;
-    hud.labelText = @"Uploading";
-    [hud show:YES];
-    
-    // myProgressTask uses the HUD instance to update progress
-    [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
-    
-    // Upload recipe to Parse
-    [group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [hud hide:YES];
+    if ([self.nameTextField.text length] != 0) {
+        // Create a new Group and set name
+        PFObject *group= [PFObject objectWithClassName:@"Group"];
+        [group setObject:self.nameTextField.text forKey:@"name"];
         
         
-        if(succeeded) {
+        //Profile Picture
+        NSData *imageData = UIImagePNGRepresentation(self.img_Profile.image);
+        NSString *imageName = [NSString stringWithFormat:@"%@_GroupPhoto", self.nameTextField.text];
+        PFFile *imageFile = [PFFile fileWithName:imageName data:imageData];
+        [group setObject:imageFile forKey:@"groupPic"];
+        
+        // Show progress
+        hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [self.navigationController.view addSubview:hud];
+        hud.mode = MBProgressHUDModeAnnularDeterminate;
+        hud.labelText = @"Uploading";
+        [hud show:YES];
+        
+        // myProgressTask uses the HUD instance to update progress
+        [hud showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+        
+        // Upload recipe to Parse
+        [group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             
-            // Show success message
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully created new group" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-            
-            // Notify table view to reload the recipes from Parse cloud
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
-            
-            // Create a new UserGroup relation
-            PFObject *userGroup= [PFObject objectWithClassName:@"UserGroup"];
-            [userGroup setObject:[PFUser currentUser] forKey:@"user"];
-            [userGroup setObject:group forKey:@"group"];
-            
-            //Set default balance of 0
-            userGroup[@"balance"] = @0;
-            
-            //Save
-            [userGroup saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if(succeeded){
-                    [self.delegate refresh];
-                    
-                    // Dismiss the controller
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                } else {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Relation Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                    [alert show];
-                }
-            }];
-        } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    }];
-    
-//    [self dismissViewControllerAnimated:YES completion:nil];
+            if(succeeded) {
+                [hud hide:YES];
+                // Show success message
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully created new group" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+                
+                // Notify table view to reload the recipes from Parse cloud
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];
+                
+                // Create a new UserGroup relation
+                PFObject *userGroup= [PFObject objectWithClassName:@"UserGroup"];
+                [userGroup setObject:[PFUser currentUser] forKey:@"user"];
+                [userGroup setObject:group forKey:@"group"];
+                
+                //Set default balance of 0
+                userGroup[@"balance"] = @0;
+                userGroup[@"accepted"] = @YES;
+                
+                //Save
+                [userGroup saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if(succeeded){
+                        [self.delegate refresh];
+                        
+                        // Dismiss the controller
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Relation Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                        [alert show];
+                    }
+                }];
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Failure" message:@"Please input the Group name" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 - (void)myProgressTask {
@@ -189,13 +202,13 @@
 };
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 @end

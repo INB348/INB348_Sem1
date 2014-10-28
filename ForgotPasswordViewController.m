@@ -112,15 +112,9 @@
         UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You enter email address in wrong format. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [errorAlertView show];
     }
-
     
 }
 
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//    if (buttonIndex == [alertView cancelButtonIndex]){
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-//    }
-//}
 
 -(BOOL) NSStringIsValidEmail:(NSString *)checkEmail
 {

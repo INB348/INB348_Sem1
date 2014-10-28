@@ -174,7 +174,7 @@ ColorSingleton *colorSingleton;
     PFQuery *expenseParticipatorQuery = [PFQuery queryWithClassName:@"ExpenseParticipator"];
     [expenseParticipatorQuery whereKey:@"user" equalTo:user];
     NSArray *expenseParticipators = [expenseParticipatorQuery findObjects];
-    NSLog(@"Found %d ExpenseParticipations for User %@",expenseParticipators.count, user[@"user"][@"name"]);
+    NSLog(@"Found %lu ExpenseParticipations for User %@",(unsigned long)expenseParticipators.count, user[@"user"][@"name"]);
     return expenseParticipators;
 }
 

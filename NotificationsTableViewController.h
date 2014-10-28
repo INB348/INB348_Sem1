@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface NotificationsTableViewController : UITableViewController
-
+@property (strong) NSArray *listOfNotifications;
 @end

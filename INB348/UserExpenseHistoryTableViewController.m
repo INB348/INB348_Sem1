@@ -61,7 +61,7 @@ ColorSingleton *colorSingleton;
     [expensesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
-            NSLog(@"Successfully retrieved %d Expenses.", objects.count);
+            NSLog(@"Successfully retrieved %lu Expenses.", (unsigned long)objects.count);
             
             // Do something with the found objects
             self.payedExpenseParticipator = objects;
@@ -79,7 +79,7 @@ ColorSingleton *colorSingleton;
     [expensesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.
-            NSLog(@"Successfully retrieved %d Expenses.", objects.count);
+            NSLog(@"Successfully retrieved %lu Expenses.", (unsigned long)objects.count);
             
             // Do something with the found objects
             self.usedExpenseParticipator = objects;

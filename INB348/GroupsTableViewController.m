@@ -7,26 +7,27 @@
 //
 
 #import "GroupsTableViewController.h"
-#import "ColorSingleton.h"
 
 @interface GroupsTableViewController ()
 @property (strong) NSArray *userGroups;
 @end
 
 @implementation GroupsTableViewController
-ColorSingleton *colorSingleton;
 
 - (void)refresh{
+    [[PFUser currentUser] fetchInBackground];
+    
     PFQuery *query = [PFQuery queryWithClassName:@"UserGroup"];
     [query includeKey:@"group"];
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser) {
         [query whereKey:@"user" equalTo:currentUser];
         [query whereKey:@"accepted" equalTo:[NSNumber numberWithBool:YES]];
+        [query orderByDescending:@"updatedAt"];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 // The find succeeded.
-                NSLog(@"Successfully retrieved %d UserGroups.", objects.count);
+                NSLog(@"Successfully retrieved %lu UserGroups.", (unsigned long)objects.count);
                 
                 // Do something with the found objects
                 self.userGroups = [objects mutableCopy];
@@ -37,7 +38,6 @@ ColorSingleton *colorSingleton;
             }
         }];
     }
-    colorSingleton = [ColorSingleton sharedColorSingleton];
 }
 
 - (void)viewDidLoad
@@ -69,16 +69,28 @@ ColorSingleton *colorSingleton;
     NSNumber *balance = userGroup[@"balance"];
     
     if([balance longValue] >= 0){
-        [userGroupCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
+        [userGroupCell.detailTextLabel setTextColor:[UIColor greenColor]];
     } else {
-        [userGroupCell.detailTextLabel setTextColor:[colorSingleton getRedColor]];
+        [userGroupCell.detailTextLabel setTextColor:[UIColor redColor]];
     }
     
     [userGroupCell.textLabel setText:[NSString stringWithFormat:@"%@", groupName]];
-    NSNumberFormatter *fmt = [[NSNumberFormatter alloc] init];
-    [fmt setPositiveFormat:@"0.##"];
-    [userGroupCell.detailTextLabel setText:[fmt stringFromNumber:balance]];
-    userGroupCell.imageView.image = [UIImage imageNamed:@"images.jpeg"];
+    [userGroupCell.detailTextLabel setText:[balance stringValue]];
+    
+    PFFile *thumbnail = userGroup[@"group"][@"groupPic"];
+    userGroupCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+    
+    [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        // Now that the data is fetched, update the cell's image property.
+        if(!error) {
+            userGroupCell.imageView.image = [UIImage imageWithData:data];
+        } else {
+            userGroupCell.imageView.image = [UIImage imageNamed:@"pill.png"];
+        }
+        
+        userGroupCell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }];
+    
     
     return userGroupCell;
 }
