@@ -894,7 +894,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="BalanceManagementTableViewController.h" useStoryboardIdentifierAsRestorationIdentifier="YES" id="djj-bA-Und" customClass="BalanceManagementTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="sx3-ZK-i6k">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                        <rect key="frame" x="0.0" y="44" width="320" height="475"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -945,7 +945,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="groupUserTableView" destination="sx3-ZK-i6k" id="VRo-ws-ZN2"/>
                     </connections>
@@ -1283,6 +1283,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0QC-7S-Mwg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1470,7 +1471,7 @@
             <objects>
                 <tableViewController id="8kZ-0S-PIC" customClass="EditExpenseParticipatorsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5Kf-3Q-qI8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -1517,6 +1518,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s9Q-CF-Sr6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1764,7 +1766,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Csb-4y-qKR">
-                                            <rect key="frame" x="78" y="25" width="10" height="10"/>
+                                            <rect key="frame" x="78" y="24" width="8" height="16"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1960,7 +1962,8 @@ It is very important to our development team to get your feedback in a timely wa
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YOb-gP-TQX" customClass="NewExpenseNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Xwo-m3-h6l"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oGM-Fw-aqV">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="oGM-Fw-aqV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1994,7 +1997,8 @@ It is very important to our development team to get your feedback in a timely wa
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OLN-Wh-s9V" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ahw-lI-K1D">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="Ahw-lI-K1D">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2244,10 +2248,10 @@ It is very important to our development team to get your feedback in a timely wa
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="5Hs-c3-pvd"/>
         <segue reference="Rqb-Jp-OcO"/>
-        <segue reference="r84-v2-Taf"/>
-        <segue reference="P92-RH-zFd"/>
+        <segue reference="5Hs-c3-pvd"/>
+        <segue reference="jTv-Yn-TmP"/>
+        <segue reference="KdW-Uh-HYd"/>
         <segue reference="3Cj-as-CbW"/>
     </inferredMetricsTieBreakers>
 </document>

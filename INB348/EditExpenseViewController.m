@@ -8,6 +8,7 @@
 
 #import "EditExpenseViewController.h"
 #import "ColorSingleton.h"
+#import "NumberFormatterSingleton.h"
 
 @interface EditExpenseViewController ()
 @property (nonatomic, assign) id currentResponder;
@@ -18,6 +19,7 @@
 NSMutableArray *paymentMultipliers;
 NSMutableArray *usageMultipliers;
 ColorSingleton *colorSingleton;
+NumberFormatterSingleton *numberFormatterSingleton;
 
 #pragma mark - Setup
 - (void)setOldExpenseValues {
@@ -200,14 +202,15 @@ ColorSingleton *colorSingleton;
             
             [newExpenseParticipators addObject:expenseParticipator];
             PFUser *currentUser = [PFUser currentUser];
-            NSString *note = [NSString stringWithFormat: @"%@ has edited information of the '%@' expense. You have been charged $ %@ in this updated expense", currentUser[@"name"], expenseParticipator[@"expense"][@"name"], expenseParticipator[@"usage"]];
+            NSString *moneyFormat = [[numberFormatterSingleton getNumberFormatter] stringFromNumber:expenseParticipator[@"usage"]];
+            NSString *note = [NSString stringWithFormat: @"%@ has edited the '%@' expense. You have been charged $ %@ in this one", currentUser[@"name"], expenseParticipator[@"expense"][@"name"], moneyFormat];
             //        NSLog (@"%@", participator[@"user"]);
-            PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
-            [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
-            [deleteGroupNotification setObject:expenseParticipator[@"user"][@"user"] forKey:@"toUser"];
-            [deleteGroupNotification setObject:note forKey:@"note"];
-            [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
-            [deleteGroupNotification saveEventually];
+            PFObject *notification = [PFObject objectWithClassName:@"Notifications"];
+            [notification setObject:[PFUser currentUser] forKey:@"fromUser"];
+            [notification setObject:expenseParticipator[@"user"][@"user"] forKey:@"toUser"];
+            [notification setObject:note forKey:@"note"];
+            [notification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
+            [notification saveEventually];
             
         }
     }

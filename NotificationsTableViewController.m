@@ -106,7 +106,7 @@
         [cell setBackgroundColor:[UIColor colorWithRed:91.0/255 green:111.0/255 blue:165.0/255 alpha:1]];
     }
     
-    cell.textLabel.numberOfLines = 3; // multiline
+    cell.textLabel.numberOfLines = 2; // multiline
     
     [cell.textLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [cell.textLabel setText:[NSString stringWithFormat:@"%@", note]];

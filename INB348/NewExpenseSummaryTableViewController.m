@@ -220,16 +220,16 @@ NumberFormatterSingleton *numberFormatterSingleton;
     for (PFObject *participator in navigationController.expenseParticipators) {
         [participator setObject:expense forKey:@"expense"];
         [newParticipators addObject:participator];
-        
+        NSString *moneyFormat = [[numberFormatterSingleton getNumberFormatter] stringFromNumber:participator[@"usage"]];
         NSLog(@"%@", participator);
-        NSString *note = [NSString stringWithFormat: @"You have been charged $ %@ for %@ expense", participator[@"usage"], participator[@"expense"][@"name"]];
+        NSString *note = [NSString stringWithFormat: @"You have been charged $ %@ for '%@' expense", moneyFormat, participator[@"expense"][@"name"]];
 //        NSLog (@"%@", participator[@"user"]);
-        PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
-        [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
-        [deleteGroupNotification setObject:participator[@"user"][@"user"] forKey:@"toUser"];
-        [deleteGroupNotification setObject:note forKey:@"note"];
-        [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
-        [deleteGroupNotification saveEventually];
+        PFObject *notification = [PFObject objectWithClassName:@"Notifications"];
+        [notification setObject:[PFUser currentUser] forKey:@"fromUser"];
+        [notification setObject:participator[@"user"][@"user"] forKey:@"toUser"];
+        [notification setObject:note forKey:@"note"];
+        [notification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
+        [notification saveEventually];
 
     }
     
