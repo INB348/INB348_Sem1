@@ -34,6 +34,11 @@
     self.txt_Email.delegate = self;
     self.txt_Password.delegate= self;
     
+    PFUser *currentUser = [PFUser currentUser];
+    
+    if (currentUser) {
+        [self performSegueWithIdentifier:@"LogInSuccessful" sender:self];
+    }
 }
 
 /** Move the UIView up when the keyboard is hiding an object on the screen */

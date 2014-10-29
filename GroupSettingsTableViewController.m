@@ -269,6 +269,34 @@ GroupTabBarController *groupTabBarController;
                 NSLog(@"Error: %@ %@", error, [error userInfo]);
             }
         }];
+        
+//        NSLog (@"%@", groupTabBarController.group);
+        NSLog (@"%@", groupTabBarController.groupUsers);
+        
+        for (PFObject *groupUser in groupTabBarController.groupUsers) {
+            NSLog(@"%@", groupUser);
+            NSString *string1 = [[PFUser currentUser] objectForKey:@"name"];
+            NSString *string2 = @"group";
+            NSString *note = [NSString stringWithFormat: @"'%@' has deleted '%@' %@", string1, groupTabBarController.group[@"name"], string2];
+            
+            PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
+            [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
+            [deleteGroupNotification setObject:groupUser[@"user"] forKey:@"toUser"];
+            [deleteGroupNotification setObject:note forKey:@"note"];
+            [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
+            [deleteGroupNotification saveEventually];
+
+        }
+//        NSString *string1 = [[PFUser currentUser] objectForKey:@"name"];
+//        NSString *string2 = gName[@"name"];
+//        NSString *note = [NSString stringWithFormat: @"'%@' has deleted '%@'", string1, string2];
+//        
+//        PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
+//        [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
+//        [deleteGroupNotification setObject:object forKey:@"toUser"];
+//        [deleteGroupNotification setObject:note forKey:@"note"];
+//        [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
+//        [deleteGroupNotification saveEventually];
 
     }
 }
@@ -340,7 +368,8 @@ GroupTabBarController *groupTabBarController;
                             
                             NSString *string1 = [[PFUser currentUser] objectForKey:@"name"];
                             NSString *string2 = gName[@"name"];
-                            NSString *note = [NSString stringWithFormat: @"'%@' invited you to join '%@'", string1, string2];
+                            NSString *string3 = @"group";
+                            NSString *note = [NSString stringWithFormat: @"'%@' invited you to join '%@' %@", string1, string2, string3];
                             
                             PFObject *addMemberNotification = [PFObject objectWithClassName:@"Notifications"];
                             [addMemberNotification setObject:[PFUser currentUser] forKey:@"fromUser"];

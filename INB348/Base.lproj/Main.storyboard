@@ -282,13 +282,13 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9ia-mB-KjQ" id="dDm-te-4BO">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Change your name" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="QHg-xA-aXy">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Change your name" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="QHg-xA-aXy">
                                                     <rect key="frame" x="24" y="7" width="273" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="textColor" red="0.01176470588" green="0.28627450980000002" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -738,7 +738,7 @@
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="textColor" red="0.01176470588" green="0.28627450980000002" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 </textField>
                                             </subviews>
                                             <color key="backgroundColor" red="0.1843137255" green="0.25490196079999999" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -1305,7 +1305,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                         <color key="textColor" red="0.01176470588" green="0.28627450980000002" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Amount..." minimumFontSize="17" clearButtonMode="whileEditing" id="eeD-uL-aSV">
                                         <rect key="frame" x="20" y="60" width="280" height="30"/>
@@ -1405,7 +1405,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="textColor" red="0.01176470588" green="0.28627450980000002" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" id="9Ku-sX-90A">
                                         <rect key="frame" x="18" y="406" width="284" height="175"/>
@@ -2069,7 +2069,7 @@ It is very important to our development team to get your feedback in a timely wa
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="textColor" red="0.01176470588" green="0.28627450980000002" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     <connections>
                                                         <action selector="nameChanged:" destination="MH3-f6-7zw" eventType="editingChanged" id="y17-xf-Kyq"/>
                                                     </connections>
@@ -2241,7 +2241,7 @@ It is very important to our development team to get your feedback in a timely wa
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="5Hs-c3-pvd"/>
-        <segue reference="ADN-J7-yNz"/>
+        <segue reference="i8y-dR-bd7"/>
         <segue reference="r84-v2-Taf"/>
         <segue reference="P92-RH-zFd"/>
         <segue reference="3Cj-as-CbW"/>
