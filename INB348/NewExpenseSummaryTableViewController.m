@@ -211,22 +211,6 @@ NumberFormatterSingleton *numberFormatterSingleton;
     [expense setValue:[self returnStringIfNotNull:navigationController.comment] forKey:@"description"];
     [expense setObject:navigationController.group forKey:@"group"];
     [expense saveInBackground];
-    
-    for (PFObject *groupUser in expenseParticipators) {
-        
-        NSLog(@"%@", groupUser);
-//        NSString *string1 = [[PFUser currentUser] objectForKey:@"name"];
-//        NSString *string2 = @"group";
-//        NSString *note = [NSString stringWithFormat: @"'%@' has deleted '%@' %@", string1, groupTabBarController.group[@"name"], string2];
-//        
-//        PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
-//        [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
-//        [deleteGroupNotification setObject:groupUser[@"user"] forKey:@"toUser"];
-//        [deleteGroupNotification setObject:note forKey:@"note"];
-//        [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
-//        [deleteGroupNotification saveEventually];
-        
-    }
 
     return expense;
 }
@@ -236,7 +220,19 @@ NumberFormatterSingleton *numberFormatterSingleton;
     for (PFObject *participator in navigationController.expenseParticipators) {
         [participator setObject:expense forKey:@"expense"];
         [newParticipators addObject:participator];
+        
+        NSLog(@"%@", participator);
+        NSString *note = [NSString stringWithFormat: @"You were included in %@ for %@", participator[@"expense"][@"name"], participator[@"usage"]];
+//        NSLog (@"%@", participator[@"user"]);
+        PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
+        [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
+        [deleteGroupNotification setObject:participator[@"user"][@"user"] forKey:@"toUser"];
+        [deleteGroupNotification setObject:note forKey:@"note"];
+        [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
+        [deleteGroupNotification saveEventually];
+
     }
+    
     [PFObject saveAllInBackground:newParticipators block:^(BOOL succeeded, NSError *error) {
         if(succeeded){
             [self updateUserBalance];
