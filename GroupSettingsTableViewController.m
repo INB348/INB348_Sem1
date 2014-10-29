@@ -187,10 +187,8 @@ GroupTabBarController *groupTabBarController;
     if (buttonIndex == [alertView cancelButtonIndex]){
         //cancel clicked ...do your action
     } else {
-        [PFObject deleteAllInBackground:groupTabBarController.groupUsers];
 //        [groupTabBarController.group deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 //            if(succeeded){
-//                
 //                for(PFObject *groupUser in groupTabBarController.groupUsers){
 //                    [groupUser deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 //                        if(succeeded){
@@ -206,7 +204,72 @@ GroupTabBarController *groupTabBarController;
 //                [errorAlertView show];
 //            }
 //        }];
+//
         
+        PFQuery *query = [PFQuery queryWithClassName:@"UserGroup"];
+        [query whereKey:@"group" equalTo:groupTabBarController.group];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                // The find succeeded.
+                NSLog(@"Successfully retrieved %lu scores.", (unsigned long)objects.count);
+                // Do something with the found objects
+                for (PFObject *object in objects) {
+                    [object deleteInBackground];
+                }
+            } else {
+                // Log details of the failure
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+        
+        PFQuery *query2 = [PFQuery queryWithClassName:@"Expense"];
+        [query2 whereKey:@"group" equalTo:groupTabBarController.group];
+        [query2 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                // The find succeeded.
+                NSLog(@"Successfully retrieved %lu scores.", (unsigned long)objects.count);
+                // Do something with the found objects
+                for (PFObject *object in objects) {
+                    PFQuery *query3 = [PFQuery queryWithClassName:@"ExpenseParticipator"];
+                    [query3 whereKey:@"expense" equalTo:object];
+                    [query3 findObjectsInBackgroundWithBlock:^(NSArray *smObjects, NSError *error) {
+                        if (!error) {
+                            // The find succeeded.
+                            NSLog(@"Successfully retrieved %lu scores.", (unsigned long)objects.count);
+                            // Do something with the found objects
+                            for (PFObject *smObject in smObjects) {
+                                [smObject deleteInBackground];
+                            }
+                        } else {
+                            // Log details of the failure
+                            NSLog(@"Error: %@ %@", error, [error userInfo]);
+                        }
+                    }];
+                    
+                    [object deleteInBackground];
+                }
+            } else {
+                // Log details of the failure
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+        
+        PFQuery *query4 = [PFQuery queryWithClassName:@"Group"];
+        [query4 whereKey:@"group" equalTo:groupTabBarController.group];
+        [query4 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                // The find succeeded.
+                NSLog(@"Successfully retrieved %lu scores.", (unsigned long)objects.count);
+                // Do something with the found objects
+                for (PFObject *object in objects) {
+                    [object deleteInBackground];
+                }
+            } else {
+                // Log details of the failure
+                NSLog(@"Error: %@ %@", error, [error userInfo]);
+            }
+        }];
+
     }
 }
 
