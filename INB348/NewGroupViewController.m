@@ -149,8 +149,8 @@ nameTextField = _nameTextField;
             if(succeeded) {
                 [hud hide:YES];
                 // Show success message
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully created new group" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Complete" message:@"Successfully created new group" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//                [alert show];
                 
                 // Notify table view to reload the recipes from Parse cloud
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshTable" object:self];

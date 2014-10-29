@@ -30,8 +30,8 @@ ColorSingleton *colorSingleton;
 }
 
 - (void)setDescriptionTextViewBorders {
-    self.descriptionTextView.layer.borderWidth = 5.0f;
-    self.descriptionTextView.layer.borderColor = [[UIColor grayColor] CGColor];
+    self.descriptionTextView.layer.borderWidth = 2.0f;
+    self.descriptionTextView.layer.borderColor = [[colorSingleton getLightGreyColor] CGColor];
     self.descriptionTextView.layer.cornerRadius = 8;
 }
 
