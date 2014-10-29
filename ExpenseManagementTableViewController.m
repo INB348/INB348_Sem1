@@ -82,15 +82,17 @@ NumberFormatterSingleton *numberFormatterSingleton;
 - (void)setCreatedAtLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"HH:mm dd-MM-yyyy"];
+    [dateFormatter setDateFormat:@"dd-MMM-YYYY HH:mm "];
     NSDate *expenseCreatedAt = groupExpense.createdAt;
     [expenseHistoryCell.createdAtLabel setText:[dateFormatter stringFromDate:expenseCreatedAt]];
+    expenseHistoryCell.createdAtLabel.textColor = [UIColor colorWithRed:109.0/255 green:109.0/255 blue:109.0/255 alpha:1];
 }
 
 - (void)setNameLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell
 {
     NSString *expenseName = groupExpense[@"name"];
     [expenseHistoryCell.nameLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
+//    expenseHistoryCell.nameLabel.textColor = [UIColor colorWithRed:109.0/255 green:109.0/255 blue:109.0/255 alpha:1];
 }
 
 - (void)setAmountLabel:(PFObject *)groupExpense expenseHistoryCell:(HistoryCell *)expenseHistoryCell

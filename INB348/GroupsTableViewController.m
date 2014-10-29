@@ -75,7 +75,11 @@ NumberFormatterSingleton *numberFormatterSingleton;
     NSNumber *balance = userGroup[@"balance"];
     [userGroupCell.detailTextLabel setText:[[numberFormatterSingleton getCurrencyNumberFormatter] stringFromNumber:balance]];
     if([balance longValue] >= 0){
-        [userGroupCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
+        if ([balance longValue] == 0) {
+            [userGroupCell.detailTextLabel setTextColor:[colorSingleton getGreenColor]];
+        } else {
+            [userGroupCell.detailTextLabel setTextColor:[colorSingleton getBlueColor]];
+        }
     } else {
         [userGroupCell.detailTextLabel setTextColor:[colorSingleton getRedColor]];
     }

@@ -1967,7 +1967,8 @@ It is very important to our development team to get your feedback in a timely wa
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="foj-ie-Mo4" customClass="EditExpenseNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VeC-sX-xI7">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="VeC-sX-xI7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2237,8 +2238,8 @@ It is very important to our development team to get your feedback in a timely wa
     <inferredMetricsTieBreakers>
         <segue reference="gHh-eZ-Rmr"/>
         <segue reference="5Hs-c3-pvd"/>
-        <segue reference="jTv-Yn-TmP"/>
-        <segue reference="KdW-Uh-HYd"/>
+        <segue reference="P92-RH-zFd"/>
+        <segue reference="r84-v2-Taf"/>
         <segue reference="3Cj-as-CbW"/>
     </inferredMetricsTieBreakers>
 </document>
