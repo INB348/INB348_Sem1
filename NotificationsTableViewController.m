@@ -94,7 +94,7 @@
     NSString *dateString = [dateFormatter stringFromDate:createdAt];
     
     if (read) {
-        cell.textLabel.textColor = [UIColor colorWithRed:38.0/255 green:38.0/255 blue:38.0/255 alpha:1]; // color
+        cell.textLabel.textColor = [UIColor colorWithRed:8.0/255 green:73.0/255 blue:182.0/255 alpha:1]; // color
         cell.textLabel.font = [UIFont boldSystemFontOfSize:(15)]; // font size
         cell.detailTextLabel.textColor = [UIColor colorWithRed:109.0/255 green:109.0/255 blue:109.0/255 alpha:1];
         [cell setBackgroundColor:[UIColor whiteColor]];
@@ -147,7 +147,7 @@
         [object saveInBackground];
         
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        cell.textLabel.textColor = [UIColor colorWithRed:38.0/255 green:38.0/255 blue:38.0/255 alpha:1]; // color
+        cell.textLabel.textColor = [UIColor colorWithRed:8.0/255 green:73.0/255 blue:182.0/255 alpha:1]; // color
         cell.textLabel.font = [UIFont boldSystemFontOfSize:(15)]; // font size
         cell.detailTextLabel.textColor = [UIColor colorWithRed:109.0/255 green:109.0/255 blue:109.0/255 alpha:1];
         [cell setBackgroundColor:[UIColor whiteColor]];

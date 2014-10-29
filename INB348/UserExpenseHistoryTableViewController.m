@@ -126,9 +126,9 @@ NumberFormatterSingleton *numberFormatterSingleton;
 
     UILabel *myLabel = [[UILabel alloc] init];
     myLabel.font = [UIFont systemFontOfSize:20];
-    myLabel.frame = CGRectMake(8, 0, 320, 30);
-
-    headerView.backgroundColor = [colorSingleton getLightGreyColor];
+    myLabel.frame = CGRectMake(8, -5, 320, 40);
+    myLabel.textColor = [colorSingleton getWhiteColor];
+    headerView.backgroundColor = [UIColor colorWithRed:45.0/255 green:64.0/255 blue:130.0/255 alpha:1];
     
     switch (section)
     {
@@ -154,10 +154,11 @@ NumberFormatterSingleton *numberFormatterSingleton;
 - (void)setCreatedAtLabel:(PFObject *)expenseParticipator expenseHistoryCell:(HistoryCell *)expenseHistoryCell
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"HH:mm dd-MM-yyyy"];
+    [dateFormatter setDateFormat:@"dd-MMM-YYYY HH:mm"];
     PFObject *expense = expenseParticipator[@"expense"];
     NSDate *expenseCreatedAt = expense.createdAt;
     [expenseHistoryCell.createdAtLabel setText:[dateFormatter stringFromDate:expenseCreatedAt]];
+    expenseHistoryCell.createdAtLabel.textColor = [UIColor colorWithRed:109.0/255 green:109.0/255 blue:109.0/255 alpha:1];
 }
 
 
