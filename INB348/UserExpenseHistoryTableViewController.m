@@ -11,9 +11,9 @@
 #import "NumberFormatterSingleton.h"
 
 @interface UserExpenseHistoryTableViewController ()
-@property (strong) NSArray *expenses;
-@property (strong) NSArray *usedExpenseParticipator;
-@property (strong) NSArray *payedExpenseParticipator;
+@property (strong) NSMutableArray *expenses;
+@property (strong) NSMutableArray *usedExpenseParticipators;
+@property (strong) NSMutableArray *payedExpenseParticipators;
 @end
 
 @implementation UserExpenseHistoryTableViewController
@@ -22,26 +22,14 @@ ColorSingleton *colorSingleton;
 NumberFormatterSingleton *numberFormatterSingleton;
 
 #pragma mark - Setup
-
-- (void)setBalanceLabel {
-    NSNumber *balance = self.groupUser[@"balance"];
-    NSNumberFormatter *fmt = [numberFormatterSingleton getCurrencyNumberFormatter];
-    self.balanceLabel.title = [fmt stringFromNumber:balance];
-    
-    if([balance longValue] >= 0){
-        [self.balanceLabel setTintColor:[colorSingleton getGreenColor]];
-    } else {
-        [self.balanceLabel setTintColor:[colorSingleton getRedColor]];
-    }
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self refresh];
+    self.expenses = [NSMutableArray array];
+    self.payedExpenseParticipators = [NSMutableArray array];
+    self.usedExpenseParticipators = [NSMutableArray array];
     colorSingleton = [ColorSingleton sharedColorSingleton];
     numberFormatterSingleton = [NumberFormatterSingleton sharedMyNumberFormatterSingleton];
-    self.balanceLabel.enabled = NO;
-    [self.balanceLabel setTintColor:[UIColor blackColor]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,19 +37,11 @@ NumberFormatterSingleton *numberFormatterSingleton;
 }
 
 #pragma mark - Reload Table
-- (void)reloadIfReady{
-    if(readyForReload){
-        [self.tableView reloadData];
-        readyForReload = @false;
-    } else {
-        readyForReload = @true;
-    }
-}
 
 - (void)refresh{
     PFQuery *expensesQuery = [PFQuery queryWithClassName:@"ExpenseParticipator"];
     [expensesQuery whereKey:@"user" equalTo:self.groupUser];
-    [expensesQuery whereKey:@"payment" notEqualTo:@0];
+    //[expensesQuery whereKey:@"payment" notEqualTo:@0];
     [expensesQuery includeKey:@"expense"];
     [expensesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
@@ -69,52 +49,63 @@ NumberFormatterSingleton *numberFormatterSingleton;
             NSLog(@"Successfully retrieved %lu Expenses.", (unsigned long)objects.count);
             
             // Do something with the found objects
-            self.payedExpenseParticipator = objects;
-            [self reloadIfReady];
+            for (PFObject *expenseParticipator in objects) {
+                if(![expenseParticipator[@"payment"] isEqualToNumber:@0]){
+                    [self.payedExpenseParticipators addObject:expenseParticipator];
+                }
+                if(![expenseParticipator[@"usage"] isEqualToNumber:@0]){
+                    [self.usedExpenseParticipators addObject:expenseParticipator];
+                }
+                [self.expenses addObject:expenseParticipator[@"expense"]];
+            }
+            [self.tableView reloadData];
         } else {
             // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
     
-    expensesQuery = [PFQuery queryWithClassName:@"ExpenseParticipator"];
-    [expensesQuery whereKey:@"user" equalTo:self.groupUser];
-    [expensesQuery whereKey:@"usage" notEqualTo:@0];
-    [expensesQuery includeKey:@"expense"];
-    [expensesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            // The find succeeded.
-            NSLog(@"Successfully retrieved %lu Expenses.", (unsigned long)objects.count);
-            
-            // Do something with the found objects
-            self.usedExpenseParticipator = objects;
-            [self reloadIfReady];
-        } else {
-            // Log details of the failure
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-        }
-    }];
+
+    
+//    expensesQuery = [PFQuery queryWithClassName:@"ExpenseParticipator"];
+//    [expensesQuery whereKey:@"user" equalTo:self.groupUser];
+//    [expensesQuery whereKey:@"usage" notEqualTo:@0];
+//    [expensesQuery includeKey:@"expense"];
+//    [expensesQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if (!error) {
+//            // The find succeeded.
+//            NSLog(@"Successfully retrieved %lu Expenses.", (unsigned long)objects.count);
+//            
+//            // Do something with the found objects
+//            self.usedExpenseParticipators = objects;
+//            [self reloadIfReady];
+//        } else {
+//            // Log details of the failure
+//            NSLog(@"Error: %@ %@", error, [error userInfo]);
+//        }
+//    }];
     
     self.navigationItem.title = self.groupUser[@"user"][@"name"];
-    [self setBalanceLabel];
-    
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     switch(section){
         case 0:
-            return self.payedExpenseParticipator.count;
+            return 1;
             break;
         case 1:
-            return self.usedExpenseParticipator.count;
+            return self.payedExpenseParticipators.count;
+            break;
+        case 2:
+            return self.usedExpenseParticipators.count;
             break;
     }
     return 0;
@@ -122,6 +113,11 @@ NumberFormatterSingleton *numberFormatterSingleton;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    switch (section) {
+        case 0:
+            return 0;
+            break;
+    }
     return 30.0;
 }
 
@@ -137,9 +133,12 @@ NumberFormatterSingleton *numberFormatterSingleton;
     switch (section)
     {
         case 0:
-            myLabel.text = NSLocalizedString(@"Paid", @"Paid");
+            //myLabel.text = NSLocalizedString(@"", @"");
             break;
         case 1:
+            myLabel.text = NSLocalizedString(@"Paid", @"Paid");
+            break;
+        case 2:
             myLabel.text = NSLocalizedString(@"Used", @"Used");
             break;
         default:
@@ -167,9 +166,17 @@ NumberFormatterSingleton *numberFormatterSingleton;
     [expenseHistoryCell.nameLabel setText:[NSString stringWithFormat:@"%@", expenseName]];
 }
 
-- (void)setTotalExpenseAmount:(PFObject *)expenseParticipator fmt:(NSNumberFormatter *)fmt expenseHistoryCell:(HistoryCell *)expenseHistoryCell {
+- (void)setExpenseAmount:(PFObject *)expenseParticipator expenseHistoryCell:(HistoryCell *)expenseHistoryCell {
     PFObject *expense = expenseParticipator[@"expense"];
-    [expenseHistoryCell.amountLabel setText:[fmt stringFromNumber:expense[@"amount"]]];
+    [expenseHistoryCell.amountLabel setText:[[numberFormatterSingleton getCurrencyNumberFormatter] stringFromNumber:expense[@"amount"]]];
+    [expenseHistoryCell.amountLabel setTextColor:[colorSingleton getBlueColor]];
+}
+- (void)setTotalExpenseAmount:(HistoryCell *)expenseHistoryCell{
+    double totalBalance = 0;
+    for (PFObject *expense in self.expenses) {
+        totalBalance += [expense[@"amount"] doubleValue];
+    }
+    [expenseHistoryCell.amountLabel setText:[[numberFormatterSingleton getCurrencyNumberFormatter] stringFromNumber:[NSNumber numberWithDouble:totalBalance]]];
     [expenseHistoryCell.amountLabel setTextColor:[colorSingleton getBlueColor]];
 }
 
@@ -177,24 +184,39 @@ NumberFormatterSingleton *numberFormatterSingleton;
     HistoryCell *expenseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"userExpenseCell" forIndexPath:indexPath];
     PFObject *expenseParticipator;
     
-    NSNumberFormatter *fmt = [numberFormatterSingleton getCurrencyNumberFormatter];
-    
     switch([indexPath section]){
         case 0:
-            expenseParticipator = self.payedExpenseParticipator[indexPath.row];
-            [expenseHistoryCell.userAmountLabel setText:[fmt stringFromNumber:expenseParticipator[@"payment"]]];
-            [expenseHistoryCell.userAmountLabel setTextColor:[colorSingleton getGreenColor]];
+            [expenseHistoryCell.userAmountLabel setText:[[numberFormatterSingleton getCurrencyNumberFormatter] stringFromNumber:self.groupUser[@"balance"]]];
+            [expenseHistoryCell.nameLabel setText:@"User Balance:"];
+            [expenseHistoryCell.createdAtLabel setText:@"All Expenses:"];
+            [self setTotalExpenseAmount:expenseHistoryCell];
+            expenseHistoryCell.accessoryType = UITableViewCellAccessoryNone;
+            expenseHistoryCell.userInteractionEnabled = NO;
+            if([self.groupUser[@"balance"] longValue] >= 0){
+                [expenseHistoryCell.userAmountLabel setTextColor:[colorSingleton getGreenColor]];
+            } else {
+                [expenseHistoryCell.userAmountLabel setTextColor:[colorSingleton getRedColor]];
+            }
             break;
         case 1:
-            expenseParticipator = self.usedExpenseParticipator[indexPath.row];
-            [expenseHistoryCell.userAmountLabel setText:[fmt stringFromNumber:expenseParticipator[@"usage"]]];
+            expenseParticipator = self.payedExpenseParticipators[indexPath.row];
+            [expenseHistoryCell.userAmountLabel setText:[[numberFormatterSingleton getCurrencyNumberFormatter] stringFromNumber:expenseParticipator[@"payment"]]];
+            [expenseHistoryCell.userAmountLabel setTextColor:[colorSingleton getGreenColor]];
+            
+            [self setExpenseAmount:expenseParticipator expenseHistoryCell:expenseHistoryCell];
+            [self setNameLabel:expenseParticipator expenseHistoryCell:expenseHistoryCell];
+            [self setCreatedAtLabel:expenseParticipator expenseHistoryCell:expenseHistoryCell];
+            break;
+        case 2:
+            expenseParticipator = self.usedExpenseParticipators[indexPath.row];
+            [expenseHistoryCell.userAmountLabel setText:[[numberFormatterSingleton getCurrencyNumberFormatter] stringFromNumber:expenseParticipator[@"usage"]]];
             [expenseHistoryCell.userAmountLabel setTextColor:[colorSingleton getRedColor]];
+            
+            [self setExpenseAmount:expenseParticipator expenseHistoryCell:expenseHistoryCell];
+            [self setNameLabel:expenseParticipator expenseHistoryCell:expenseHistoryCell];
+            [self setCreatedAtLabel:expenseParticipator expenseHistoryCell:expenseHistoryCell];
             break;
     }
-    
-    [self setTotalExpenseAmount:expenseParticipator fmt:fmt expenseHistoryCell:expenseHistoryCell];
-    [self setNameLabel:expenseParticipator expenseHistoryCell:expenseHistoryCell];
-    [self setCreatedAtLabel:expenseParticipator expenseHistoryCell:expenseHistoryCell];
     
     return expenseHistoryCell;
 }
@@ -213,11 +235,11 @@ NumberFormatterSingleton *numberFormatterSingleton;
         PFObject *oldExpense;
         
         switch([indexPath section]){
-            case 0:
-                oldExpense = self.payedExpenseParticipator[indexPath.row][@"expense"];
-                break;
             case 1:
-                oldExpense = self.usedExpenseParticipator[indexPath.row][@"expense"];
+                oldExpense = self.payedExpenseParticipators[indexPath.row][@"expense"];
+                break;
+            case 2:
+                oldExpense = self.usedExpenseParticipators[indexPath.row][@"expense"];
                 break;
         }
         

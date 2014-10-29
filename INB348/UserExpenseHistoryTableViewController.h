@@ -17,6 +17,4 @@
 @property (strong) PFObject *groupUser;
 - (IBAction)back:(id)sender;
 @property (strong) PFObject *group;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *balanceLabel;
-
 @end

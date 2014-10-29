@@ -866,6 +866,7 @@
                                     <outlet property="createdAtLabel" destination="Eex-L1-EDg" id="wrT-Lt-efu"/>
                                     <outlet property="nameLabel" destination="qFL-fY-upv" id="iWV-aw-TVQ"/>
                                     <outlet property="userAmountLabel" destination="zmQ-mW-owB" id="kXV-An-VaD"/>
+                                    <segue destination="foj-ie-Mo4" kind="modal" identifier="editExpenseSegue" id="KdW-Uh-HYd"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -881,12 +882,8 @@
                                 <action selector="back:" destination="xf2-i7-Y20" id="nHD-Po-4Zr"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Balance" style="plain" id="W9u-E9-TbH"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
-                    <connections>
-                        <outlet property="balanceLabel" destination="W9u-E9-TbH" id="0di-oE-Trl"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3k2-3V-Br0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1724,7 +1721,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Csb-4y-qKR">
-                                            <rect key="frame" x="72" y="24.5" width="12" height="12"/>
+                                            <rect key="frame" x="72" y="23.5" width="12" height="18"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2197,7 +2194,7 @@ It is very important to our development team to get your feedback in a timely wa
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" id="XfF-9r-nxB">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="settingsMembersCell" id="XfF-9r-nxB">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XfF-9r-nxB" id="esw-Tz-GfT">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -2238,9 +2235,10 @@ It is very important to our development team to get your feedback in a timely wa
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="5Hs-c3-pvd"/>
         <segue reference="gHh-eZ-Rmr"/>
-        <segue reference="3Cj-as-CbW"/>
+        <segue reference="5Hs-c3-pvd"/>
         <segue reference="jTv-Yn-TmP"/>
+        <segue reference="KdW-Uh-HYd"/>
+        <segue reference="3Cj-as-CbW"/>
     </inferredMetricsTieBreakers>
 </document>

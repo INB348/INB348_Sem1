@@ -91,7 +91,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"memberCell";
+    static NSString *CellIdentifier = @"settingsMembersCell";
 //    UITableViewCell *memberCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     
