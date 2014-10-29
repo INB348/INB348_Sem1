@@ -211,6 +211,23 @@ NumberFormatterSingleton *numberFormatterSingleton;
     [expense setValue:[self returnStringIfNotNull:navigationController.comment] forKey:@"description"];
     [expense setObject:navigationController.group forKey:@"group"];
     [expense saveInBackground];
+    
+    for (PFObject *groupUser in expenseParticipators) {
+        
+        NSLog(@"%@", groupUser);
+//        NSString *string1 = [[PFUser currentUser] objectForKey:@"name"];
+//        NSString *string2 = @"group";
+//        NSString *note = [NSString stringWithFormat: @"'%@' has deleted '%@' %@", string1, groupTabBarController.group[@"name"], string2];
+//        
+//        PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
+//        [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
+//        [deleteGroupNotification setObject:groupUser[@"user"] forKey:@"toUser"];
+//        [deleteGroupNotification setObject:note forKey:@"note"];
+//        [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
+//        [deleteGroupNotification saveEventually];
+        
+    }
+
     return expense;
 }
 

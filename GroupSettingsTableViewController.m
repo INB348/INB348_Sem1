@@ -270,8 +270,7 @@ GroupTabBarController *groupTabBarController;
             }
         }];
         
-//        NSLog (@"%@", groupTabBarController.group);
-        NSLog (@"%@", groupTabBarController.groupUsers);
+//        NSLog (@"%@", groupTabBarController.groupUsers);
         
         for (PFObject *groupUser in groupTabBarController.groupUsers) {
             NSLog(@"%@", groupUser);
@@ -287,17 +286,6 @@ GroupTabBarController *groupTabBarController;
             [deleteGroupNotification saveEventually];
 
         }
-//        NSString *string1 = [[PFUser currentUser] objectForKey:@"name"];
-//        NSString *string2 = gName[@"name"];
-//        NSString *note = [NSString stringWithFormat: @"'%@' has deleted '%@'", string1, string2];
-//        
-//        PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
-//        [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
-//        [deleteGroupNotification setObject:object forKey:@"toUser"];
-//        [deleteGroupNotification setObject:note forKey:@"note"];
-//        [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
-//        [deleteGroupNotification saveEventually];
-
     }
 }
 
@@ -306,7 +294,19 @@ GroupTabBarController *groupTabBarController;
     [groupTabBarController.group setObject:self.nameLabel.text forKey:@"name"];
     [groupTabBarController.group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if(succeeded){
-            //
+            for (PFObject *groupUser in groupTabBarController.groupUsers) {
+                NSLog(@"%@", groupUser);
+                NSString *string1 = [[PFUser currentUser] objectForKey:@"name"];
+                NSString *note = [NSString stringWithFormat: @"'%@' has changed '%@' group's name to '%@'", string1, groupTabBarController.group[@"name"], self.nameLabel.text];
+                
+                PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
+                [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
+                [deleteGroupNotification setObject:groupUser[@"user"] forKey:@"toUser"];
+                [deleteGroupNotification setObject:note forKey:@"note"];
+                [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
+                [deleteGroupNotification saveEventually];
+                
+            }
         } else{
             UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"The Internet connection appears to be offline. Please try it again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [errorAlertView show];
