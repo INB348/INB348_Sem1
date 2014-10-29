@@ -222,7 +222,7 @@ NumberFormatterSingleton *numberFormatterSingleton;
         [newParticipators addObject:participator];
         
         NSLog(@"%@", participator);
-        NSString *note = [NSString stringWithFormat: @"You were included in %@ for %@", participator[@"expense"][@"name"], participator[@"usage"]];
+        NSString *note = [NSString stringWithFormat: @"You have been charged $ %@ for %@ expense", participator[@"usage"], participator[@"expense"][@"name"]];
 //        NSLog (@"%@", participator[@"user"]);
         PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
         [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];

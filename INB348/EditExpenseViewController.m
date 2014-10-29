@@ -197,7 +197,18 @@ ColorSingleton *colorSingleton;
                [expenseParticipator setValue:@0 forKey:@"usage"];
                 [expenseParticipator setValue:@0 forKey:@"usageMultiplier"];
             }
+            
             [newExpenseParticipators addObject:expenseParticipator];
+            PFUser *currentUser = [PFUser currentUser];
+            NSString *note = [NSString stringWithFormat: @"%@ has edited information of the '%@' expense. You have been charged $ %@ in this updated expense", currentUser[@"name"], expenseParticipator[@"expense"][@"name"], expenseParticipator[@"usage"]];
+            //        NSLog (@"%@", participator[@"user"]);
+            PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
+            [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
+            [deleteGroupNotification setObject:expenseParticipator[@"user"][@"user"] forKey:@"toUser"];
+            [deleteGroupNotification setObject:note forKey:@"note"];
+            [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
+            [deleteGroupNotification saveEventually];
+            
         }
     }
     
