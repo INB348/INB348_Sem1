@@ -165,7 +165,6 @@ NewExpenseNavigationController *navigationController;
 }
 
 - (IBAction)next:(id)sender {
-    bool readyForNext = YES;
     if(self.tableView.indexPathsForSelectedRows.count != 0){
         for (NSIndexPath *selectedExpensePayerIndex in self.tableView.indexPathsForSelectedRows) {
             SelectUsersCell *groupUserCell = (SelectUsersCell *)[self.tableView cellForRowAtIndexPath:selectedExpensePayerIndex];
@@ -179,18 +178,15 @@ NewExpenseNavigationController *navigationController;
                     } else {
                         NSLog(@"Multiplier must be at least 1");
                         [self showOkAlertButton:@"Multiplier must be greater than 0.\nPlease try again."];
-                        readyForNext = NO;
+                        return;
                     }
                 }
             }
         }
+        [self performSegueWithIdentifier:@"showSummary" sender:self];
     } else{
         NSLog(@"You must select at least 1 Member");
         [self showOkAlertButton:@"You must select at least 1 Member.\nPlease try again."];
-        readyForNext = NO;
-    }
-    if(readyForNext){
-        [self performSegueWithIdentifier:@"showSummary" sender:self];
     }
 }
 @end
