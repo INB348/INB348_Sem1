@@ -95,7 +95,7 @@ NumberFormatterSingleton *numberFormatterSingleton;
     [self setBalance:userGroup userGroupCell:userGroupCell];
     
     PFFile *thumbnail = userGroup[@"group"][@"groupPic"];
-    userGroupCell.imageView.image = [UIImage imageNamed:@"people_grey.jpg"];
+    userGroupCell.imageView.image = [UIImage imageNamed:@"blank.png"];
     
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         // Now that the data is fetched, update the cell's image property.

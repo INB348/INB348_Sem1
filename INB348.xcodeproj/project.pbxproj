@@ -56,6 +56,7 @@
 		0C6E5FB619B731A5000594BF /* burger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C6E5FB219B731A5000594BF /* burger@2x.png */; };
 		0C6E5FB719B731A5000594BF /* pill.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C6E5FB319B731A5000594BF /* pill.png */; };
 		0C6E5FB819B731A5000594BF /* login.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0C6E5FB419B731A5000594BF /* login.jpg */; };
+		0CBA00BD1A01D8A600575055 /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CBA00BC1A01D8A600575055 /* blank.png */; };
 		0CE717ED19C033D800D9F56D /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717EC19C033D800D9F56D /* LogInViewController.m */; };
 		0CE717F019C03C7800D9F56D /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717EF19C03C7800D9F56D /* SignUpViewController.m */; };
 		0CE717F319C04C0400D9F56D /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CE717F219C04C0400D9F56D /* ForgotPasswordViewController.m */; };
@@ -175,6 +176,7 @@
 		0C6E5FB219B731A5000594BF /* burger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "burger@2x.png"; sourceTree = "<group>"; };
 		0C6E5FB319B731A5000594BF /* pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pill.png; sourceTree = "<group>"; };
 		0C6E5FB419B731A5000594BF /* login.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = login.jpg; sourceTree = "<group>"; };
+		0CBA00BC1A01D8A600575055 /* blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blank.png; sourceTree = "<group>"; };
 		0CE717EB19C033D800D9F56D /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogInViewController.h; path = ../LogInViewController.h; sourceTree = "<group>"; };
 		0CE717EC19C033D800D9F56D /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogInViewController.m; path = ../LogInViewController.m; sourceTree = "<group>"; };
 		0CE717EE19C03C7800D9F56D /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = ../SignUpViewController.h; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 		0C6E5FB019B73197000594BF /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0CBA00BC1A01D8A600575055 /* blank.png */,
 				D8E2067819FF82AD002F8E5E /* WhoPaysNextIcon */,
 				D8E2066019FF6595002F8E5E /* person_black.jpg */,
 				D8E2065E19FF6590002F8E5E /* person_grey.jpg */,
@@ -684,6 +687,7 @@
 				D8E2067519FF8283002F8E5E /* WhoPaysNextIcon120.png in Resources */,
 				0C6E5FB619B731A5000594BF /* burger@2x.png in Resources */,
 				0C5650FE19EF6966008E667C /* RSS_Feed-128.png in Resources */,
+				0CBA00BD1A01D8A600575055 /* blank.png in Resources */,
 				0C5650FD19EF6966008E667C /* Group_of_People-128.png in Resources */,
 				0C6E5FB719B731A5000594BF /* pill.png in Resources */,
 				0C6E5F8319B72750000594BF /* Images.xcassets in Resources */,

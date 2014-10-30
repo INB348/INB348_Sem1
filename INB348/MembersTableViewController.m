@@ -74,8 +74,11 @@
         if([groupUser[@"balance"] isEqualToNumber:@0]){
             [groupUser deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if(succeeded){
+                    NSLog (@"%@", groupUser);
                     PFUser *user = groupUser[@"user"];
+                    
                     if ([user.objectId isEqualToString:[PFUser currentUser].objectId]) {
+                        
                         [self dismissViewControllerAnimated:YES completion:nil];
                     }
                     [self reloadGroupUsers];

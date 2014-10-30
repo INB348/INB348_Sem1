@@ -33,6 +33,7 @@ txt_ReTypePassword = _txt_ReTypePassword;
     self.txt_NewPassword.delegate = self;
     self.txt_ReTypePassword.delegate = self;
     
+    
     // Fetch the devices from persistent data store
     self.txt_NewName.text = [[PFUser currentUser] objectForKey:@"name"];
     

@@ -29,9 +29,12 @@ GroupTabBarController *groupTabBarController;
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    self.nameLabel.delegate = self;
+    self.usernameLabel.delegate = self;
+    self.backupName = groupTabBarController.group[@"name"];
     /* Profile Image Format */
     PFFile *thumbnail = [groupTabBarController.group objectForKey:@"groupPic"];
-    self.img_Profile.image = [UIImage imageNamed:@"people_grey.jpg"];
+//    self.img_Profile.image = [UIImage imageNamed:@"people_grey.jpg"];
     
     [thumbnail getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
         // Now that the data is fetched, update the cell's image property.
@@ -41,6 +44,7 @@ GroupTabBarController *groupTabBarController;
             self.img_Profile.image = [UIImage imageNamed:@"people_grey.jpg"];
         }
     }];
+    
     self.img_Profile.layer.cornerRadius = self.img_Profile.frame.size.width / 2;
     self.img_Profile.clipsToBounds = YES;
     self.img_Profile.layer.borderWidth = 3.0f;
@@ -139,6 +143,7 @@ GroupTabBarController *groupTabBarController;
 - (void)viewDidAppear:(BOOL)animated{
     self.navigationItem.title = groupTabBarController.group[@"name"];
     self.nameLabel.text = groupTabBarController.group[@"name"];
+    NSLog(@"Teest: %@", self.backupName);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -290,28 +295,33 @@ GroupTabBarController *groupTabBarController;
 }
 
 - (IBAction)nameChanged:(id)sender {
-    self.navigationItem.title = self.nameLabel.text;
-    [groupTabBarController.group setObject:self.nameLabel.text forKey:@"name"];
-    [groupTabBarController.group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if(succeeded){
-            for (PFObject *groupUser in groupTabBarController.groupUsers) {
-                NSLog(@"%@", groupUser);
-                NSString *string1 = [[PFUser currentUser] objectForKey:@"name"];
-                NSString *note = [NSString stringWithFormat: @"'%@' has changed '%@' group's name to '%@'", string1, groupTabBarController.group[@"name"], self.nameLabel.text];
+    if ([self.nameLabel.text isEqualToString:self.backupName]) {
+        //
+    } else {
+        NSString *oldname = self.backupName;
+        self.navigationItem.title = self.nameLabel.text;
+        [groupTabBarController.group setObject:self.nameLabel.text forKey:@"name"];
+        [groupTabBarController.group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(succeeded){
+                for (PFObject *groupUser in groupTabBarController.groupUsers) {
+                    NSString *note = [NSString stringWithFormat: @"'%@' group's name to '%@'", oldname, self.nameLabel.text];
+                    
+                    PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
+                    [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
+                    [deleteGroupNotification setObject:groupUser[@"user"] forKey:@"toUser"];
+                    [deleteGroupNotification setObject:note forKey:@"note"];
+                    [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
+                    [deleteGroupNotification saveEventually];
                 
-                PFObject *deleteGroupNotification = [PFObject objectWithClassName:@"Notifications"];
-                [deleteGroupNotification setObject:[PFUser currentUser] forKey:@"fromUser"];
-                [deleteGroupNotification setObject:groupUser[@"user"] forKey:@"toUser"];
-                [deleteGroupNotification setObject:note forKey:@"note"];
-                [deleteGroupNotification setValue:[NSNumber numberWithBool:NO] forKey:@"read"];
-                [deleteGroupNotification saveEventually];
-                
+                }
+            } else{
+                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"The Internet connection appears to be offline. Please try it again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [errorAlertView show];
             }
-        } else{
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"The Internet connection appears to be offline. Please try it again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [errorAlertView show];
-        }
-    }];
+        }];
+        
+        self.backupName = self.nameLabel.text;
+    }
 }
 
 - (IBAction)back:(id)sender {

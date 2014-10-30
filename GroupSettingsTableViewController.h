@@ -14,6 +14,7 @@
 @interface GroupSettingsTableViewController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *nameLabel;
+@property (nonatomic, strong) NSString *backupName;
 @property (strong, nonatomic) IBOutlet UIImageView *img_Profile;
 @property (strong, nonatomic) IBOutlet UITextField *usernameLabel;
 

@@ -1766,7 +1766,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Csb-4y-qKR">
-                                            <rect key="frame" x="78" y="24" width="8" height="16"/>
+                                            <rect key="frame" x="77" y="24" width="8" height="22"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2079,7 +2079,7 @@ It is very important to our development team to get your feedback in a timely wa
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                     <connections>
-                                                        <action selector="nameChanged:" destination="MH3-f6-7zw" eventType="editingChanged" id="y17-xf-Kyq"/>
+                                                        <action selector="nameChanged:" destination="MH3-f6-7zw" eventType="editingDidEnd" id="ofU-kX-NTJ"/>
                                                     </connections>
                                                 </textField>
                                                 <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="btn_ChoosePhoto" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Yjc-OA-c83">
@@ -2248,10 +2248,10 @@ It is very important to our development team to get your feedback in a timely wa
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Rqb-Jp-OcO"/>
-        <segue reference="5Hs-c3-pvd"/>
-        <segue reference="jTv-Yn-TmP"/>
         <segue reference="KdW-Uh-HYd"/>
+        <segue reference="5Hs-c3-pvd"/>
+        <segue reference="Rqb-Jp-OcO"/>
+        <segue reference="jTv-Yn-TmP"/>
         <segue reference="3Cj-as-CbW"/>
     </inferredMetricsTieBreakers>
 </document>
