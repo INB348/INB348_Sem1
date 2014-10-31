@@ -45,6 +45,32 @@
     return true;
 }
 
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    // 1. The view for the header
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 22)];
+    
+    // 2. Set a custom background color and a border
+    headerView.backgroundColor = [UIColor colorWithWhite:0.5f alpha:1.0f];
+    headerView.layer.borderColor = [UIColor colorWithWhite:0.5 alpha:1.0].CGColor;
+    headerView.layer.borderWidth = 1.0;
+    
+    // 3. Add a label
+    UILabel* headerLabel = [[UILabel alloc] init];
+    headerLabel.frame = CGRectMake(5, 2, tableView.frame.size.width - 5, 18);
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.textColor = [UIColor whiteColor];
+    headerLabel.font = [UIFont boldSystemFontOfSize:15.0];
+    headerLabel.text = @"* Swipe left to quickly delete a member";
+    headerLabel.textAlignment = NSTextAlignmentLeft;
+    
+    // 4. Add the label to the header view
+    [headerView addSubview:headerLabel];
+    
+    // 5. Finally return
+    return headerView;
+}
+
 - (void)reloadGroupUsers{
     //Retrieving GroupUser list
     PFQuery *groupUsersQuery = [PFQuery queryWithClassName:@"UserGroup"];

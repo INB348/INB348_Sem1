@@ -53,6 +53,7 @@ NumberFormatterSingleton *numberFormatterSingleton;
     [groupUsersQuery includeKey:@"user"];
     [groupUsersQuery whereKey:@"group" equalTo:groupTabBarController.group];
     [groupUsersQuery whereKey:@"accepted" equalTo:[NSNumber numberWithBool:YES]];
+    [groupUsersQuery orderByAscending:@"balance"];
     [groupUsersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             // The find succeeded.

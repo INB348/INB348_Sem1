@@ -94,7 +94,6 @@
         chosenImage.layer.borderColor = [UIColor whiteColor].CGColor;
     }
     
-    
     return cell;
 }
 

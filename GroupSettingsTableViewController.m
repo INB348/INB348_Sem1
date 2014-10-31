@@ -291,6 +291,8 @@ GroupTabBarController *groupTabBarController;
             [deleteGroupNotification saveEventually];
 
         }
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

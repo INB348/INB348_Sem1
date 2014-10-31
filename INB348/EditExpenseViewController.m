@@ -202,9 +202,8 @@ NumberFormatterSingleton *numberFormatterSingleton;
             
             [newExpenseParticipators addObject:expenseParticipator];
             PFUser *currentUser = [PFUser currentUser];
-            NSString *moneyFormat = [[numberFormatterSingleton getNumberFormatter] stringFromNumber:expenseParticipator[@"usage"]];
-            NSString *note = [NSString stringWithFormat: @"%@ has edited the '%@' expense. You have been charged $ %@ in this one", currentUser[@"name"], expenseParticipator[@"expense"][@"name"], moneyFormat];
-            //        NSLog (@"%@", participator[@"user"]);
+//            NSString *moneyFormat = [[numberFormatterSingleton getNumberFormatter] stringFromNumber:expenseParticipator[@"usage"]];
+            NSString *note = [NSString stringWithFormat: @"%@ has edited the '%@' expense.", currentUser[@"name"], expenseParticipator[@"expense"][@"name"]];
             PFObject *notification = [PFObject objectWithClassName:@"Notifications"];
             [notification setObject:[PFUser currentUser] forKey:@"fromUser"];
             [notification setObject:expenseParticipator[@"user"][@"user"] forKey:@"toUser"];
